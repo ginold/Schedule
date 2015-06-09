@@ -1,0 +1,111 @@
+<div ng-include="'components/navbar/navbar.html'"></div>
+
+<div class="container">
+	<form class="form-horizontal col-md-6" >
+
+
+
+  <div class="form-group">
+    <label  class="col-sm-3 control-label">Prénom</label>
+    <div class="col-sm-9">
+      <input type="text" ng-model="user.prenom" class="form-control"  >
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label class="col-sm-3 control-label">Nom</label>
+    <div class="col-sm-9">
+      <input type="text" ng-model="user.name" class="form-control" >
+    </div>
+  </div>
+
+   <div class="form-group">
+    <label class="col-sm-3 control-label">Date de naissance </label>
+    <div class="col-sm-9">
+      <input type="date" ng-model="user.naissance" class="form-control" >
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label class="col-sm-3 control-label">E-mail </label>
+    <div class="col-sm-9">
+      <input type="mail" ng-model="user.email" class="form-control" >
+    </div>
+  </div>
+
+  <h3>Adresse</h3>
+   <div class="form-group">
+    <label class="col-sm-3 control-label">Rue et no</label>
+    <div class="col-sm-9">
+      <input type="text" ng-model="user.adresse.rue" class="form-control" >
+    </div>
+  </div>
+
+   <div class="form-group">
+    <label class="col-sm-3 control-label">Ville</label>
+    <div class="col-sm-9">
+      <input type="text" ng-model="user.adresse.ville" class="form-control" >
+    </div>
+  </div>
+   <div class="form-group">
+    <label class="col-sm-3 control-label">NPA</label>
+    <div class="col-sm-9">
+      <input type="text" ng-model="user.adresse.npa" class="form-control" >
+    </div>
+  </div>
+
+   <div class="form-group">
+    <label class="col-sm-3 control-label">Tél. fixe</label>
+    <div class="col-sm-9">
+      <input type="text" ng-model="user.telFixe" class="form-control" >
+    </div>
+  </div>
+
+   <div class="form-group">
+    <label class="col-sm-3 control-label">Tél. portable</label>
+    <div class="col-sm-9">
+      <input type="text" ng-model="user.telPortable" class="form-control" >
+    </div>
+  </div>
+
+   <div class="form-group">
+    <label class="col-sm-3 control-label">No compte</label>
+    <div class="col-sm-9">
+      <input type="text" ng-model="user.compteBanc" class="form-control" >
+    </div>
+  </div>
+
+
+</form>
+
+<form class="form-horizontal col-md-6" >
+	<h4>Autres</h4>
+	       	<ul class="coursierOthersCheckbox">
+	        	<li> <label class="checkboxText"><input type="checkbox" ng-model="user.mobility"> Mobility</label></li>
+	        	<li> <label class="checkboxText"><input type="checkbox" ng-model="user.ag"> Abonnement Général</label>	</li>
+	        	<li> <label class="checkboxText"><input type="checkbox"  ng-model="user.permis"> Permis de conduire</label></li>
+	        </ul>
+	      <div class="form-group">
+		    <label class="col-sm-3 control-label">Login</label>
+		    <div class="col-sm-9">
+		      <input type="text" ng-model="user.login" class="form-control" >
+		    </div>
+		  </div>
+		     <div class="form-group">
+		    <label class="col-sm-3 control-label">Mot de passe</label>
+		    <div class="col-sm-9">
+		      <input type="text" ng-model="user.password" class="form-control" >
+		    </div>
+		  </div>
+
+		  <div class="form-group">
+		    <div class="col-sm-offset-2 col-sm-9">
+		      <button class="btn btn-primary" ng-click="createCoursier(user)">Créer coursier</button>
+		    </div>
+		  </div>
+</form>
+</div> <!-- container -->
+
+  
+
+<div ng-include="'components/footer/footer.html'"></div>

@@ -1,0 +1,85 @@
+<div ng-include="'components/navbar/navbar.html'"></div>
+
+<div class="container">
+  <div class="row">
+ 
+    <div class="col-sm-12">
+      <h2>Changer le mot de passe</h2>
+    </div>
+    <div class="col-sm-12">
+   
+      <!-- <form class="form" name="form" ng-submit="changePassword(form)" novalidate>
+
+        <div class="form-group">
+          <label>Mot de passe actuel</label>
+
+          <input type="password" name="password" class="form-control" ng-model="user.oldPassword"
+                 mongoose-error/>
+          <p class="help-block" ng-show="form.password.$error.mongoose">
+              {{ errors.other }}
+          </p>
+        </div>
+
+        <div class="form-group">
+          <label>Nouveau mot de passe</label>
+
+          <input type="password" name="newPassword" class="form-control" ng-model="user.newPassword"
+                 ng-minlength="3"
+                 required/>
+          <p class="help-block"
+             ng-show="(form.newPassword.$error.minlength || form.newPassword.$error.required) && (form.newPassword.$dirty || submitted)">
+            Le mot de passe doit avoir au moins 3 charactères
+          </p>
+        </div>
+
+        <p class="help-block"> {{ message }} </p>
+
+        <button class="btn btn-lg btn-primary" type="submit">changer</button>
+
+      </form> -->
+
+
+    <div id="calendar">
+
+      
+
+    <div class="MonthYearSelect">
+        <label>Month</label>
+        <select ng-model="month" ng-change="renderCalendar(month, year)">
+          <option ng-repeat="month in [] | range: 12" value="{{$index}}">{{calendar.monthNames[$index]}}</option>
+        </select >
+
+        <label>Year</label>
+        <select ng-model="year" ng-change="renderCalendar(month,year)">
+          <option>2014</option>
+          <option selected>2015</option>
+          <option>2016</option>
+        </select>
+      </div>
+      <h2 class="monthYear col-md-12"> {{calendar.month}} - {{calendar.year}}</h2>
+
+<div class="table-responsive">
+  <table class="table table-bordered">
+      <!-- colonnes pour la css -->
+     <col class="column" ng-repeat=" numDay in [] | range: calendar.days+1" data-dayNameCol="{{calendar.daysNames[$index-1]}}"/>
+
+   <!-- les jours du mois-->
+    <tr class="mainHeader"> 
+      <th>coursier/jour</th>
+       <th class="monthDay" ng-repeat=" numDay in [] | range: calendar.days" > {{$index+1}} {{calendar.daysNames[$index]}}
+       </th>
+    </tr>
+    <!-- rangs avec nom du coursier et les jours -->
+    <tr ng-repeat="user in users" >
+        <!-- <td class="coursierName">nom coursier</td> -->
+        <td class="coursierName" >{{user.name}}</td>
+        <td ng-click="getCoursierDay($event)" class="coursierDay"  ng-repeat=" numDay in [] | range: calendar.days" data-day="{{$index+1}}-{{monthNum}}-{{year}}" data-coursierName="{{user.name}}"> </td>
+     </tr>
+  </table>
+         </div>  
+
+        </div> <!-- calendar -->
+    </div>
+  </div>
+</div>
+<div ng-include="'components/footer/footer.html'"></div>

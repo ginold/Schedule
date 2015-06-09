@@ -1,0 +1,11 @@
+<div ng-include="'components/navbar/navbar.html'"></div>
+<div class="container">
+	<h3>Liste des shifts</h3>
+	<ul class="shift list-group" >
+		<li class="list-group-item" ng-repeat="shift in shifts" ><a ui-sref="shifts.details({shiftId:shift._id})" >{{shift.nom.length > 0 ? shift.nom : "Pas de nom"}}</a></li>
+
+	</ul>
+
+</div>
+
+<div ng-include="'components/footer/footer.html'"></div>

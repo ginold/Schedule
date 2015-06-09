@@ -1,0 +1,83 @@
+<div ng-include="'components/navbar/navbar.html'"></div>
+
+<div class="container">
+<form class="form-horizontal col-md-10" >
+	<div class="col-md-6">	
+	  <div class="form-group">
+			    <label class="col-sm-4 control-label">Nom du shiftt</label>
+			    <div class="col-sm-8">
+			      <input type="text" ng-model= "shift.nom" required class="form-control" >
+			    </div>
+			  </div>
+		
+	        <p class="help-block" ng-show="form.name.$error.required && submitted">
+	            Un nom est requis</p>
+		
+			 <!-- heures du shift -->
+			   <div class="form-group">
+			    <label class="col-sm-4 control-label">Début du shift</label>
+			    <div class="col-sm-8">
+			      <input type="time" ng-model= "shift.debut" placeholder="HH:mm" required class="form-control" >
+			    </div>
+			  </div>
+
+			    <div class="form-group">
+			    <label class="col-sm-4 control-label">Fin du shift</label>
+			    <div class="col-sm-8">
+			      <input type="time" ng-model= "shift.fin" placeholder="HH:mm" required class="form-control" >
+			    </div>
+			  </div>
+
+			   <div class="form-group">
+			    <label class="col-sm-4 control-label">Période de vailidité</label>
+			    <div class="col-sm-8">De
+			      <select ng-model="shift.periodeIn"><option ng-repeat="month in months" value="{{$index}}">{{month}}</option></select>
+			      à <select ng-model="shift.periodeOut" ><option ng-repeat="month in months"  value="{{$index}}">{{month}}</option></select>
+			    </div>
+			  </div>
+
+	  <div class="form-group" id="villesJoursShift">
+	       <!-- villes -->
+	       	<h3>Villes</h3>
+	       	<ul class="villesCheckbox">
+	        	<li> <label class="checkboxText"><input type="checkbox" checklist-value="'lausanne'" checklist-model="shift.villes"> Lausanne</label></li>
+	        	<li> <label class="checkboxText"><input type="checkbox" checklist-value="'yverdon'" checklist-model="shift.villes"> Yverdon	</label></li>
+	        	<li> <label class="checkboxText"><input type="checkbox"  checklist-value="'neuchâtel'" checklist-model="shift.villes"> Neuchâtel</label>	</li>
+	        </ul>
+	        
+	       <!--  jours de la semaine -->
+		 	<h3>Jours</h3>
+	        <ul class="joursCheckbox">
+	        	<li> <label class="checkboxText"><input type="checkbox" checklist-value="{id: 1, nom: 'lundi'}" checklist-model="shift.jours"> Lu	</label></li>
+	        	<li> <label class="checkboxText"><input type="checkbox" checklist-value="{id: 2, nom: 'mardi'}" checklist-model="shift.jours"> Ma	</label></li>
+	        	<li><label class="checkboxText"> <input type="checkbox" checklist-value="{id: 3, nom: 'mercredi'}" checklist-model="shift.jours"> Me</label>	</li>
+	        	<li> <label class="checkboxText"><input type="checkbox" checklist-value="{id: 4, nom: 'jeudi'}" checklist-model="shift.jours"> Je	</label></li>
+	        	<li> <label class="checkboxText"><input type="checkbox" checklist-value="{id: 5, nom: 'vendredi'}" checklist-model="shift.jours"> Ve	</label></li>
+	        	<li> <label class="checkboxText"><input type="checkbox" checklist-value="{id: 6, nom: 'samedi'}" checklist-model="shift.jours"> Sa	</label></li>
+	        </ul>
+
+	        <h4>Remarques</h4>
+	        <textarea ng-model="shift.remarques" rows="4" cols="50"></textarea>
+	        </br>
+	   </div>
+    </div>
+    <!-- coursiers liste -->
+    <h3>Liste des coursiers</h3>
+    <div class="col-md-6" id="listeCoursiersShift">	
+	    <ul class=" coursiersCheckbox">
+			<li ng-repeat="user in users"> 
+				<label class="checkboxText"><input type="checkbox" checklist-value="{id : user._id, name : user.name}" checklist-model="shift.coursiers">{{user.name}}</label>
+			</li>
+		</ul>
+		<!-- Cocher/decocher tous les coursiers -->
+	
+    </div>
+    	<button class="btn btn-primary btn-lg btn-login"  ng-click="checkAll(shift.coursiers)">Cocher tous</button>
+
+ 	<button class="btn btn-primary btn-lg btn-login"  ng-click="createShift(shift)">Créer shift</button>
+   
+  </form>
+
+</div><!-- container -->
+
+<div ng-include="'components/footer/footer.html'"></div>
