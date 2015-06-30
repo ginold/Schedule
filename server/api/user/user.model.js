@@ -17,8 +17,14 @@ var UserSchema = new Schema({
   login : String,
   prenom: String,
   compteBanc :String,
-  adresse: [],
-   hashedPassword: String,
+  adresse: {
+    npa: {type: Number},
+    ville : { type: String},
+    rue : { type: String}
+  },
+  dispos: Schema.Types.Mixed,
+  shifts:  Schema.Types.Mixed,
+  hashedPassword: String,
     role: {
     type: String,
     default: 'user'
@@ -151,7 +157,8 @@ UserSchema.methods = {
     if (!password || !this.salt) return '';
     var salt = new Buffer(this.salt, 'base64');
     return crypto.pbkdf2Sync(password, salt, 10000, 64).toString('base64');
-  }
+  },
+
 };
 
 module.exports = mongoose.model('User', UserSchema);

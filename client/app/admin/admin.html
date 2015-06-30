@@ -1,14 +1,21 @@
-<div ng-include="'components/navbar/navbar.html'"></div>
+<div class="bg-primary text-center title">
+  <h2>Liste des coursiers</h2>
+</div>
 
-<div class="container">
+<div class="container">   
 
-  <ul class="list-group">
-    <li class="list-group-item" ng-repeat="user in users">
+<form class="form-inline search">
+  <div class="form-group">
+     <label>Recherche</label>
+    <input type="text" ng-model="searchCoursier"> 
+  </div>
+</form>
+
+  <ul class="list-group">	
+    <li class="list-group-item" ng-repeat="user in users | filter: searchCoursier">
         <strong>{{user.name}}</strong><br>
         <span class="text-muted">{{user.email}}</span>
         <a ng-click="delete(user)" class="trash"><span class="glyphicon glyphicon-trash pull-right"></span></a>
     </li>
   </ul>
 </div>
-
-<div ng-include="'components/footer/footer.html'"></div>

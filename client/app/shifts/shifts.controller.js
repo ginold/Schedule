@@ -1,17 +1,12 @@
 'use strict';
 
 angular.module('velociteScheduleApp')
-  .controller('ShiftsCtrl', function ($scope,$rootScope, $http, $state) {
+  .controller('ShiftsCtrl', function ($scope, $http, $state, shiftService) {
     
     $http.get("/api/shifts").success(function(shifts){
+    	shiftService.formatHoursMinutes(shifts);
+    	shiftService.formatCities(shifts);
     	$scope.shifts = shifts;
     })
 
-    $scope.shiftDetails = function(shiftId){
-    	$state.go('shifts.details', {shiftId:shiftId}); //get it from shifts.html ng-click
-     	$rootScope.$on('$stateChangeError', 
-function(event, toState, toParams, fromState, fromParams, error){ console.log("fail") })
-    }
-    	
-    
 });

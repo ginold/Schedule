@@ -1,0 +1,68 @@
+
+<div class="container" >
+ 	<div>
+ 		<button class="col-md-1 btn-info button btn"ng-click="back()">Retour</button>
+ 		<h1 class="text-center" ng-show="!noDispos" >Confirmation</h1>
+ 	</div>
+ 	<!-- if noDispos = true, you didn't fill your dispos -->
+	<h1 ng-show="noDispos" class="text-center text-danger">Peut-être remplis d'abord tes dipos?</h1>
+	<section class="disponibilites col-md-12">
+		
+
+		<div class="week col-md-3" ng-repeat="week in weeks">
+			<h3>Du {{names[$index]}}</h3>
+			<p class="{{week.shiftsWeek == null ? 'text-danger' : ''}}">
+			<label>Shifts souhaités:&nbsp;</label>{{week.shiftsWeek == null ? "Attention, t'as oublié!" : week.shiftsWeek}}</p>
+			<p><label>Remarques:&nbsp;</label>
+			{{week.remarques == null ? 'Pas de remarques' : week.remarques}}</p>
+			<h2>Horaire</h2>
+
+			<table class="table table-striped table-bordered verifyTable" ng-repeat="dispo in week.dispos | orderBy: 'start._d' " > 
+			  <tr><!-- dispo date -->
+			    <td>Le</td>
+			    <td>
+			    <strong>{{dispo.start._d | amDateFormat:'dddd DD MMMM YYYY'}} <strong></td> 
+			  </tr>
+			  <tr  ng-show="{{dispo.title == 'Dispo'}}"> 
+			  <!-- dispo starting time -->
+			    <td>Début</td>
+			    <td>{{ dispo.start._d  | amDateFormat:'HH:mm'}}</td> 
+			  </tr>
+			   <tr ng-show="{{dispo.title == 'Dispo'}}">
+			   <!-- dispo ending time -->
+			    <td>Fin</td>			  
+			    <td>{{ dispo.end._d  | amDateFormat:'HH:mm'}}</td> 
+			  </tr>
+			  <tr ng-show="{{dispo.title == 'Dispo'}}">
+			  <!-- dispo's cities, comma separated-->
+			    <td>Villes</td>
+			    <td>
+			    	<span ng-repeat="ville in dispo.villes">	
+			    		{{ville}}{{$last ? '' : ', '}}
+			    	</span>
+			    </td> 
+			  </tr>
+			  <tr ng-show="{{dispo.title == 'Absent'}}">
+			  	 <td colspan="2" class="text-center">
+			  	 <strong class="text-danger">Absent</strong>
+			  </tr>
+			</table>
+			<!-- if absent, show different table-->
+			<!-- <table class="table table-striped table-bordered" ng-repeat="dispo in week.dispos" ng-show="{{dispo.title == 'Absent'}}" >
+			 </tr>
+			   <tr>
+			    <td colspan="2" class="text-center"><strong class="text-danger">Absent</strong>
+			    <td> <strong>{{dispo.start._d | amDateFormat:'dddd DD  	MMMM YYYY'}} <strong></td> 
+			    </td>
+			  </tr>
+			</table> -->
+
+		</div>
+	</section>
+	<div class="row text-center" ng-show="!noDispos">
+		<button class="btn-primary btn btn-lg" ng-click="sendDispos(dispos)">Envoyer</button>
+
+	</div>
+		
+
+</div>

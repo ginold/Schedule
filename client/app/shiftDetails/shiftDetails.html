@@ -1,7 +1,49 @@
 
-<div class="container">
-	<h3>Détails du shift</h3>
-	<p>qwewqe</p>
-
+<div class="bg-primary text-center title">
+	<h2>Détails du shift</h2>
 </div>
+
+<div class="container" >
+
+	<div class="col-md-6">
+		
+		<p><label>Nom du shift: &nbsp;</label>{{shift.nom}}</p>
+		<p><label>Début:&nbsp;</label>{{shift.debut | amDateFormat:'H:mm'}}</p>
+		<p><label>Fin:&nbsp;</label>{{shift.fin | amDateFormat:'H:mm'}}</p>
+		<p><label>Description:&nbsp;</label>{{shift.remarques}}</p>
+
+		<h4>Jours</h4>
+		<ul>
+			<li ng-repeat="jour in shift.jours | orderBy: reverse">{{jour.nom}} - {{jour.times}} fois</li>
+		</ul>
+		
+	</div>
+	
+	<div class="col-md-6">
+	<h4>Ville</h4>
+	<ul>
+		<li>{{shift.villes[0]}}</li>
+	</ul>
+		<h4>Coursiers capables</h4>
+		<ul>
+			<li ng-repeat="coursier in shift.coursiers">{{coursier.name}} {{coursier.prenom}}</li>
+		</ul>
+		<div ng-show="showAddCoursiers" class="coursiersListe text-center">
+		 <h4>Ajouter</h4>
+			<label class="coursiersCheckbox" 
+			ng-repeat="coursier in coursiers track by $index">
+			<input type="checkbox" 
+			checklist-value="coursier._id"
+			checklist-model="selectedCoursiers">
+				{{coursier.name}} {{coursier.prenom}}
+				</label>
+			<button class="btn btn-success btn-sm"   ng-click="addCoursiers(selectedCoursiers)">Ajouter</button>
+		</div>
+		<button class="btn btn-success" ng-click="loadCoursiers()">Ajouter des coursier</button>
+	</div>
+</div>
+<div class="text-center back">
+	<button ng-click="back()" class="btn btn-info btn-lg">Retour</button>
+</div>
+
 

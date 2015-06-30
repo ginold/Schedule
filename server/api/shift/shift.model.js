@@ -13,7 +13,7 @@ var ShiftSchema = new Schema({
   remarques: String,
   debut : Date,
   fin: Date,
-  coursiers :[],
+  coursiers : [{ type: Schema.ObjectId, ref: 'User' }],
   villes : [],
   jours : [],
   periodeIn : String,

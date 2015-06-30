@@ -8,7 +8,9 @@ angular.module('velociteScheduleApp')
     	permis : false,
     	mobility : false
     };
-
+    $scope.okModal = function(){
+    	$modalInstance.dismiss('cancel');
+    }
 
     $scope.createCoursier = function(user){
     	console.log(user)
@@ -18,13 +20,18 @@ angular.module('velociteScheduleApp')
 		        .then( function() {
 		          // Account created, redirect to home
 		           var modalInstance = $modal.open({
-		            template: '<h2>Vous avez bien créé le coursier</h2>',//par rapport a l index.html
+		            templateUrl: 'app/createCoursier/createCoursierModal.html',//par rapport a l index.html
 		            controller: 'CreateCoursierCtrl',
 		            size: "sm"
 		          });
 		        })
 		        .catch( function(err) {
 		        	console.log(err)
+		        	var modalInstance = $modal.open({
+		            template: "<h2>Erreur s'\est produite",//par rapport a l index.html
+		            controller: 'CreateCoursierCtrl',
+		            size: "sm"
+		          });
 		          err = err.data;
 		          $scope.errors = {};
 

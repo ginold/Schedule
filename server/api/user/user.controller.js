@@ -43,7 +43,7 @@ exports.show = function (req, res, next) {
   User.findById(userId, function (err, user) {
     if (err) return next(err);
     if (!user) return res.send(401);
-    res.json(user.profile);
+    res.json(user);
   });
 };
 
@@ -57,6 +57,33 @@ exports.destroy = function(req, res) {
     return res.send(204);
   });
 };
+/**
+  Update users availbitilities
+*/
+exports.saveDispos = function(req, res){
+  var disposnibilites = req.body.dispos
+  //for every month, check if there is anything
+  for(var monthYear in disposnibilites){
+    //if not, delete the property
+    if ( Object.keys(disposnibilites[monthYear]).length == 0 ) {
+      delete disposnibilites[monthYear]
+    };  
+
+  }
+
+    //and update each month of the user.dispos
+    var stringMonthDay = monthYear.toString();
+    var set = { $set: {} };
+    set.$set['dispos.' + monthYear] = disposnibilites[monthYear];
+    
+    User.update({ _id:  req.body.id }, set , function(error){
+         if (error) return res.send(500, err);
+         return res.send(204)
+     }); 
+
+   
+
+}
 
 /**
  * Change a users password

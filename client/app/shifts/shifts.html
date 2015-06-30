@@ -1,11 +1,40 @@
-<div ng-include="'components/navbar/navbar.html'"></div>
+<div ui-view="">
+<div class="bg-primary text-center title">
+	<h2>Liste des shifts</h2>
+</div>
 <div class="container">
-	<h3>Liste des shifts</h3>
-	<ul class="shift list-group" >
-		<li class="list-group-item" ng-repeat="shift in shifts" ><a ui-sref="shifts.details({shiftId:shift._id})" >{{shift.nom.length > 0 ? shift.nom : "Pas de nom"}}</a></li>
 
-	</ul>
+	
+	<label>Recherche &nbsp;<input type="text"  ng-model="searchShift.nom" class="form-control"> </label>
+	<table class="table table-striped table-bordered">
+		<tr >
+			<th class='shiftsHeaders'>Nom du shift</th>
+			<th class='shiftsHeaders'>Début</th>
+			<th class='shiftsHeaders'>Fin</th>
+			<th class='shiftsHeaders'>Ville</th>
+			<th class='shiftsHeaders'>Jours</th>
+		</tr>
+		<tr ng-repeat="shift in shifts | filter: searchShift"> 
+			<td>
+				<a class="shiftName" ui-sref="shifts.details({shiftId:shift._id})" >{{shift.nom.length > 0 ? shift.nom : "Pas de nom"}}</a> 
+			</td>
+			<td>
+			 	 {{shift.debut}} 
+			</td>
+			<td>
+				 {{shift.fin}} 
+			</td>
+			<td>
+				<abbr ng-repeat="ville in shift.villes">{{ville}}</abbr>
+			</td>
+			<td>
+				<span ng-repeat="jour in shift.jours | orderBy:'id'">
+					{{jour.nom}}{{$last ? '' : ', '}}
+				</span>
+			</td>
+		</tr>
+	</table>
 
 </div>
 
-<div ng-include="'components/footer/footer.html'"></div>
+</div>

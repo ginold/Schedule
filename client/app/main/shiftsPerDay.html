@@ -1,0 +1,3 @@
+<td ng-repeat="day in [] | range: calendar.days" >
+         <span class="shiftParJour" ng-repeat="shift in sortShiftByDayOfWeek(null, day+1, monthNum,year)"> {{shift.nom}} - {{shift.times}}</span>
+         </td>

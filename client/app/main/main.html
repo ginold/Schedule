@@ -1,18 +1,145 @@
-<div ng-include="'components/navbar/navbar.html'"></div>
+
 
 <header class="hero-unit" id="banner">
-  <div class="container">
-    <h1>mon planning</h1>
-  </div>
+ <!--  <div class="container">
+    <h3>{{isAdmin() == true ? "Tous les coursiers" :" Mon planning"}}</h3>
+  </div> -->
 </header>
+ <div class="text-center" ng-show="loading"> <img src="assets/images/loading.gif">
+  </div>
 
-<div class="container">
+
+<div class="container" ng-show="!loading">
   <div class="row">
+  
     <div class="col-lg-12">
+        <!-- show first monthly calendar to non admin -->
+      <div ng-show="!isAdmin()" ui-calendar="calendarConfig.calendarCoursier" ng-model="eventSources"></div>
 
-      <div ui-calendar="calendarConfig.calendarCoursier" ng-model="eventSources"></div>
+     
+
+    <!-- show all coursiers calendar to admin -->
+    <div id="calendar" ng-show="isAdmin()">
+
+    <div class=" col-md-4">
+      <!-- select the month we are in -->
+        <label>Mois</label>
+        <select ng-model="month" 
+        ng-change="renderCalendar(month)">
+          <option 
+          ng-repeat="months in calendar.monthNames" 
+          value="{{$index}}"  
+          ng-selected="calendar.monthNames[monthNum] == calendar.monthNames[$index]">{{calendar.monthNames[$index]}}</option>
+        </select >
+
+        <!-- select the year we are in -->
+        <label>Année</label>
+        <select ng-model="year" 
+        ng-change="renderCalendar(monthNum,year)">
+          <option>2014</option>
+          <option ng-selected="year == calendar.year">
+          2015</option>
+          <option>2016</option>
+          <option>2017</option>
+        </select>
+    </div>
+ 
+    <div class="text-centered">
+     <!--  previous and next buttons (month) -->
+      <h2 class="col-md-5 text-center"> 
+         <button id="prevMonth"  class="btn btn-success" ng-click="renderCalendar(monthNum-1)" ><</button>
+         {{calendar.month}} {{calendar.year}}
+         <button id="nextMonth"  class="btn btn-success" ng-click="renderCalendar(monthNum+1)">></button>
+      </h2>       
+    </div>
+
+
+    <div class="head">
+       <button class="btn btn-info btn-sm"ng-click="toggleIsPresent()">Dispos</button>
+       <button class="btn btn-warning  btn-sm"ng-click="toggleNoInfo()">No info</button>
+        <button class="btn btn-primary  btn-sm"  ng-click="togglePlanning(isAdmin())">{{isAdmin() == true ? "Mon planning" :"Tous les coursiers"}}
+        </button>
+        <p><button class="btn btn-sm" ng-click="todaysCoursiers()">Qui roule AJD </button> ou le: <select ng-model="workingDay" ng-change="whoWorksOn(workingDay, monthNum, year)"> <option ng-repeat="key in calendar.monthDays track by $index"> {{$index+1}}</option></select></p>
+    </div>
+    <div class="table-responsive" >
+  <table id="planning" cellspacing="0" class="collapsed table">
+     <!-- colonnes pour la css et les weekends,+1 car une colonne pour users -->
+     <col></col>
+     <col class="column" ng-repeat="numDay in calendar.monthDays track by $index" ng-class="isToday($index+1, monthNum, year)" data-dayNameCol="{{calendar.daysNames[$index]}}" date="{{$index+1}}-{{monthNum}}-{{year}}"/>
+
+     <!-- les jours du mois-->
+      <tr class="mainHeader bg-active"> 
+        <th>Coursier/Jour</th>
+         <th class="monthDay" ng-repeat="numDay in calendar.monthDays track by $index" > {{$index+1}} {{calendar.daysNames[$index] | uppercase}}
+         </th>
+      </tr>
+      <!-- rangs avec nom du coursier et les jours. On ajoute la class myRow à l'endroit de notre login id-->
+      <tr ng-repeat="user in coursiers track by user._id"  class=" {{currentUser._id == user._id ? 'myRow coursierName '+ user._id : 'coursierName '+ user._id }} ">
+          <td  class="coursierTD"
+              popover="Email: {{user.email}} portable: {{user.telPortable}}"
+               popover-placement="top"
+               popover-trigger="click" 
+               popover-append-to-body="true">
+                <a href="#"> {{::user.name}} {{::user.prenom}}</a>     
+          </td>
+
+          <td 
+          ng-click="setShift($index+1, monthNum,year, user)" class="coursierDay"  
+          ng-repeat="numDay in calendar.monthDays track by $index" 
+          date="{{$index+1}}-{{monthNum+1}}-{{year}}"
+          ng-class="isPresent($index, monthNum,year, user._id) == true ? 'present' : isAbsent($index, monthNum,year, user._id) == true ? 'absent' : 'noInfoOff' " > 
+            <span elem 
+                class="attributedShift"
+                ng-repeat="shift in getAttributedShift($index, monthNum,year, user._id) track by $index"
+               popover="{{shift.ville}}"
+               popover-placement="top"
+               popover-trigger="mouseenter" >
+               {{shift.nom == "Absence/vacances" ? "s" : shift.nom }}{{$last ? '' : '+'}}
+            </span>
+          </td> 
+       </tr>
+
+
+         <tr>
+           <td>Manques Lausanne</td>   
+            <td  class="shiftsParJourCell"
+            ng-repeat="day in calendar.monthDays track by $index">
+             <span class="shiftParJour" ng-repeat="shift in dailyShifts[getDayOfWeek($index, monthNum,year)-1]"><!-- {{shift.ville == "Lausanne" ? 
+             ( isAttributedShift(shift, $parent.$index, monthNum, year,"lausanne")  == true ? 'enough-> '+shift.nom : "notEnough->"+shift.nom+' '+shift.times ) : '' }}  --> {{shift.ville == "Lausanne" ? shift.nom : ''}}</span>
+           </td>
+          </tr>
+         <tr>
+         <tr>
+           <td>Manques Yverdon</td>   
+            <td  class="shiftsParJourCell"
+            ng-repeat="day in calendar.monthDays track by $index">
+             <span class="shiftParJour" ng-repeat="shift in dailyShifts[getDayOfWeek($index, monthNum,year)-1]"><!-- {{shift.ville == "Yverdon" ? 
+             ( isAttributedShift(shift, $parent.$index, monthNum, year,"lausanne")  == true ? 'enough-> '+shift.nom : "notEnough->"+shift.nom+' '+shift.times ) : ''  }} --> {{shift.ville == "Yverdon" ? shift.nom : ''}}</span>
+           </td>
+          </tr>
+         <tr>
+          <tr>
+           <td>Manques Neuchâtel</td>   
+            <td  class="shiftsParJourCell"
+            ng-repeat="day in calendar.monthDays track by $index">
+             <span class="shiftParJour" ng-repeat="shift in dailyShifts[getDayOfWeek($index, monthNum,year)-1]" >
+            <!--  {{shift.ville == "Neuchâtel" ?
+
+             ( isAttributedShift(shift, $parent.$index, monthNum, year) == true ? 'enough-> '+shift.nom : "notEnough->"+shift.nom+' '+shift.times ) : ''}} --> {{shift.ville == "Neuchâtel" ? shift.nom : ''}}
+             </span>
+           </td>
+          </tr>
+          <tr>
+            <td>Doublons</td>
+            <td ng-repeat="day in calendar.monthDays track by $index"></td>
+          </tr>
+
+  </table>
+
+
+</div>  <!-- table div --> 
+
+        </div> <!-- calendar -->
     </div>
   </div>
 </div>
-
-<div ng-include="'components/footer/footer.html'"></div>

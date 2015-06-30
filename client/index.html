@@ -29,7 +29,14 @@
     <![endif]-->
 
     <!-- Add your site or application content here -->
+    <div ng-include="'components/navbar/navbar.html'"></div>
+     <div class="text-center" ng-show="loading">
+      <img src="assets/images/loading.gif">
+    </div>
     <div ui-view=""></div>
+    
+   
+    <div ng-include="'components/footer/footer.html'"></div>
 
 
 
@@ -52,6 +59,8 @@
       <script src="bower_components/angular-ui-calendar/src/calendar.js"></script>
       <script src="bower_components/jquery-timepicker-jt/jquery.timepicker.js"></script>
       <script src="bower_components/checklist-model/checklist-model.js"></script>
+      <script src="bower_components/angular-moment/angular-moment.js"></script>
+      <script src="bower_components/moment-timezone/builds/moment-timezone-with-data-2010-2020.js"></script>
       <!-- endbower -->
     <!-- endbuild -->
 
@@ -69,15 +78,19 @@
           <script src="app/createCoursier/createCoursier.js"></script>
           <script src="app/createShift/createShift.controller.js"></script>
           <script src="app/createShift/createShift.js"></script>
+          <script src="app/main/attribuerShift.controller.js"></script>
           <script src="app/main/main.controller.js"></script>
           <script src="app/main/main.js"></script>
           <script src="app/modalRemoveDispo/modalRemoveDispo.controller.js"></script>
           <script src="app/sendDispos/sendDispos.controller.js"></script>
           <script src="app/sendDispos/sendDispos.js"></script>
+          <script src="app/sendDispos/verifyDispos.controller.js"></script>
           <script src="app/shiftDetails/shiftDetails.controller.js"></script>
+          <script src="app/shiftService/shiftService.service.js"></script>
           <script src="app/shifts/shiftDetails.controller.js"></script>
           <script src="app/shifts/shifts.controller.js"></script>
           <script src="app/shifts/shifts.js"></script>
+          <script src="components/attribution/attribution.service.js"></script>
           <script src="components/auth/auth.service.js"></script>
           <script src="components/auth/user.service.js"></script>
           <script src="components/modal/modal.service.js"></script>

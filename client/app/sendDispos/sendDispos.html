@@ -1,40 +1,46 @@
-<div ng-include="'components/navbar/navbar.html'"></div>
-<div class="container">
-	
-	<div ui-calendar="calendarConfig.calendarDispos" ng-model="eventSources" class="col-lg-8"></div>
-	<div class="col-lg-3 col-md-3 row">
-	<button ng-click="toggleDispoType()" type="button" class="btn btn-danger btn-lg active">Absence</button>
-	<button ng-click="toggleDispoType()" type="button" class="btn btn-primary btn-lg active">Préférence</button>
-		<label>Nombre souhaite de shifts</label>
-
-          <input type="number" name="shiftsWeekly" class="form-control" ng-model="user.shiftsWeekly" min="1" max="11" required >
- 			<br>
-          <label>Remarques</label>
-          <textarea  class="form-control" ></textarea>
-          <div class="checkbox">
-			  <label>
-			    <input type="checkbox" value="">
-			    L
-			  </label>
-			
-		</div>
-		<div class="checkbox">   <label>
-			    <input type="checkbox" value="">
-			    Y
-			  </label>
-		</div>
-		<div class="checkbox">
-			  <label>
-			    <input type="checkbox" value="">
-			    N
-			  </label>
-		</div>
-		<button  type="button" class="btn btn-primary">
-            Envoyer
-    </div> 
-    <button ng-click="deleteEvent()">dek</button>
+<div ui-view="">
+	<div class="container" ng-keypress="checkCity($event)">
+		<div class="col-lg-3 col-md-3 row">
+		<button ng-click="toggleDispoType('absent')" type="button" class="btn btn-danger btn-lg ">Absence</button>
+		<button ng-click="toggleDispoType('present')" type="button" class="btn btn-primary btn-lg">Préférence</button>
 
 
 
+
+			<label>Nombre souhaité de shifts</label>
+
+	          <input ng-focus="true" type="number" name="shiftsWeek" class="form-control" ng-model="shiftsWeek" min="1" max="11" required ng-change="inputShiftsWeek(shiftsWeek)">
+	          <h4 ng-show="forgotShiftsWeek" class="bg-warning">Oublié de tes shifts par semaine!</h4>
+	 			<br>
+	          <label>Remarques</label>
+	          <!-- assign availabilities for the selected month -->
+	          <textarea  name='remarques' class="form-control" ng-model="remarques" ng-change="inputRemarques(remarques)" placeholder="pas de remarques"></textarea>
+
+
+	          <!-- dispo cities -->
+	          <h3>Villes</h3>
+	          <div class="checkbox" >
+				  <label>
+				    <input type="checkbox"  checklist-value="'Lausanne'" checklist-model="villes" ng-checked="laus_check">
+				    Lausanne
+				  </label>
+					
+				</div>
+				<div class="checkbox">   <label>
+				    <input type="checkbox"  checklist-value="'Yverdon'" checklist-model="villes" ng-checked="yv_check">
+				    Yverdon
+				  </label>
+				</div>
+				<div class="checkbox">
+				  <label>
+				    <input type="checkbox"  checklist-value="'Neuchâtel'" checklist-model="villes" ng-checked="neuch_check">
+				    Neuchâtel
+				  </label>
+				</div>
+				<h4 ng-show="forgotCity" class="bg-warning">Oublié de selectionner une ville!</h4>
+				<button  type="button" class="btn btn-primary" ui-sref="sendDispos.verify({dispos : dispos})">
+		            Confirmation</button>
+		    </div> 
+		<div ui-calendar="calendarConfig.calendarDispos" ng-model="eventSources" class="col-lg-8" ></div>
+	</div>
 </div>
-<div ng-include="'components/footer/footer.html'"></div>

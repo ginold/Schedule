@@ -7,7 +7,8 @@ angular.module('velociteScheduleApp', [
   'ui.router',
   'ui.bootstrap',
   'ui.calendar',
-  'checklist-model'
+  'checklist-model',
+  'angularMoment'
 ])
   .config(function ($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider) {
     $urlRouterProvider
