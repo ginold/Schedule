@@ -1,18 +1,20 @@
 'use strict';
 
 angular.module('velociteScheduleApp')
-  .controller('CreateShiftCtrl', function ($scope, User, $http,$modal, calendarService) {
+  .controller('CreateShiftCtrl', function ($scope, User, $http,$modal, calendarService, shiftService) {
   	//time picker for inputs
     $(document).ready(function(){
     	$('input[type="time"]').timepicker({
     		timeFormat : 'H\\:i',
-    		disableTimeRanges: [['00:00am', '6:00am'], ['09:00pm', '00:00pm']]
+    		disableTimeRanges: [['00:00am', '6:00am'], ['09:00pm', '00:00am']]
     	});
     });
     // Use the User $resource to fetch all users
     $scope.users = User.query();
+    $scope.competences = ["Back-office","Spécial", "Coursier", "Dispatcheur", "CTiste"]
     $scope.shift = {};
     $scope.shift.coursiers = null;
+    $scope.selectedCompetences = [];
     $scope.isFalseHour = false;
     $scope.times = 1 ;
     //days of week with default times/day shift = 1
@@ -24,7 +26,7 @@ angular.module('velociteScheduleApp')
       {id:5, nom : 'Vendredi', times: 1},
       {id:6, nom : 'Samedi', times: 1}
     ]
-    $scope.cities = [ {nom:'Lausanne'},{nom:'Yverdon'},{nom:'Neuchâtel'}]
+    $scope.cities = [ 'Lausanne','Yverdon','Neuchâtel']
      //months for periode de validite
     $scope.months = calendarService.getMonths();
    // console.log($scope.months)
@@ -39,14 +41,28 @@ angular.module('velociteScheduleApp')
       };
     };
    }
-   $scope.enableTimes = function(){
+
+
+  $scope.sortByCompetences = function  (competences) {
+    console.log(competences)
+    var competentUsers = []
+    for (var i = $scope.users.length - 1; i >= 0; i--) {
+     var ok = shiftService.containsAll(competences, $scope.users[i].competences); // true
+      if (ok) {
+        competentUsers.push($scope.users[i])
+      };
+    };
+    $scope.competentUsers = competentUsers
+
+  }
+   $scope.enableTimes = function(){ 
 
    }
    /*
     create the shift with all its data
    */
     $scope.createShift = function(shift){
-      console.log(shift)
+      console.debug(shift);
       if (shift.nom == null || shift.nom == '') {
          var modalInstance = $modal.open({
                 templateUrl: 'app/createShift/shiftIncompleteModal.html',//par rapport a l index.html
@@ -95,6 +111,7 @@ angular.module('velociteScheduleApp')
 
 
     };
+
 
 
   });

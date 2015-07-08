@@ -2,26 +2,25 @@
     <h3 class="modal-title text-center">Attribuer un shift</h3>
 </div>
 
-        <div class="modal-body " ng-show="shifts.length > 1">
+        <div class="modal-body ">
             <p>À: <b> &nbsp;{{coursier.prenom}} {{coursier.name}} </b></p>
             <p>Pour le <b>{{date | amDateFormat: "dddd D MMMM YYYY"}}</b></p>
             <p>Dispo de: <b>{{dispoStart | amDateFormat: "H:mm"}}</b> à <b>{{dispoEnd | amDateFormat: "H:mm"}}</b></p>
-            <p>Nombre de shifts souhaités : </p>
+            <b ng-show="wait">attendez...</b>
+            <p ng-show="!wait" ng-class="attributed == shiftsWeekly || attributed > shiftsWeekly ? 'bg-danger' : '' ">Nombre de shifts souhaités :   <b>{{attributed}}/{{shiftsWeekly}}</b></p>
+                <p  ng-show="shifts.length == 1">Pas de shift adéquat trouvé</p>
+               
             <p>Selectionnez un shift &nbsp;
                 <select multiple class="form-control" ng-options="shift as shift.nom group by shift.ville for shift in shifts" ng-model="selectedShift"></select>
-            </p>            
+            </p>  
+            <h4>Tous les shifts</h4>
+            <select class="form-control" ng-options="shift as shift.nom group by shift.villes[0] for shift in allShifts" ng-model="otherShift"></select>    
         </div>
-        
 
 
-        <div class="modal-body text-center" ng-show="shifts.length == 1">
-          <p>Pas de shift adéquat trouvé</p>
-            <select multiple class="form-control" ng-options="shift as shift.nom group by shift.ville for shift in shifts" ng-model="selectedShift"></select>
-           
-        </div>
         <div class="text-center">
 
-            <button ng-show="shifts.length > 1" class="btn btn-success " ng-click="attribuer(selectedShift, coursier, date)">Attribuer</button>
+            <button ng-show="selectedShift.length > 0 || otherShift" class="btn btn-success " ng-click="attribuer(selectedShift, coursier, date, otherShift)">Attribuer</button>
 
             <button class="btn btn-info" ng-click="close()">Annuler</button>
         </div>

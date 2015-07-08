@@ -2,6 +2,7 @@
 
 angular.module('velociteScheduleApp')
   .controller('CreateCoursierCtrl', function ($scope,Auth, $modal) {
+  	$scope.competences = ["Back-office","Spécial", "Coursier", "Dispatcheur", "CTiste"]
   	//init false by default
     $scope.user = {
     	ag : false,

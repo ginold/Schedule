@@ -32,17 +32,6 @@ exports.create = function(req, res) {
 };
 
 
-function arrayUnique(array) {
-    var a = array.concat();
-    for(var i=0; i<a.length; ++i) {
-        for(var j=i+1; j<a.length; ++j) {
-            if(a[i] === a[j])
-                a.splice(j--, 1);
-        }
-    }
-    return a;
-};
-
 // Updates an existing shift in the DB.
 exports.update = function(req, res) {
  // console.log(req.body);
@@ -50,31 +39,20 @@ exports.update = function(req, res) {
   Shift.findById(req.params.id, function (err, shift) {
     if (err) { return handleError(res, err); }
     if(!shift) { return res.send(404); }
-    var oldCoursiers = shift.coursiers;
-    var newCoursiers = req.body.coursiers
-    var newOldCoursiers = oldCoursiers.concat(newCoursiers) 
-    console.log('-----newOldCoursiers before-------')
-   console.log(newOldCoursiers)
-    for( var i=0; i<newOldCoursiers.length-1; i++ ) {
-      if ( newOldCoursiers[i]._id == newOldCoursiers[i+1]._id ) {
-        delete newOldCoursiers[i];
-      }
-    }
+//     var oldCoursiers = shift.coursiers;
+//     var newCoursiers = req.body.coursiers
+//     console.log(oldCoursiers)
+//     var newOldCoursiers = oldCoursiers.concat(newCoursiers) 
 
-    console.log('-----old coursiers-------')
-   console.log(JSON.stringify(oldCoursiers))
-    console.log('-----additional coursiers-------')
-   console.log(JSON.stringify(newCoursiers))
-    console.log('-----newOldCoursiers after-------')
-   console.log(JSON.stringify(newOldCoursiers) )
-//console.log('-----shift-------')
-     shift.coursiers = newCoursiers;
+//     console.log(newOldCoursiers)
+// //console.log('-----shift-------')
+//      shift.coursiers = newOldCoursiers;
     //console.log(shift)
 
-    // updated.save(function (err) {
-    //   if (err) { return handleError(res, err); }
-    //   return res.json(200, shift);
-    // });
+    shift.save(function (err) {
+      if (err) { return handleError(res, err); }
+      return res.json(200, shift);
+    });
   });
 };
 

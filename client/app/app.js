@@ -9,7 +9,7 @@ angular.module('velociteScheduleApp', [
   'ui.calendar',
   'checklist-model',
   'angularMoment'
-])
+  ])
   .config(function ($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider) {
     $urlRouterProvider
     //if you are logged, redirect to planning

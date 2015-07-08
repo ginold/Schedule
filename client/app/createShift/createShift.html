@@ -42,7 +42,7 @@
        	<h3>Villes</h3>
        	<ul class="villesCheckbox">
         	<li ng-repeat="city in cities"> 
-        		<label class="checkboxText"><input name="villes" type="radio" value="{{city.nom}}" ng-model="shift.villes"> {{city.nom}}
+        		<label class="checkboxText"><input name="villes" type="radio" value="{{city}}" ng-model="shift.villes"> {{city}}
         		</label>
         	</li>
      	</ul>
@@ -73,10 +73,23 @@
 	</div> <!-- first column -->
 	
     <div class="col-md-6" >	
+
+       	<h3>Compétences nécessaires</h3>
+       	<ul class="villesCheckbox">
+        	<li ng-repeat="competence in competences"> 
+        		<label class="checkboxText"><input  type="checkbox" 
+        		checklist-value="competence" 
+        		checklist-model="shift.competences" 
+        		ng-click="sortByCompetences(shift.competences)"> {{competence}}
+        		</label>
+        	</li>
+     	</ul>
+
+
      	<h3>Liste des coursiers</h3>
 	    <ul id="listeCoursiersShift" class=" coursiersCheckbox">
-			<li ng-repeat="user in users"> 
-				<label class="checkboxText"><input type="checkbox" checklist-value="user._id" checklist-model="shift.coursiers">{{user.name}}</label>
+			<li ng-repeat="user in competentUsers"> 
+				<label class="checkboxText">{{user.name}}</label>
 			</li>
 		</ul>
 		<!-- Cocher/decocher tous les coursiers -->

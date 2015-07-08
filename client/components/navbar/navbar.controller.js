@@ -17,4 +17,21 @@ angular.module('velociteScheduleApp')
     $scope.isActive = function(route) {
       return route === $location.path();
     };
+
+    //toggle planning between all coursiers and monthly personnal view
+$scope.togglePlanning = function(planningAdmin){
+  if (planningAdmin) {
+     $scope.isAdmin = function(){
+      return false;
+     } 
+      $scope.toggleButtonText = "Tous les coursiers"
+      $scope.toggleHeaderText = "Mon planning"
+  }else{
+     $scope.isAdmin = function(){
+      return true;
+     }
+      $scope.toggleButtonText = "Mon planning"
+      $scope.toggleHeaderText = "Tous les coursiers"
+  }
+}
   });

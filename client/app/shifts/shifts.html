@@ -19,10 +19,10 @@
 				<a class="shiftName" ui-sref="shifts.details({shiftId:shift._id})" >{{shift.nom.length > 0 ? shift.nom : "Pas de nom"}}</a> 
 			</td>
 			<td>
-			 	 {{shift.debut}} 
+			 	 {{shift.debut | amDateFormat:'H:mm'}} 
 			</td>
 			<td>
-				 {{shift.fin}} 
+				 {{shift.fin | amDateFormat:'H:mm'}} 
 			</td>
 			<td>
 				<abbr ng-repeat="ville in shift.villes">{{ville}}</abbr>

@@ -1,6 +1,3 @@
-.thing-form {
-  margin: 20px 0;
-}
 
 #banner {
     border-bottom: none;
@@ -22,7 +19,66 @@
     background: #4393B9;
     margin-bottom: 10px;
 }
+.manquesCell{
+  height: 40px;
+ // overflow-y: scroll;
+}
+.cityManquesHeader th{
+  text-align: center;
+  cursor: pointer;
+  font-size: 0.9em;
+}
 
+///////=======================DISPOS=========================
+.dispoLevelCityLow{
+ background-color: #FFBC82 ;
+}
+.dispoLevelCityMedium{
+background-color: #85FFF7 ;
+}
+.dispoLevelCityHigh{
+background-color: #00FF4C ;
+}
+.busy{
+ color: black;
+ background-color: #E6E6E6;
+
+}
+.lowDispo{
+
+ background-color: #FFBC82;
+
+
+}
+.highDispo{
+  background-color: #00FF4C;
+
+}
+.mediumDispo{
+// border-style:solid; 
+  background-color: #85FFF7;
+}
+.absent{
+    background-color: #FF8C8C;
+    opacity: 0.9;
+}
+.noInfo{
+    background-color: #FFD58C;
+
+}
+.noInfo, .noInfoOff{
+  cursor: help;
+}
+.absent:hover{
+    cursor: not-allowed;
+}
+.present{
+    background-color: #6ED7FF;
+    color: white;
+    cursor: pointer;
+}
+
+////---------------==============================
 .footer {
     text-align: center;
     padding: 30px 0;
@@ -36,28 +92,44 @@
     margin-top: 1%;
 }
 
-
-.mainHeader{
-    
+//======================CALENDAR TABLE======================
+#calendar{
+  margin-top: 4%;
 }
-
 #planning {
   border-collapse: separate;
   border-spacing: 0;
   min-width: 350px;
   width: 100%;
-  margin-top: 1%;
+
 }
 td,th {
     text-align: center;
 }
+#planning thead, tbody{
+//  display: block;
+}
+.coursierDay{
+  // width: 100%;
 
+}
+
+#shiftsTable{
+
+  height: 300px;
+  overflow-y: auto;    
+   overflow-x: hidden;
+}
 #planning tr th,
 #planning tr td {
   border-right: 1px solid #bbb;
   border-bottom: 1px solid #bbb;
-  padding: 5px;
+  padding-top: 2px;
+  padding-bottom: 2px;
+  padding-left: 6px;
+  padding-right: 6px;
 }
+
 #planning tr th:first-child,
 #planning tr td:first-child {
   border-left: 1px solid #bbb;
@@ -66,6 +138,7 @@ table tr th {
   background: #eee;
   border-top: 1px solid #bbb;
   text-align: left;
+  
 }
 
 /* top-left border-radius */
@@ -73,6 +146,7 @@ table tr th {
   border-top-left-radius: 10px;
   border-left: 10px;
 }
+
 
 /* top-right border-radius */
 #planning tr:first-child th:last-child {
@@ -90,32 +164,34 @@ table tr th {
   border-bottom-right-radius: 10px;
 }
 
+//======================================
 #prevMonth{
     margin-right: 4%;
 }
 #nextMonth{
     margin-left: 4%;
 }
-.head{
-    text-align:center;
-    padding-left:20px;
-    margin-top: 20px;
+#monthYearSelect{
+  margin-top: 2%;
+}
+#headButtons{
+  display: flex;
+  margin-top: 2%;
 }
 .monthDay  {
     width:50px;
     text-align: center;
     font-weight: normal;
+    font-size: 0.9em;
+    line-height: 110%;
 }
-.MonthYearSelect{
-    position: relative;
-   
-}
+
 .rowDaySelected{
-  background-color: #ECF0C5;
+  background-color: #ECF0C5 !important;
 
 }
-  .colDaySelected{
-    background-color: #86ED80
+.colDaySelected{
+    background-color: #86ED80 !important;
 }
 .myRow{
     background-color: rgba(123, 200, 224, 0.2) ;  
@@ -123,37 +199,69 @@ table tr th {
 .coursierDay:hover{
     background-color: rgba(123, 100, 224, 0.2) ; 
 }
+.shiftManqueDaySelected{
+   border: solid;
+  border-width: 2px;
+  border-color: blue;
+}
+.noBg{
+  background-color: "";
+}
 .coursierDay{
     font-size: 0.8em;
 }
-.absent{
-    background-color: #FF7575;
-    opacity: 0.8;
+.wantedShifts li{
+  text-align: center;
 }
-.noInfo{
-    background-color: #FFD58C;
-}
-.absent:hover{
-    cursor: not-allowed;
-}
-.present{
-    background-color: #6ED7FF;
-    color: white;
-      cursor: pointer;
-}
-.shiftParJour{
-    display: block;
-    font-size: 0.9em;
+.shiftsByCity{
+  cursor: pointer;
+    margin: 0 0 0 0;
+    padding: 0 0 0 0;
+    font-size: 0.8em;
+    line-height: 110%;
+     
 
+}
+.shiftsByCity:hover{
+      border: solid;
+      border-width: 1px;
+      border-color: black;
+     }
+
+.shiftsDoubles{
+    margin: 0 0 0 0;
+    padding: 0 0 0 0;
+    font-size: 0.8em;
+    display: block;
 }
 .column[data-dayNameCol='di'], .column[data-dayNameCol='sa']{
     background-color: #fcf8e3;
 }
-
-.today{
-    background-color: rgba(60, 255, 0, 0.2) ; 
+.attributedShift{
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-size: 0.9em;
+  cursor: help;
 }
-
+.today{
+    background-color: rgba(60, 255, 0, 0.2) !important; 
+    z-index: 20;
+}
+span[popover="*'Lausanne'"]{
+  color:red;
+}
+.dropdown{
+  margin-right: 2%;
+  padding-left: 3%;
+}
+.theContainer{
+  width: 70%;
+  margin-left: 12%;
+  margin-top:  -3%;
+}
+#fullCal{
+  width: 75%;
+  margin-left: 12.5%;
+}
 
 .modal.fade {
   opacity: 1;
@@ -166,4 +274,19 @@ table tr th {
 }
 .popover{
     color: black;
+    width: 10%;
 }
+.popover-inner{
+  width: 85%;
+}
+
+.line-separator{
+
+height:1px;
+
+background:#717171;
+
+border-bottom:1px solid #313030;
+
+}
+

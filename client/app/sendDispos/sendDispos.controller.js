@@ -30,7 +30,7 @@ angular.module('velociteScheduleApp')
   /* config calendar */
   $scope.calendarConfig = {    
     calendarDispos:{
-      height: 600,
+      height: 660,
       firstDay: 1, //monday
       lang : 'fr',
       selectHelper: true,
@@ -109,9 +109,8 @@ angular.module('velociteScheduleApp')
             if (typeof $scope.dispos[$scope.monthYear][$scope.week] !="undefined") {
               //everything is already init, so we can push    
                 $scope.forgotCity = false;
-                $scope.forgotShiftsWeek = false;
-                dispo.villes = angular.copy($scope.villes)
                 //push to calendar for all dispos
+                dispo.villes = angular.copy($scope.villes)
                 $scope.weekDispos.push(dispo); 
                 $scope.dispos[$scope.monthYear][$scope.week].dispos.push(dispo)
                 $scope.dispos[$scope.monthYear][$scope.week].shiftsWeek = $scope.shiftsWeek;

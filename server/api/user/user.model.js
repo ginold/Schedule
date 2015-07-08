@@ -7,7 +7,7 @@ var crypto = require('crypto');
 var UserSchema = new Schema({
   name: String,
   email: { type: String, lowercase: true },
- 
+  index: Number,
   ag: Boolean,
   mobility: Boolean,
   permis: Boolean,
@@ -17,6 +17,7 @@ var UserSchema = new Schema({
   login : String,
   prenom: String,
   compteBanc :String,
+  competences : [],
   adresse: {
     npa: {type: Number},
     ville : { type: String},

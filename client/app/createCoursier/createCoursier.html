@@ -78,18 +78,21 @@
 </form>
 
 <form class="form-horizontal col-md-6" >
+  <h4>Compétences</h4>
+    <ul class="coursierOthersCheckbox">
+        <li ng-repeat="competence in competences">
+          <label class="checkboxText" > <input type="checkbox" checklist-value="competence" checklist-model="user.competences">{{competence}}</label>
+        </li> 
+    </ul>
+       
+
 	<h4>Autres</h4>
 	       	<ul class="coursierOthersCheckbox">
 	        	<li> <label class="checkboxText"><input type="checkbox" ng-model="user.mobility"> Mobility</label></li>
 	        	<li> <label class="checkboxText"><input type="checkbox" ng-model="user.ag"> Abonnement Général</label>	</li>
 	        	<li> <label class="checkboxText"><input type="checkbox"  ng-model="user.permis"> Permis de conduire</label></li>
 	        </ul>
-	      <div class="form-group">
-		    <label class="col-sm-3 control-label">Login</label>
-		    <div class="col-sm-9">
-		      <input type="text" ng-model="user.login" class="form-control" >
-		    </div>
-		  </div>
+
 		     <div class="form-group">
 		    <label class="col-sm-3 control-label">Mot de passe</label>
 		    <div class="col-sm-9">

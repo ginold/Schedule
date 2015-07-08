@@ -1,0 +1,361 @@
+0 info it worked if it ends with ok
+1 verbose cli [ 'C:\\Program Files\\nodejs\\\\node.exe',
+1 verbose cli   'C:\\Program Files\\nodejs\\node_modules\\npm\\bin\\npm-cli.js',
+1 verbose cli   'i',
+1 verbose cli   'mongoose-auto-increment' ]
+2 info using npm@2.5.1
+3 info using node@v0.12.0
+4 verbose node symlink C:\Program Files\nodejs\\node.exe
+5 warn package.json karma-coffee-preprocessor@0.2.1 No README data
+6 warn package.json passport-local@0.1.6 No README data
+7 warn package.json karma-phantomjs-launcher@0.1.4 No README data
+8 silly cache add args [ 'mongoose-auto-increment', null ]
+9 verbose cache add spec mongoose-auto-increment
+10 silly cache add parsed spec { raw: 'mongoose-auto-increment',
+10 silly cache add   scope: null,
+10 silly cache add   name: 'mongoose-auto-increment',
+10 silly cache add   rawSpec: '',
+10 silly cache add   spec: '*',
+10 silly cache add   type: 'range' }
+11 verbose addNamed mongoose-auto-increment@*
+12 silly addNamed semver.valid null
+13 silly addNamed semver.validRange *
+14 silly addNameRange { name: 'mongoose-auto-increment', range: '*', hasData: false }
+15 silly mapToRegistry name mongoose-auto-increment
+16 silly mapToRegistry using default registry
+17 silly mapToRegistry registry https://registry.npmjs.org/
+18 silly mapToRegistry uri https://registry.npmjs.org/mongoose-auto-increment
+19 verbose addNameRange registry:https://registry.npmjs.org/mongoose-auto-increment not in flight; fetching
+20 verbose request uri https://registry.npmjs.org/mongoose-auto-increment
+21 verbose request no auth needed
+22 info attempt registry request try #1 at 6:23:06 PM
+23 verbose request id 8f5cea0fadeb76b8
+24 http request GET https://registry.npmjs.org/mongoose-auto-increment
+25 http 200 https://registry.npmjs.org/mongoose-auto-increment
+26 silly get cb [ 200,
+26 silly get   { server: 'CouchDB/1.5.0 (Erlang OTP/R16B03)',
+26 silly get     etag: '"C3D62WGBPCYH3841X6ZEU5OVT"',
+26 silly get     'content-type': 'application/json',
+26 silly get     'cache-control': 'max-age=60',
+26 silly get     'content-length': '54516',
+26 silly get     'accept-ranges': 'bytes',
+26 silly get     date: 'Fri, 03 Jul 2015 16:23:04 GMT',
+26 silly get     via: '1.1 varnish',
+26 silly get     age: '0',
+26 silly get     connection: 'keep-alive',
+26 silly get     'x-served-by': 'cache-fra1231-FRA',
+26 silly get     'x-cache': 'HIT',
+26 silly get     'x-cache-hits': '1',
+26 silly get     'x-timer': 'S1435940584.202727,VS0,VE99',
+26 silly get     vary: 'Accept' } ]
+27 verbose get saving mongoose-auto-increment to C:\Users\_ginold_\AppData\Roaming\npm-cache\registry.npmjs.org\mongoose-auto-increment\.cache.json
+28 silly addNameRange number 2 { name: 'mongoose-auto-increment', range: '*', hasData: true }
+29 silly addNameRange versions [ 'mongoose-auto-increment',
+29 silly addNameRange   [ '1.0.0',
+29 silly addNameRange     '1.0.1',
+29 silly addNameRange     '1.1.0',
+29 silly addNameRange     '1.2.0',
+29 silly addNameRange     '1.1.1',
+29 silly addNameRange     '1.2.1',
+29 silly addNameRange     '1.2.2',
+29 silly addNameRange     '1.2.3',
+29 silly addNameRange     '1.3.0',
+29 silly addNameRange     '1.3.1',
+29 silly addNameRange     '2.0.0',
+29 silly addNameRange     '2.0.1',
+29 silly addNameRange     '2.0.2',
+29 silly addNameRange     '2.0.3',
+29 silly addNameRange     '2.0.4',
+29 silly addNameRange     '2.1.0',
+29 silly addNameRange     '2.1.1',
+29 silly addNameRange     '2.1.2',
+29 silly addNameRange     '2.1.3',
+29 silly addNameRange     '2.1.4',
+29 silly addNameRange     '3.0.0',
+29 silly addNameRange     '3.0.1',
+29 silly addNameRange     '3.0.2',
+29 silly addNameRange     '3.0.3',
+29 silly addNameRange     '3.0.4',
+29 silly addNameRange     '3.0.5',
+29 silly addNameRange     '3.0.6',
+29 silly addNameRange     '3.0.7',
+29 silly addNameRange     '3.0.8',
+29 silly addNameRange     '3.1.0',
+29 silly addNameRange     '3.2.0',
+29 silly addNameRange     '3.2.2',
+29 silly addNameRange     '3.2.3',
+29 silly addNameRange     '4.0.0',
+29 silly addNameRange     '3.2.4' ] ]
+30 verbose addNamed mongoose-auto-increment@4.0.0
+31 silly addNamed semver.valid 4.0.0
+32 silly addNamed semver.validRange 4.0.0
+33 silly mapToRegistry name mongoose-auto-increment
+34 silly mapToRegistry using default registry
+35 silly mapToRegistry registry https://registry.npmjs.org/
+36 silly mapToRegistry uri https://registry.npmjs.org/mongoose-auto-increment
+37 verbose addRemoteTarball https://registry.npmjs.org/mongoose-auto-increment/-/mongoose-auto-increment-4.0.0.tgz not in flight; adding
+38 verbose addRemoteTarball [ 'https://registry.npmjs.org/mongoose-auto-increment/-/mongoose-auto-increment-4.0.0.tgz',
+38 verbose addRemoteTarball   '86531b5b07a434fa88ba0c04694c214230b435cc' ]
+39 info retry fetch attempt 1 at 6:23:06 PM
+40 info attempt registry request try #1 at 6:23:06 PM
+41 http fetch GET https://registry.npmjs.org/mongoose-auto-increment/-/mongoose-auto-increment-4.0.0.tgz
+42 http fetch 200 https://registry.npmjs.org/mongoose-auto-increment/-/mongoose-auto-increment-4.0.0.tgz
+43 silly fetchAndShaCheck shasum 86531b5b07a434fa88ba0c04694c214230b435cc
+44 verbose addTmpTarball C:\Users\_ginold_\AppData\Local\Temp\npm-98724-830cff33\registry.npmjs.org\mongoose-auto-increment\-\mongoose-auto-increment-4.0.0.tgz not in flight; adding
+45 verbose addTmpTarball already have metadata; skipping unpack for mongoose-auto-increment@4.0.0
+46 silly cache afterAdd mongoose-auto-increment@4.0.0
+47 verbose afterAdd C:\Users\_ginold_\AppData\Roaming\npm-cache\mongoose-auto-increment\4.0.0\package\package.json not in flight; writing
+48 verbose afterAdd C:\Users\_ginold_\AppData\Roaming\npm-cache\mongoose-auto-increment\4.0.0\package\package.json written
+49 silly install resolved [ { name: 'mongoose-auto-increment',
+49 silly install resolved     version: '4.0.0',
+49 silly install resolved     description: 'This plugin allows you to auto-increment any field on any mongoose schema that you wish.',
+49 silly install resolved     repository:
+49 silly install resolved      { type: 'git',
+49 silly install resolved        url: 'git://github.com/codetunnel/mongoose-auto-increment.git' },
+49 silly install resolved     dependencies: { extend: '^2.0.0' },
+49 silly install resolved     peerDependencies: { mongoose: '~4.0.0' },
+49 silly install resolved     devDependencies: { async: '*', chai: '*', mocha: '*', mongoose: '~4.0.0' },
+49 silly install resolved     keywords:
+49 silly install resolved      [ 'mongoose',
+49 silly install resolved        'plugin',
+49 silly install resolved        'auto-increment',
+49 silly install resolved        'auto',
+49 silly install resolved        'increment',
+49 silly install resolved        'automatic',
+49 silly install resolved        'autoincrement',
+49 silly install resolved        'auto_increment',
+49 silly install resolved        'autoinc',
+49 silly install resolved        'auto-inc',
+49 silly install resolved        'auto_inc',
+49 silly install resolved        'pureautoinc',
+49 silly install resolved        'mongoose-pureautoinc' ],
+49 silly install resolved     author:
+49 silly install resolved      { name: 'Alex Ford',
+49 silly install resolved        email: 'alex.ford@codetunnel.com',
+49 silly install resolved        url: 'Chevex' },
+49 silly install resolved     contributors: [ [Object], [Object], [Object], [Object] ],
+49 silly install resolved     scripts: { test: 'node_modules/mocha/bin/mocha' },
+49 silly install resolved     bugs: { url: 'https://github.com/codetunnel/mongoose-auto-increment/issues' },
+49 silly install resolved     gitHead: '7b36fc6ef64eee3ac85bd086b208eaaf986d99f5',
+49 silly install resolved     homepage: 'https://github.com/codetunnel/mongoose-auto-increment',
+49 silly install resolved     _id: 'mongoose-auto-increment@4.0.0',
+49 silly install resolved     _shasum: '86531b5b07a434fa88ba0c04694c214230b435cc',
+49 silly install resolved     _from: 'mongoose-auto-increment@*',
+49 silly install resolved     _npmVersion: '2.6.1',
+49 silly install resolved     _nodeVersion: '0.12.0',
+49 silly install resolved     _npmUser: { name: 'chevex', email: 'alex.ford@codetunnel.com' },
+49 silly install resolved     maintainers: [ [Object] ],
+49 silly install resolved     dist:
+49 silly install resolved      { shasum: '86531b5b07a434fa88ba0c04694c214230b435cc',
+49 silly install resolved        tarball: 'http://registry.npmjs.org/mongoose-auto-increment/-/mongoose-auto-increment-4.0.0.tgz' },
+49 silly install resolved     directories: {},
+49 silly install resolved     _resolved: 'https://registry.npmjs.org/mongoose-auto-increment/-/mongoose-auto-increment-4.0.0.tgz' } ]
+50 info install mongoose-auto-increment@4.0.0 into D:\HEIG\VelociteSchedule
+51 info installOne mongoose-auto-increment@4.0.0
+52 verbose installOne of mongoose-auto-increment to D:\HEIG\VelociteSchedule not in flight; installing
+53 verbose lock using C:\Users\_ginold_\AppData\Roaming\npm-cache\_locks\mongoose-auto-increment-f472709af653b793.lock for D:\HEIG\VelociteSchedule\node_modules\mongoose-auto-increment
+54 silly install write writing mongoose-auto-increment 4.0.0 to D:\HEIG\VelociteSchedule\node_modules\mongoose-auto-increment
+55 silly cache addNamed cb mongoose-auto-increment@4.0.0
+56 verbose unbuild node_modules\mongoose-auto-increment
+57 verbose gentlyRm vacuuming D:\HEIG\VelociteSchedule\node_modules\mongoose-auto-increment
+58 verbose tar unpack C:\Users\_ginold_\AppData\Roaming\npm-cache\mongoose-auto-increment\4.0.0\package.tgz
+59 verbose tar unpacking to D:\HEIG\VelociteSchedule\node_modules\mongoose-auto-increment
+60 verbose gentlyRm vacuuming D:\HEIG\VelociteSchedule\node_modules\mongoose-auto-increment
+61 silly gunzTarPerm modes [ '777', '666' ]
+62 silly gunzTarPerm extractEntry package.json
+63 silly gunzTarPerm modified mode [ 'package.json', 420, 438 ]
+64 silly gunzTarPerm extractEntry .npmignore
+65 silly gunzTarPerm modified mode [ '.npmignore', 420, 438 ]
+66 silly gunzTarPerm extractEntry README.md
+67 silly gunzTarPerm modified mode [ 'README.md', 420, 438 ]
+68 silly gunzTarPerm extractEntry LICENSE
+69 silly gunzTarPerm modified mode [ 'LICENSE', 420, 438 ]
+70 silly gunzTarPerm extractEntry index.js
+71 silly gunzTarPerm modified mode [ 'index.js', 420, 438 ]
+72 silly gunzTarPerm extractEntry .travis.yml
+73 silly gunzTarPerm modified mode [ '.travis.yml', 420, 438 ]
+74 silly gunzTarPerm extractEntry CONTRIBUTING.md
+75 silly gunzTarPerm modified mode [ 'CONTRIBUTING.md', 420, 438 ]
+76 silly gunzTarPerm extractEntry test/test.js
+77 silly gunzTarPerm modified mode [ 'test/test.js', 420, 438 ]
+78 silly gunzTarPerm extractEntry test/mocha.opts
+79 silly gunzTarPerm modified mode [ 'test/mocha.opts', 420, 438 ]
+80 info preinstall mongoose-auto-increment@4.0.0
+81 silly prepareForInstallMany adding extend@^2.0.0 from mongoose-auto-increment dependencies
+82 silly prepareForInstallMany adding mongoose@~4.0.0 from mongoose-auto-increment peerDependencies
+83 silly cache add args [ 'extend@^2.0.0', null ]
+84 verbose cache add spec extend@^2.0.0
+85 silly cache add parsed spec { raw: 'extend@^2.0.0',
+85 silly cache add   scope: null,
+85 silly cache add   name: 'extend',
+85 silly cache add   rawSpec: '^2.0.0',
+85 silly cache add   spec: '>=2.0.0 <3.0.0',
+85 silly cache add   type: 'range' }
+86 verbose addNamed extend@>=2.0.0 <3.0.0
+87 silly addNamed semver.valid null
+88 silly addNamed semver.validRange >=2.0.0 <3.0.0
+89 silly addNameRange { name: 'extend', range: '>=2.0.0 <3.0.0', hasData: false }
+90 silly mapToRegistry name extend
+91 silly mapToRegistry using default registry
+92 silly mapToRegistry registry https://registry.npmjs.org/
+93 silly mapToRegistry uri https://registry.npmjs.org/extend
+94 verbose addNameRange registry:https://registry.npmjs.org/extend not in flight; fetching
+95 verbose request uri https://registry.npmjs.org/extend
+96 verbose request no auth needed
+97 info attempt registry request try #1 at 6:23:07 PM
+98 verbose etag "AUJ8EPSVZ8Q28XHX3G29VNFAN"
+99 http request GET https://registry.npmjs.org/extend
+100 http 200 https://registry.npmjs.org/extend
+101 silly get cb [ 200,
+101 silly get   { server: 'CouchDB/1.5.0 (Erlang OTP/R16B03)',
+101 silly get     etag: '"310A8OIEXH6LGP9SIN0ZFAHY4"',
+101 silly get     'content-type': 'application/json',
+101 silly get     'cache-control': 'max-age=60',
+101 silly get     'content-length': '13978',
+101 silly get     'accept-ranges': 'bytes',
+101 silly get     date: 'Fri, 03 Jul 2015 16:23:04 GMT',
+101 silly get     via: '1.1 varnish',
+101 silly get     age: '8',
+101 silly get     connection: 'keep-alive',
+101 silly get     'x-served-by': 'cache-fra1244-FRA',
+101 silly get     'x-cache': 'HIT',
+101 silly get     'x-cache-hits': '1',
+101 silly get     'x-timer': 'S1435940584.646857,VS0,VE0',
+101 silly get     vary: 'Accept' } ]
+102 verbose get saving extend to C:\Users\_ginold_\AppData\Roaming\npm-cache\registry.npmjs.org\extend\.cache.json
+103 silly addNameRange number 2 { name: 'extend', range: '>=2.0.0 <3.0.0', hasData: true }
+104 silly addNameRange versions [ 'extend',
+104 silly addNameRange   [ '1.0.0',
+104 silly addNameRange     '1.1.0',
+104 silly addNameRange     '1.1.1',
+104 silly addNameRange     '1.1.3',
+104 silly addNameRange     '1.2.0',
+104 silly addNameRange     '1.2.1',
+104 silly addNameRange     '1.3.0',
+104 silly addNameRange     '2.0.0',
+104 silly addNameRange     '2.0.1',
+104 silly addNameRange     '3.0.0' ] ]
+105 verbose addNamed extend@2.0.1
+106 silly addNamed semver.valid 2.0.1
+107 silly addNamed semver.validRange 2.0.1
+108 silly cache afterAdd extend@2.0.1
+109 verbose afterAdd C:\Users\_ginold_\AppData\Roaming\npm-cache\extend\2.0.1\package\package.json not in flight; writing
+110 verbose afterAdd C:\Users\_ginold_\AppData\Roaming\npm-cache\extend\2.0.1\package\package.json written
+111 silly install resolved [ { name: 'extend',
+111 silly install resolved     author:
+111 silly install resolved      { name: 'Stefan Thomas',
+111 silly install resolved        email: 'justmoon@members.fsf.org',
+111 silly install resolved        url: 'http://www.justmoon.net' },
+111 silly install resolved     version: '2.0.1',
+111 silly install resolved     description: 'Port of jQuery.extend for node.js and the browser',
+111 silly install resolved     main: 'index',
+111 silly install resolved     scripts:
+111 silly install resolved      { test: 'npm run lint && node test/index.js && npm run coverage-quiet',
+111 silly install resolved        coverage: 'covert test/index.js',
+111 silly install resolved        'coverage-quiet': 'covert test/index.js --quiet',
+111 silly install resolved        lint: 'jscs *.js */*.js' },
+111 silly install resolved     contributors: [ [Object] ],
+111 silly install resolved     keywords: [ 'extend', 'clone', 'merge' ],
+111 silly install resolved     repository:
+111 silly install resolved      { type: 'git',
+111 silly install resolved        url: 'git+https://github.com/justmoon/node-extend.git' },
+111 silly install resolved     dependencies: {},
+111 silly install resolved     devDependencies: { tape: '^4.0.0', covert: '^1.0.1', jscs: '^1.11.3' },
+111 silly install resolved     license: 'MIT',
+111 silly install resolved     gitHead: 'ce3790222d3d2051f728f74be9565f155ed599c3',
+111 silly install resolved     bugs: { url: 'https://github.com/justmoon/node-extend/issues' },
+111 silly install resolved     homepage: 'https://github.com/justmoon/node-extend#readme',
+111 silly install resolved     _id: 'extend@2.0.1',
+111 silly install resolved     _shasum: '1ee8010689e7395ff9448241c98652bc759a8260',
+111 silly install resolved     _from: 'extend@>=2.0.0 <3.0.0',
+111 silly install resolved     _npmVersion: '2.8.3',
+111 silly install resolved     _nodeVersion: '1.8.1',
+111 silly install resolved     _npmUser: { name: 'ljharb', email: 'ljharb@gmail.com' },
+111 silly install resolved     dist:
+111 silly install resolved      { shasum: '1ee8010689e7395ff9448241c98652bc759a8260',
+111 silly install resolved        tarball: 'http://registry.npmjs.org/extend/-/extend-2.0.1.tgz' },
+111 silly install resolved     maintainers: [ [Object], [Object] ],
+111 silly install resolved     directories: {},
+111 silly install resolved     _resolved: 'https://registry.npmjs.org/extend/-/extend-2.0.1.tgz',
+111 silly install resolved     readme: 'ERROR: No README data found!' } ]
+112 info install extend@2.0.1 into D:\HEIG\VelociteSchedule\node_modules\mongoose-auto-increment
+113 info installOne extend@2.0.1
+114 verbose installOne of extend to D:\HEIG\VelociteSchedule\node_modules\mongoose-auto-increment not in flight; installing
+115 verbose lock using C:\Users\_ginold_\AppData\Roaming\npm-cache\_locks\extend-10ea72ffd6ba8c99.lock for D:\HEIG\VelociteSchedule\node_modules\mongoose-auto-increment\node_modules\extend
+116 silly install write writing extend 2.0.1 to D:\HEIG\VelociteSchedule\node_modules\mongoose-auto-increment\node_modules\extend
+117 silly cache addNamed cb extend@2.0.1
+118 verbose unbuild node_modules\mongoose-auto-increment\node_modules\extend
+119 verbose gentlyRm vacuuming D:\HEIG\VelociteSchedule\node_modules\mongoose-auto-increment\node_modules\extend
+120 verbose tar unpack C:\Users\_ginold_\AppData\Roaming\npm-cache\extend\2.0.1\package.tgz
+121 verbose tar unpacking to D:\HEIG\VelociteSchedule\node_modules\mongoose-auto-increment\node_modules\extend
+122 verbose gentlyRm vacuuming D:\HEIG\VelociteSchedule\node_modules\mongoose-auto-increment\node_modules\extend
+123 silly gunzTarPerm modes [ '777', '666' ]
+124 silly gunzTarPerm extractEntry package.json
+125 silly gunzTarPerm modified mode [ 'package.json', 420, 438 ]
+126 silly gunzTarPerm extractEntry .npmignore
+127 silly gunzTarPerm modified mode [ '.npmignore', 420, 438 ]
+128 silly gunzTarPerm extractEntry README.md
+129 silly gunzTarPerm modified mode [ 'README.md', 420, 438 ]
+130 silly gunzTarPerm extractEntry LICENSE
+131 silly gunzTarPerm modified mode [ 'LICENSE', 420, 438 ]
+132 silly gunzTarPerm extractEntry index.js
+133 silly gunzTarPerm modified mode [ 'index.js', 420, 438 ]
+134 silly gunzTarPerm extractEntry .jscs.json
+135 silly gunzTarPerm modified mode [ '.jscs.json', 420, 438 ]
+136 silly gunzTarPerm extractEntry component.json
+137 silly gunzTarPerm modified mode [ 'component.json', 420, 438 ]
+138 silly gunzTarPerm extractEntry .travis.yml
+139 silly gunzTarPerm modified mode [ '.travis.yml', 420, 438 ]
+140 silly gunzTarPerm extractEntry CHANGELOG.md
+141 silly gunzTarPerm modified mode [ 'CHANGELOG.md', 420, 438 ]
+142 info preinstall extend@2.0.1
+143 silly install resolved []
+144 verbose about to build D:\HEIG\VelociteSchedule\node_modules\mongoose-auto-increment\node_modules\extend
+145 info build D:\HEIG\VelociteSchedule\node_modules\mongoose-auto-increment\node_modules\extend
+146 verbose linkStuff [ false,
+146 verbose linkStuff   false,
+146 verbose linkStuff   false,
+146 verbose linkStuff   'D:\\HEIG\\VelociteSchedule\\node_modules\\mongoose-auto-increment\\node_modules' ]
+147 info linkStuff extend@2.0.1
+148 verbose linkBins extend@2.0.1
+149 verbose linkMans extend@2.0.1
+150 verbose rebuildBundles extend@2.0.1
+151 info install extend@2.0.1
+152 info postinstall extend@2.0.1
+153 verbose unlock done using C:\Users\_ginold_\AppData\Roaming\npm-cache\_locks\extend-10ea72ffd6ba8c99.lock for D:\HEIG\VelociteSchedule\node_modules\mongoose-auto-increment\node_modules\extend
+154 verbose about to build D:\HEIG\VelociteSchedule\node_modules\mongoose-auto-increment
+155 info build D:\HEIG\VelociteSchedule\node_modules\mongoose-auto-increment
+156 verbose linkStuff [ false,
+156 verbose linkStuff   false,
+156 verbose linkStuff   false,
+156 verbose linkStuff   'D:\\HEIG\\VelociteSchedule\\node_modules' ]
+157 info linkStuff mongoose-auto-increment@4.0.0
+158 verbose linkBins mongoose-auto-increment@4.0.0
+159 verbose linkMans mongoose-auto-increment@4.0.0
+160 verbose rebuildBundles mongoose-auto-increment@4.0.0
+161 verbose rebuildBundles [ 'extend' ]
+162 info install mongoose-auto-increment@4.0.0
+163 info postinstall mongoose-auto-increment@4.0.0
+164 verbose already installed skipping mongoose@~4.0.0 D:\HEIG\VelociteSchedule
+165 silly install resolved []
+166 verbose unlock done using C:\Users\_ginold_\AppData\Roaming\npm-cache\_locks\mongoose-auto-increment-f472709af653b793.lock for D:\HEIG\VelociteSchedule\node_modules\mongoose-auto-increment
+167 verbose stack Error: The package mongoose does not satisfy its siblings' peerDependencies requirements!
+167 verbose stack     at C:\Program Files\nodejs\node_modules\npm\lib\install.js:103:32
+167 verbose stack     at C:\Program Files\nodejs\node_modules\npm\lib\install.js:225:5
+167 verbose stack     at C:\Program Files\nodejs\node_modules\npm\node_modules\read-installed\read-installed.js:138:5
+167 verbose stack     at C:\Program Files\nodejs\node_modules\npm\node_modules\read-installed\read-installed.js:251:14
+167 verbose stack     at cb (C:\Program Files\nodejs\node_modules\npm\node_modules\slide\lib\async-map.js:47:24)
+167 verbose stack     at C:\Program Files\nodejs\node_modules\npm\node_modules\read-installed\read-installed.js:251:14
+167 verbose stack     at cb (C:\Program Files\nodejs\node_modules\npm\node_modules\slide\lib\async-map.js:47:24)
+167 verbose stack     at C:\Program Files\nodejs\node_modules\npm\node_modules\read-installed\read-installed.js:251:14
+167 verbose stack     at cb (C:\Program Files\nodejs\node_modules\npm\node_modules\slide\lib\async-map.js:47:24)
+167 verbose stack     at C:\Program Files\nodejs\node_modules\npm\node_modules\read-installed\read-installed.js:251:14
+168 verbose cwd D:\HEIG\VelociteSchedule
+169 error Windows_NT 6.3.9600
+170 error argv "C:\\Program Files\\nodejs\\\\node.exe" "C:\\Program Files\\nodejs\\node_modules\\npm\\bin\\npm-cli.js" "i" "mongoose-auto-increment"
+171 error node v0.12.0
+172 error npm  v2.5.1
+173 error code EPEERINVALID
+174 error peerinvalid The package mongoose does not satisfy its siblings' peerDependencies requirements!
+174 error peerinvalid Peer mongoose-auto-increment@4.0.0 wants mongoose@~4.0.0
+175 verbose exit [ 1, true ]
