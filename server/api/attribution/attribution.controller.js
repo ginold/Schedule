@@ -2,7 +2,6 @@
 
 var _ = require('lodash');
 var mongoose = require('mongoose')
-var objectMerge = require('object-merge');
 var Attribution = require('./attribution.model');
 
 // Get list of attributions
