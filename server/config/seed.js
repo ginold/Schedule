@@ -30,17 +30,17 @@ Attribution.find({}).remove(function() {
     shifts : [],
     monthYear : {
       "07-2015": {
-        1 : {
-
+        1: {
+          shifts : []
         }
+
       },
       "08-2015":{
-        1 : {
-          
+        1: {
+          shifts : []
         }
       }
-    },
-  
+    }
   })
 });
 
