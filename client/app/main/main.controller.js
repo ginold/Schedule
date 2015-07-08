@@ -65,6 +65,9 @@ $(document).ready(function () {
             $scope.alreadySeen.push(monthYear)
                 $http.get('api/attributions').success(function(attributions){
                   $scope.attributions = attributions
+                   if ($scope.attributions.length == 0) {
+                   return;
+                 }
                  AttributionsService.getMyMonthlyShifts($scope.currentUser._id, monthYear, $scope.attributions, function (myShifts) {
                       AttributionsService.formatShiftsForCalendar(myShifts, function(formatedShifts){     
                       $('#fullCal').fullCalendar('addEventSource', formatedShifts); 
@@ -649,7 +652,9 @@ $scope.toggleCityDispos = function (city) {
     }
 }
 $scope.returnAttributions = function(monthYear){
-  return $scope.attributions[0].monthYear[monthYear]
+  if ($scope.attributions.length != 0) {
+      return $scope.attributions[0].monthYear[monthYear]
+    };
 }
 $scope.toggleBusy = function(){
 

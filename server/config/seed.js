@@ -1,12 +1,8 @@
-/**
- * Populate DB with sample data on server start
- * to disable, edit config/environment/index.js, and set `seedDB: false`
- */
-
 'use strict';
 
 
 var User = require('../api/user/user.model');
+var Attribution = require('../api/attribution/attribution.model');
 
 
 User.find({}).remove(function() {
@@ -14,15 +10,33 @@ User.find({}).remove(function() {
     provider: 'local',
     name: 'Test User',
     email: 'test@test.com',
-    password: 'test'
+    password: 'test',
+    competences : ["Back-office", "Spécial"]
   }, {
     provider: 'local',
     role: 'admin',
     name: 'Admin',
     email: 'admin@admin.com',
-    password: 'admin'
+    password: 'admin',
+    competences : ["Spécial"]
   }, function() {
       console.log('finished populating users');
     }
   );
 });
+Attribution.find({}).remove(function() {
+  Attribution.create({
+    coursier : {},
+    shifts : [],
+    monthYear : {
+      "07-2015": {
+        shifts : []
+      },
+      "08-2015":{
+        shifts : []
+      }
+    },
+    day : "1"
+  })
+});
+
