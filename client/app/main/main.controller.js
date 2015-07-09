@@ -1,6 +1,7 @@
 'use strict';
 
 angular.module('velociteScheduleApp')
+
   .controller('MainCtrl', function ($modal,$state, $scope, $http, User, calendarService, AttributionsService, shiftService, Auth) {
     
     var date = new Date();
@@ -24,9 +25,8 @@ angular.module('velociteScheduleApp')
     $scope.alreadySeen = [];
 
 $(document).ready(function () {
-
   $("body").on('click','.cityManquesHeader',function(){
-     $(this).next('tr').slideToggle('fast')
+     $(this).next('div').slideToggle('fast')
   });
 
   $(document).keyup(function(e) {
@@ -35,7 +35,7 @@ $(document).ready(function () {
         $(".colDaySelected").removeClass('colDaySelected')
     }
   });
-
+  //because angular-fullcalendar was so sloooooow....
   $('#fullCal').fullCalendar({
         height: 620,
         width:400,
@@ -85,13 +85,8 @@ $(document).ready(function () {
 //render calendar on month or year change
 $scope.renderCalendar = function(month, year){
 
-  //$("").removeClass("Lausanne Neuchâtel Yverdon colDaySelected rowDaySelected")
-  //$("").removeClass("absent present noInfoOff presentOff")
-  console.debug('render calendar')
   //if year == null, only month has changed -> load only dispos of this month
   if (year == null) {
-   // $(".attributedShift").addClass('toEmpty')
-  //  $(".Lausanne, .Neuchâtel, .Yverdon, colDaySelected, .rowDaySelected, .absent, .present, .noInfoOff, .presentOff").addClass('toRemove');
     $scope.monthYear = moment(1+"-"+(month+1)+"-"+$scope.year,"D-M-YYYY").format("MM-YYYY")
     year = $scope.year
     $scope.loadAbsencesAndDispos($scope.coursiers, month)
@@ -133,7 +128,8 @@ $scope.orderShiftsByDay = function(){
           var shift = {   shiftID : shifts[i]._id,
                           nom :shifts[i].nom, 
                           times: shifts[i].jours[j].times, 
-                          ville: shifts[i].villes[0], _id:shifts[i]._id,
+                          ville: shifts[i].villes[0], 
+                          _id: shifts[i]._id,
                           competences : shifts[i].competences,
                           debut : shifts[i].debut, 
                           fin: shifts[i].fin, 
@@ -168,8 +164,6 @@ $scope.orderShiftsByDay = function(){
   }
 }
 $scope.orderShiftsByDay();
-
-
 /*
   show, by day, who could possibly do the shift.
   Green -> is able, is present and nbshifts/week ok
@@ -182,6 +176,8 @@ $scope.showPotentialCoursiers = function(day,month,year, shift, event){
   $(".lowDispo, .mediumDispo, .highDispo, .busy, .shiftManqueDaySelected").removeClass("lowDispo mediumDispo highDispo busy shiftManqueDaySelected"). addClass('noBg')
   $(event.target).addClass('shiftManqueDaySelected')
   var date = moment(new Date(year, month, day)).format("D-M-YYYY");
+  $scope.preselectedShift = shift;
+  $scope.preselectedDate = date;
   var arePresentDispos = [];
  //get every one on dispo on that day
   for (var i =  $scope.presences.length - 1; i >= 0; i--) {
@@ -190,7 +186,7 @@ $scope.showPotentialCoursiers = function(day,month,year, shift, event){
           arePresentDispos.push($scope.presences[i])
       };
   };
-  $('td.presentOff').each( function(){
+  $('td').each( function(){
     var attributedShifts = $(this).attr('shiftsAttributed');
     var shiftsLeft = $(this).attr('shiftsLeft');
     var shiftsWanted = $(this).attr('shiftsWanted');
@@ -256,39 +252,21 @@ $scope.sortPotentialCoursiers = function(coursierId, shiftsLeft, shiftsWanted, a
     };
   }
 
-$scope.getAttributedShifts = function(day, month,year, userId){
-  if (typeof $scope.attributions[0] != 'undefined') {
-     var date = new Date(year, month, day+1)
-     var monthYear = moment(date).format("MM-YYYY")
-     var day = moment(date).format("D")
-     var attributions = $scope.attributions[0].monthYear
-     var attributedShifts = []
-     for(var month in attributions){
-      //if its the current month
-      if (month == monthYear) {
-        for(var dday in attributions[month]){
-         //if its the current day
-          if (dday == day) {
-            for (var i = 0; i < attributions[month][day].shifts.length; i++) {
-              if (typeof attributions[month][day].shifts[i].coursierAttributed != 'undefined') {
-                //if there is an id in the attributed shifts, its THAT GUY!!!
-                if(attributions[month][day].shifts[i].coursierAttributed._id == userId){
-                  attributedShifts.push(attributions[month][day].shifts[i])
-                }
-              };
-            };
-          };
-        }
-      };
-     }
-     if (attributedShifts.length == 0) {
-      return
-     }else{
-      return attributedShifts;
-     }
-  };
 
-}
+$scope.getAttributedShifts = function (attributions, day, coursierId){
+  day = moment(day,"D-M-YYYY").format("D")
+       if (attributions) {
+           if (attributions[day]) {           
+            var daShifts = []
+            $.each(attributions[day].shifts, function(i, shift){
+               if (shift.coursierAttributed._id  == coursierId) {
+                    daShifts.push(shift);  
+                }
+              })                     
+          };
+          return daShifts; 
+        };  
+  }
 /*
   Shows a list of sorted out shifts with corresponding
   hours, cities and capabilities of coursier.
@@ -297,9 +275,9 @@ $scope.setShift = function(day, month,year, user){
   var date = new Date(year, month, day)
   var day = moment(date).format("D-M-YYYY");
   var dayOfWeek = moment(date).day()
-  //SORT SHIFTs BY DAY OF WEEK clicked
   var day_shifts = $scope.dailyShifts[dayOfWeek-1]
-
+  var attributedShifts  = $scope.getAttributedShifts($scope.attributions[0].monthYear[$scope.monthYear], day, user._id)
+          
   //check if the day clicked is an dispo present day
   for (var i = 0; i < $scope.presences.length; i++) {
     var dispoDay = moment($scope.presences[i].start).format("D-M-YYYY")
@@ -309,33 +287,24 @@ $scope.setShift = function(day, month,year, user){
         if($scope.presences[i].coursierId == user._id){
           var dispo = $scope.presences[i];
           var dispoHours = $scope.getDispoHoursAndDay(dispo);
-          console.log("DISPO HOURS "+dispoHours.start, dispoHours.end)
- 
           var time_shifts = $scope.compareDiposHoursAndShift(dispoHours, day_shifts);
-          console.debug('time shifts');
-          console.debug(time_shifts);
-          // //then sort the shifts by the dispo's and shift's cities
           var time_city_shifts  = $scope.compareDispoCityAndShift(time_shifts,dispo);
-           console.debug('time city shifts');
-          console.debug(time_city_shifts);
           var time_city_able_shifts = $scope.compareUserAndShift(time_city_shifts, user._id, user.competences); 
-        
-          //TODOOOOOOOOOOOOOOO check if this shift hasnt been attributed yet
-          var time_city_able_notAttributed_shifts = $scope.checkAttributedShifts(time_city_able_shifts)
+          //Get attributed shifts for that coursier on that day
           //show the select screen, give it the date, found shifts and the complete user.
-          $scope.showPopover(time_city_able_shifts, user, date, day_shifts, $scope.shifts);  
+          $scope.showPopover(time_city_able_shifts, user, date, day_shifts, attributedShifts);  
+          return;
         }
+    // no dispo found
+    }else if (i == $scope.presences.length-1) {
+       $scope.showPopover(null, user, date, null, attributedShifts);  
+       return;
     };
+    
   };
 }
-/*
-  returns 
-*/
-$scope.checkAttributedShifts = function(shifts){
 
-}
-$scope.showPopover = function(shifts, coursier, date, dayShifts, allShifts){
-  console.debug(date);
+$scope.showPopover = function(shifts, coursier, date, dayShifts,attributedShifts){
   var dateCol = moment(date).subtract(1, 'months')
   var dateCol = moment(dateCol).format('D-M-YYYY')
   $("col[date="+dateCol+"]").addClass('colDaySelected');
@@ -361,7 +330,16 @@ $scope.showPopover = function(shifts, coursier, date, dayShifts, allShifts){
                return dayShifts
             },
             allShifts :function(){
-              return allShifts
+              return $scope.shifts
+            },
+            preselectedShift : function(){
+              return $scope.preselectedShift
+            },
+            preselectedDate : function(){
+              return $scope.preselectedDate
+            },
+            attributedShifts : function(){
+                return attributedShifts
             }
         },
         controller: 'AttribuerShiftCtrl'
@@ -372,7 +350,6 @@ $scope.showPopover = function(shifts, coursier, date, dayShifts, allShifts){
 */
 $scope.compareUserAndShift = function(shifts, userId, userCompetences){
   var capableShifts = [];
-
   for (var i = 0; i < shifts.length; i++) {
     //if user has all competences needed for this shift
       var ok = shiftService.containsAll(shifts[i].competences, userCompetences)
@@ -380,6 +357,7 @@ $scope.compareUserAndShift = function(shifts, userId, userCompetences){
           var shift = {
             nom : shifts[i].nom, 
             shiftID: shifts[i]._id,
+            _id: shifts[i]._id,
             ville : shifts[i].ville, 
             remarques : shifts[i].remarques,
             debut :shifts[i].debut,
@@ -388,7 +366,6 @@ $scope.compareUserAndShift = function(shifts, userId, userCompetences){
           capableShifts.push(shift)
       };
   };
-  console.log(capableShifts)
   return capableShifts;
 }
 /*
@@ -398,16 +375,12 @@ $scope.compareUserAndShift = function(shifts, userId, userCompetences){
 */
 $scope.compareDispoCityAndShift = function(shifts, dispo){
   var dispo_city_shifts = [];
-  console.debug(shifts);
   for (var i = 0; i < shifts.length; i++) {
     var shiftCity = shifts[i].ville;
       //get dispo cities
       for (var h = 0; h < dispo.villes.length; h++) {
-       // console.log('DISPO CITIES ' +dispo.villes[h])
         //compare them
         if( shiftCity.toLowerCase() == dispo.villes[h].toLowerCase() ){
-        //   console.debug("shift city "+ shiftCity+ " shift name "+shifts[i].nom);
-          // console.log("dispo city "+ dispo.villes[h]);
           dispo_city_shifts.push(shifts[i])
         }
       };
@@ -505,12 +478,8 @@ shiftService.getShifts(function(shifts){
   $scope.loadCoursiers();
 });
 
- //update view on attribution passed !!!!!!!!!!!!! -> in coursierDay directive
+ //update view on attribution passed !!!!! -> in coursierDay directive
 $scope.$on('attribution', function(event, args) {
-     console.debug(args);
-     console.debug($scope.attributions[0]);
-     console.debug($scope.attributions[0].monthYear);
-     console.debug($scope.attributions[0].monthYear[args.monthYear]);
      if (!$scope.attributions[0].monthYear[args.monthYear]) {
         $scope.attributions[0].monthYear[args.monthYear] = {}
      };
@@ -523,13 +492,25 @@ $scope.$on('attribution', function(event, args) {
      }
      $scope.$broadcast('attrPassed', {attributions: $scope.attributions[0].monthYear ,monthYear : args.monthYear})
      
-  });
+});
+
+$scope.$on("deletitionShift", function(event,args){
+  var shifts = $scope.attributions[0].monthYear[args.monthYear][args.day].shifts
+  for (var i = shifts.length - 1; i >= 0; i--) {
+     if (shifts[i].coursierAttributed._id  == args.coursier._id) {
+      if (shifts[i]._id == args.shift._id) {
+        shifts.splice(i,1)
+      };
+    }; 
+  };
+  $scope.attributions[0].monthYear[args.monthYear][args.day].shifts = shifts
+  $scope.$broadcast("delPassed", {day:args.day, monthYear: args.monthYear, shifts :$scope.attributions[0].monthYear[args.monthYear][args.day].shifts})
+})
 /*
   load absences and dispos of every coursier 
   into absences[] and presences[] 
 */
 $scope.loadAbsencesAndDispos = function(coursiers, date){
-  console.debug('load absences')
   //if date ==  only the month
   if (typeof date == 'string' || typeof date =="number") {
     var newDateString = 1+"-"+(parseInt(date)+1)+"-"+$scope.year;
@@ -569,7 +550,7 @@ $scope.loadAbsencesAndDispos = function(coursiers, date){
   $scope.presences = presences;
   $scope.dispos = dispos;
   //now we have all the dispos and absences - we can load the calendar
-  $scope.renderCalendar($scope.monthNum, $scope.year, presences, dispos)
+  $scope.renderCalendar($scope.monthNum, $scope.year)
 }
 
 /*
@@ -707,10 +688,8 @@ $scope.offClasses = function (){
 /* 
   checks if the date given has been 
   defined as dispo of the coursier (userId);
-  if it is, returns the dispo cities
-  //TODO -> INPUT REFRESH ON ATTR + DOUBLONS + MANQUES   
+  if it is, returns the dispo cities  
 */
-
 $scope.checkDispo = function(day, month,year, userId){
   if (typeof $scope.dispos != 'undefined') {
     var date = new Date(year, month, day)
@@ -724,7 +703,7 @@ $scope.checkDispo = function(day, month,year, userId){
             }else{
               var villes = [];
             }
-              var dispo = {type: dispos[i].title, villes: villes }
+              var dispo = {type: dispos[i].title, villes: villes, start : dispos[i].start, end: dispos[i].end}
         }
      };
      return dispo;
@@ -755,10 +734,9 @@ $scope.checkDispo = function(day, month,year, userId){
           Returns object with name and left attributions needed if not.
         */
         scope.isAttributedShift = function (shift, day, month, year, attributions) {
-          console.debug('is attr shift in manques city');
-          console.debug('attributions in the funciton->', attributions);
+          // console.debug('is attr shift in manques city');
+          // console.debug('attributions in the funciton->', attributions);
             var day = moment(new Date(parseInt(year), parseInt(month), parseInt(day+1) ) ).format("D");
-            console.debug('the day '+day);
                 //get the day
                 for(var daDay in attributions){
                   if (daDay == day) {
@@ -799,18 +777,22 @@ $scope.checkDispo = function(day, month,year, userId){
                $.each(scope.shifts, function(i, shift){
                 var shift = scope.isAttributedShift(shift, scope.day, month, year, attributions) 
                   scope.checkedShifts.push(shift)
-                })
-               console.debug('checked shifts for '+ moment(date).format('D-M-YYYY'));
-               console.debug(scope.checkedShifts);
+                });
           }; 
           
         }
         //update view on attribution passed !!!!!!!!!!!!!
          scope.$on("attrPassed", function(e, args){
-          console.debug('attr passed in manques!');
           var date = new Date(parseInt(scope.year), scope.monthNum, scope.day+1)
           var dayOfWeek = date.getDay();
           scope.attributions = args.attributions[args.monthYear]
+          scope.checkShifts(dayOfWeek, scope.day,  scope.monthNum, scope.year, scope.attributions)
+         })
+         //update on deletition
+          scope.$on("delPassed",function(e, args){
+          var date = new Date(parseInt(scope.year), scope.monthNum, scope.day+1)
+          var dayOfWeek = date.getDay();
+          scope.attributions[args.day].shifts = args.shifts
           scope.checkShifts(dayOfWeek, scope.day,  scope.monthNum, scope.year, scope.attributions)
          })
         //WATCH MONTH and re render changes
@@ -834,12 +816,12 @@ $scope.checkDispo = function(day, month,year, userId){
    +' {{daShift.ville == city ? (daShift.enough === true ? daShift.nom : daShift.nom+"("+daShift.timesLeft+")") : null}}</p>  '
   }
 })
-  .directive('coursierDay', function  ($compile) {
+.directive('coursierDay', function  ($compile) {
     return{
-      transclude: true,
       scope : {
         year : "=",
         day : "=",
+        setShift : "=",
         monthNum : "=",
         checkDispo : "=",
         user: "=",
@@ -856,7 +838,11 @@ $scope.checkDispo = function(day, month,year, userId){
                    elem.attr("ng-click", "setShift($index+1, monthNum, year, user)")
                    elem.addClass("presentOff")
                   if (dispo.villes) {
+                    scope.from = moment(dispo.start).format("H:mm")
+                    scope.to = moment(dispo.end).format("H:mm")
+                    scope.cities =  dispo.villes.join(", ");
                     $.each(dispo.villes, function  (i, ville) {
+                       
                        elem.addClass(ville)
                        elem.addClass("city-bg-off")
                     })
@@ -877,6 +863,9 @@ $scope.checkDispo = function(day, month,year, userId){
                 if (dispo.type =="Dispo") {
                    elem.addClass("presentOff")
                   if (dispo.villes) {
+                    scope.cities =  dispo.villes.join(", ");
+                    scope.from = moment(dispo.start).format("H:mm")
+                    scope.to = moment(dispo.end).format("H:mm")
                     $.each(dispo.villes, function  (i, ville) {
                        elem.addClass(ville+" city-bg-off")
                     })
@@ -919,7 +908,7 @@ $scope.checkDispo = function(day, month,year, userId){
                   //if its during the week you clicked, get the weekly shifts of that week
                   if (moment(startWeekDay).isSame(startWeek)) {
                     var shiftsPerWeek = scope.user.dispos[month][week].shiftsWeek;
-                    var attributed = scope.getNumberOfAttributedShifts(scope.user._id, monthYear, startWeek, endWeek)
+                    var attributed = scope.getNumberOfAttributedShiftsWeek(scope.user._id, monthYear, startWeek, endWeek)
                     scope.setDispoBGInfo(startWeek, endWeek, shiftsPerWeek, attributed,moment(date)._d)
                   };
                 }
@@ -938,11 +927,11 @@ $scope.checkDispo = function(day, month,year, userId){
                 var shiftsLeft = (wantedShifts-attributedShifts)
                     if (attributedShifts>wantedShifts || attributedShifts == wantedShifts) {
                       elem.addClass("busyOff")
-                    }else if( shiftsLeft <= 3 ){
+                    }else if( shiftsLeft <= 2 ){
                       elem.addClass("lowDispoOff")
-                    }else if(shiftsLeft >=4 && shiftsLeft <=7){
+                    }else if(shiftsLeft >=3 && shiftsLeft <=5){
                       elem.addClass("mediumDispoOff")
-                    }else if(shiftsLeft >=8){
+                    }else if(shiftsLeft >=6){
                       elem.addClass("highDispoOff")
                     }
                   $(".absent").removeClass('highDispo mediumDispo lowDispo busy')
@@ -950,7 +939,11 @@ $scope.checkDispo = function(day, month,year, userId){
                   elem.attr('shiftsLeft', shiftsLeft)
                   elem.attr('shiftsWanted', wantedShifts)
                   elem.attr('coursierId', scope.user._id)
-                  elem.attr('coursierName', scope.user.name)
+                  elem.attr('coursierName', scope.user.name);
+                  //used in popover on cell
+                  scope.shiftsLeft = shiftsLeft
+                  scope.wantedShifts = wantedShifts
+                  scope.attributedShifts = attributedShifts
               };          
             };
           };
@@ -959,8 +952,7 @@ $scope.checkDispo = function(day, month,year, userId){
             gets the number of already attributed shifts to the coursier
             for the given week. 
         */
-
-        scope.getNumberOfAttributedShifts = function (coursierId, monthYear, startWeek, endWeek) {
+        scope.getNumberOfAttributedShiftsWeek = function (coursierId, monthYear, startWeek, endWeek) {
             var attributed = 0;
             var startDay = parseInt(moment(startWeek).format("D"));
             var endDay = parseInt(moment(endWeek).format("D"));
@@ -1002,6 +994,12 @@ $scope.checkDispo = function(day, month,year, userId){
           scope.getAttrShifts(scope.attributions[args.monthYear], args.monthYear)
           scope.checkShiftsPerWeek(null, scope.day, scope.monthNum, scope.year)
          })
+         //update on deletition
+         scope.$on("delPassed",function(e, args){
+          scope.attributions[args.day].shifts = args.shifts
+          scope.getAttrShifts(scope.attributions[args.monthYear], args.monthYear)
+          scope.checkShiftsPerWeek(null, scope.day, scope.monthNum, scope.year)
+         })
         //WATCH MONTH
          scope.$watch("monthNum",function(newMonth,oldValue) {
           elem.removeClass('lowDispo mediumDispo highDispo lowDispoOff mediumDispoOff highDispoOff busy busyOff')
@@ -1022,10 +1020,12 @@ $scope.checkDispo = function(day, month,year, userId){
             scope.getAttrShifts(scope.attributions, monthYear)
             scope.checkShiftsPerWeek(dayOfWeek, scope.day, scope.monthNum, newYear )
           });
-          elem.addClass("coursierDay");
-              
+          elem.addClass('coursierDay')
       },//link
-      template:'<span ng-repeat="shift in daShifts track by $index" ng-class="daShifts != null ? \'attributedShift\' : \'\'  "  '
+      template:'<div class="dispoInfo"  tooltip="De {{from != null ? from : \'?\'}} à {{to != null ? to : \'?\'}} &#8232; --- '
+              + ' {{cities != null ? \'Villes: \'+cities : \'?\'}} --- {{shiftsLeft != null ? \'Shifts restants:\'+ shiftsLeft : \'\'}}" '
+              + 'tooltip-placement="top"  tooltip-append-to-body="true" tooltip-trigger="mouseenter" > </div>'
+              +' <span city="{{shift.ville}}" hey="{{shift.nom}}" ng-repeat="shift in daShifts track by $index" ng-class="daShifts != null ? \'attributedShift\' : \'\'  "  '
               +' popover="Remarques:{{shift.competences}} {{shift.remarques}} A {{shift.ville}} de {{shift.debut | date : \'H:mm\'}} à  {{shift.fin | date : \'H:mm\'}}" '
               +'   popover-placement="top"  '
               +'  popover-trigger="mouseenter">'+
@@ -1070,7 +1070,7 @@ $scope.checkDispo = function(day, month,year, userId){
             }       
             //if it has been attributed at least one time
             if (times > 0) {
-              console.debug(day, shift.nom, times, shift.times, shift);
+             // console.debug(day, shift.nom, times, shift.times, shift);
                 //check if its the correct day for that shift
                 var shiftDayIds = []
                 for(var theDay in shift.jours){
@@ -1124,6 +1124,11 @@ $scope.checkDispo = function(day, month,year, userId){
          //update view on attribution passed !!!!!!!!!!!!!
          scope.$on("attrPassed", function(e, args){
           scope.attributions = args.attributions[args.monthYear]
+          scope.checkShifts(args.day, scope.monthNum, scope.year, scope.attributions)
+         })
+        //update on deletition
+         scope.$on("delPassed",function(e, args){
+          scope.attributions[args.day].shifts = args.shifts
           scope.checkShifts(args.day, scope.monthNum, scope.year, scope.attributions)
          })
         //WATCH MONTH and re render changes

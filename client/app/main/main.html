@@ -1,6 +1,4 @@
 
-
-
  <div class="text-center" ng-show="loading"> <img src="assets/images/loading.gif">
   </div>
 
@@ -48,7 +46,7 @@
 
 
 
- <div class="col-md-4" id="headButtons">
+ <div class="col-md-4 col-sm-12" id="headButtons">
   <div class="dropdown">
     <button class="btn btn-success  dropdown-toggle" type="button"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
       Dispos
@@ -94,7 +92,7 @@
          <!-- les jours du mois-->
             <tr class="mainHeader bg-active"> 
               <th><div>Jour|Coursier</div></th>
-               <th class="monthDay" ng-repeat="numDay in calendar.monthDays track by $index" > {{$index+1}}</br> {{calendar.daysNames[$index] | uppercase}}
+               <th class="monthDay" ng-repeat="numDay in calendar.monthDays track by $index" > {{$index+1}}
                </th>
             </tr>
          </thead>
@@ -112,14 +110,15 @@
 <!-- ng-class="checkDispo($index, monthNum, year, user._id).type == 'Dispo' ? checkDispo($index, monthNum, year, user._id).villes : ( checkDispo($index, monthNum, year, user._id).type == 'Absent' ? 'absent' : 'noInfoOff' ) "  -->
 
               <td coursier-day
-                ng-click="setShift($index+1, monthNum, year, user)"  
+                ng-click="setShift($index+1, monthNum, year, user)"
                 attributions="returnAttributions(monthYear)"
                 ng-repeat="numDay in calendar.monthDays track by $index" 
                 day ="$index+1" 
                 month-num="monthNum" 
+                set-shift="setShift"
                 year="year"
                 check-dispo="checkDispo" 
-                user="{_id: user._id, dispos: user.dispos, name: user.name}"
+                user="{_id: user._id, dispos: user.dispos, name: user.name, competences: user.competences}"
                 month-year = "monthYear"
 
                 date="{{$index+1}}-{{monthNum+1}}-{{year}}"
@@ -135,8 +134,10 @@
               </td>
               <td 
                   manques-city
+                   
                   ng-repeat="day in calendar.monthDays track by $index"
                    day="$index"
+                 
                    month-Num="monthNum"
                    year="year"
                    attributions="returnAttributions(monthYear)"
@@ -150,7 +151,8 @@
           
             </tbody><!-- manques -->
           <tr>
-            <tr class="cityManquesHeader" ng-click="slideManques($event)"><th colspan="{{calendar.monthDays.length+1}}" >Doublons</th> </tr>
+            <tr class="cityManquesHeader" ng-click="slideManques($event)"><th colspan="{{calendar.monthDays.length+1}}" >Doublons</th></tr>
+            <div class="doubleshift"> 
             <tr>
                 <td>Doublons</td>
                   <td doublons
@@ -164,7 +166,9 @@
                    month-year="monthYear"       
                    daily-shifts="dailyShifts"></td>
               </tr>
+            </div>
           </tbody>
+
          </table>
         </div>  <!-- table div --> 
 

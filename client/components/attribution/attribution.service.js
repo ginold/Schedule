@@ -4,6 +4,8 @@ angular.module('velociteScheduleApp')
   .factory('AttributionsService', function ($resource, $http,$rootScope) {
     return {
       setShift: function (shifts, coursier, date, otherShift){
+        console.debug(shifts);
+        console.debug(otherShift);
         if (shifts == null) {
           shifts = [otherShift]
         };
@@ -30,6 +32,30 @@ angular.module('velociteScheduleApp')
           }).error(function(err){
             console.log(err)
           })
+      },
+      deleteShift : function(coursier, date, shift){
+        var day = moment(date).format("D")
+        var monthYear = moment(date).format("MM-YYYY")
+        console.debug(shift, coursier, day, monthYear);
+        if(shift){
+             $http.put("api/attributions/:id/deleteShift",
+            {
+              shift : shift,
+              coursier : coursier,
+              monthYear : monthYear,
+              day : day
+            }
+          ).success(function(data, status){
+            console.debug(data, status);
+          $rootScope.$broadcast("deletitionShift", 
+               {shift:shift, day:day, monthYear:monthYear, coursier:coursier}
+               )
+          }).error(function(err){
+            console.log(err)
+          })
+        }
+      
+
       },
       formatShiftsForCalendar: function (shifts, callback) {
 

@@ -1,14 +1,34 @@
 'use strict';
 
 angular.module('velociteScheduleApp')
-  .controller('AttribuerShiftCtrl', function ($scope, shifts, $http, coursier, date, allShifts, AttributionsService, attributions) {  
-
+  .controller('AttribuerShiftCtrl', function ($scope, shifts, $http, preselectedDate, preselectedShift, coursier, date, allShifts, AttributionsService, attributions, attributedShifts) {
+    //->no shifts found => the user didnt give his dispos  
+    if (shifts == null) {
+      shifts = []
+      $scope.wait = false;
+      $scope.noDispo = true;
+    };
+    if(preselectedShift && moment(date).format("D-M-YYYY") == preselectedDate){
+      $scope.preselectedShift = preselectedShift
+    }
+    if (attributedShifts){
+      $scope.attributed = true;
+      $scope.attributedShifts = attributedShifts
+      console.debug('attributinos ! so..');
+      console.debug($scope.attributed);
+    }else if(typeof attributedShifts == 'undefined' || attributedShifts.length == 0){
+      console.debug('no attributions soo...');
+      $scope.attributed = false;
+      console.debug($scope.attributed);
+    }  
     shifts.push({nom: "Absence/vacances", ville: "Indisponible"})
     $scope.shifts = shifts;
     $scope.date = date;
     $scope.coursier = coursier
     $scope.wait = true;
     $scope.allShifts = allShifts
+    console.log('at the end');
+    console.debug($scope.attributed, attributedShifts);
     /*
       returns the number of desired shifts per week
       on during the week of the clicked day. Calls getNumberOfAttributedShifts.
@@ -27,7 +47,6 @@ angular.module('velociteScheduleApp')
                 //if its during the week you clicked, get the weekly shifts of that week
                 if (moment(startWeekDay).isSame(startWeek)) {
                   $scope.shiftsWeekly = coursier.dispos[month][week].shiftsWeek; 
-                  console.debug("should enter!");
                   $scope.getNumberOfAttributedShifts(coursierId, monthYear, startWeek, endWeek)
                   $scope.wait = false;
                 };
@@ -95,17 +114,18 @@ angular.module('velociteScheduleApp')
         };
        }
     }
-
       $scope.getDesiredShiftsWeekly(coursier._id, date)
       $scope.dispoHoursOfTheDay(coursier, date)
     
-
     $scope.close = function() {
        $scope.$dismiss();
        $(".colDaySelected").removeClass('colDaySelected');
      
     };
-    
+    $scope.deleteShift = function(coursier, date, shift){
+      AttributionsService.deleteShift(coursier, date, shift);
+        $scope.$close();
+    }
     $scope.attribuer = function(shifts, coursier, date, otherShift) {
       //in components/attribution
       AttributionsService.setShift(shifts, coursier, date,otherShift);

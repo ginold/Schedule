@@ -8,15 +8,21 @@
             <p>Dispo de: <b>{{dispoStart | amDateFormat: "H:mm"}}</b> à <b>{{dispoEnd | amDateFormat: "H:mm"}}</b></p>
             <b ng-show="wait">attendez...</b>
             <p ng-show="!wait" ng-class="attributed == shiftsWeekly || attributed > shiftsWeekly ? 'bg-danger' : '' ">Nombre de shifts souhaités :   <b>{{attributed}}/{{shiftsWeekly}}</b></p>
-                <p  ng-show="shifts.length == 1">Pas de shift adéquat trouvé</p>
-               
+                <p ng-show="shifts.length == 1">Pas de shift adéquat trouvé</p>
+               <p ng-show="noDispo"> <b>Pas de dispo trouvée!</b></p>
             <p>Selectionnez un shift &nbsp;
-                <select multiple class="form-control" ng-options="shift as shift.nom group by shift.ville for shift in shifts" ng-model="selectedShift"></select>
+                <select multiple class="form-control" ng-options="shift as shift.nom group by shift.ville for shift in shifts" ng-model="selectedShift">
+                    <option selected="selected">{{preselectedShift.nom}}</option>
+                </select>
             </p>  
-            <h4>Tous les shifts</h4>
-            <select class="form-control" ng-options="shift as shift.nom group by shift.villes[0] for shift in allShifts" ng-model="otherShift"></select>    
+            <p>Tous les shifts
+            <select class="form-control" ng-options="shift as shift.nom group by shift.villes[0] for shift in allShifts track by shift._id" ng-model="otherShift"></select> </p>
+            <div ng-show="attributedShifts.length > 0" class="text-centered">  
+            <p>Enlever un shift
+            <select class="form-control" ng-options="shift as shift.nom group by shift.ville for shift in attributedShifts track by shift._id" ng-model="attributedShift"></select></p>
+            <button class="btn btn-danger btn-sm" ng-click="deleteShift(coursier, date, attributedShift)">Enlever</button>
+             </div> 
         </div>
-
 
         <div class="text-center">
 

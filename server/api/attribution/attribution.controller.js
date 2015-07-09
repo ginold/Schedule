@@ -20,6 +20,42 @@ exports.show = function(req, res) {
     return res.json(attribution);
   });
 };
+
+exports.deleteshift = function(req,res){
+   Attribution.find(function (err, attributions) {
+    if(err) { return handleError(res, err); }
+    var theDay = req.body.day
+    var monthYear = req.body.monthYear
+    var coursier = req.body.coursier
+    var shift = req.body.shift
+
+    for(var month in attributions[0].monthYear){
+        if (month == monthYear) {
+        for(var day in attributions[0].monthYear[monthYear]){
+         if (day == theDay) {
+          var attrShifts = attributions[0].monthYear[monthYear][day].shifts
+          for (var i = attrShifts.length - 1; i >= 0; i--) {
+            if (attrShifts[i].coursierAttributed._id  == coursier._id) {
+              if (attrShifts[i]._id == shift._id) {
+                attrShifts.splice(i,1)
+              };
+            }; 
+          };
+         };
+        }
+      };
+    }
+    attributions[0].monthYear[monthYear][theDay].shifts = attrShifts;
+    var newMonthYear =  attributions[0].monthYear[monthYear]
+    var set = { $set: {} };
+    set.$set["monthYear."+monthYear] = newMonthYear
+
+    Attribution.update({ _id:  attributions[0]._id }, set , function(error, attributions){
+         if (error) return res.send(500, err);
+         return res.send(204, attrShifts)
+     }); 
+  });//attribution find by id
+}
 exports.setShift = function (req, res){
    Attribution.find(function (err, attributions) {
     if(err) { return handleError(res, err); }
