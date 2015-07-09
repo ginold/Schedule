@@ -25,7 +25,7 @@
 				 {{shift.fin | amDateFormat:'H:mm'}} 
 			</td>
 			<td>
-				<abbr ng-repeat="ville in shift.villes">{{ville}}</abbr>
+				{{shift.ville}}
 			</td>
 			<td>
 				<span ng-repeat="jour in shift.jours | orderBy:'id'">

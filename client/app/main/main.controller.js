@@ -128,7 +128,7 @@ $scope.orderShiftsByDay = function(){
           var shift = {   shiftID : shifts[i]._id,
                           nom :shifts[i].nom, 
                           times: shifts[i].jours[j].times, 
-                          ville: shifts[i].villes[0], 
+                          ville: shifts[i].ville, 
                           _id: shifts[i]._id,
                           competences : shifts[i].competences,
                           debut : shifts[i].debut, 
@@ -1022,7 +1022,7 @@ $scope.checkDispo = function(day, month,year, userId){
           });
           elem.addClass('coursierDay')
       },//link
-      template:'<div class="dispoInfo"  tooltip="De {{from != null ? from : \'?\'}} à {{to != null ? to : \'?\'}} &#8232; --- '
+      template:'<div class="dispoInfo"  tooltip="De {{from != null ? from : \'?\'}} à {{to != null ? to : \'?\'}} &#8232; '
               + ' {{cities != null ? \'Villes: \'+cities : \'?\'}} --- {{shiftsLeft != null ? \'Shifts restants:\'+ shiftsLeft : \'\'}}" '
               + 'tooltip-placement="top"  tooltip-append-to-body="true" tooltip-trigger="mouseenter" > </div>'
               +' <span city="{{shift.ville}}" hey="{{shift.nom}}" ng-repeat="shift in daShifts track by $index" ng-class="daShifts != null ? \'attributedShift\' : \'\'  "  '
