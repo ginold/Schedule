@@ -1,0 +1,55 @@
+  <div class="bg-primary text-center title">
+	<h2>Détails du coursier</h2>
+</div>
+
+  <div class="container">
+ <div class="col-md-2"></div>
+  <div class="col-md-4">
+      <h3>Personnel</h3>
+       <p> <label>Nom:</label> {{user.name}}</p>
+       <p> <label>Prénom:</label> {{user.prenom}}</p>
+       <p> <label>Date de naissance:</label> {{user.naissance}}</p>
+       <p> <label>Email:</label> {{user.email}}</p>
+        <p><label>Fixe: </label> {{user.adresse.telFixe}}</p>
+        <p><label>Portable: </label> {{user.adresse.telPortable}}</p>
+
+        <h3>Adresse</h3>
+        <p><label>Rue: </label> {{user.adresse.rue}}</p>
+        <p><label>Ville: </label> {{user.adresse.ville}}</p>
+        <p><label>NPA: </label> {{user.adresse.npa}}</p>
+   
+
+
+      </div>
+
+      <div class="col-md-4">
+        <h3>Permis</h3>
+        <p><label>AG: </label>{{user.ag == true ? " Oui":" Non"}}</p>
+        <p><label>Permis de conduire: </label>{{user.permis == true ? " Oui":" Non"}}</p>
+        <p><label>Mobility: </label>{{user.mobility == true ? " Oui":" Non"}}</p>
+
+        <h3>Vélocité</h3>
+        <p><label>Coursier depuis: </label>{{user.createdOn}}</p>
+        <p><label>Actif: </label>{{}}</p>
+
+        <h3>Compétences</h3>
+        <p ng-repeat="com in user.competences">{{com}}</p>
+        <div ng-show="addCompetences" id="addCompetences">
+		    <ul class="coursiersCheckbox">
+				<li ng-repeat="competence in competences track by $index"> <input 
+					type="checkbox" 
+	        		checklist-value="competence" 
+	        		checklist-model="user.newCompetences" >
+					<label class="checkboxText">{{competence != null ? competence : null}}</label>
+				</li>
+			</ul>
+			
+        </div>
+
+        <button class="btn-primary btn" ng-click="showCompetences()">Ajouter des compétences</button>
+        <button  ng-show="addCompetences"  class="btn btn-success" ng-click="add(user.newCompetences)">Ajouter</button>
+      </div>
+      </div>
+      <div class="text-center back">
+	<button ng-click="back()" class="btn btn-info btn-lg">Retour</button>
+</div>

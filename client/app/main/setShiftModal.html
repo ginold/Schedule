@@ -20,7 +20,7 @@
             <div ng-show="attributedShifts.length > 0" class="text-centered">  
             <p>Enlever un shift
             <select class="form-control" ng-options="shift as shift.nom group by shift.ville for shift in attributedShifts track by shift._id" ng-model="attributedShift"></select></p>
-            <button class="btn btn-danger btn-sm" ng-click="deleteShift(coursier, date, attributedShift)">Enlever</button>
+            <button ng-show="attributedShift" class="btn btn-danger btn-sm" ng-click="deleteShift(coursier, date, attributedShift)">Enlever</button>
              </div> 
         </div>
 

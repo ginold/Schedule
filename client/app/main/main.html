@@ -120,7 +120,7 @@
                 check-dispo="checkDispo" 
                 user="{_id: user._id, dispos: user.dispos, name: user.name, competences: user.competences}"
                 month-year = "monthYear"
-
+                return-attributions="returnAttributions"
                 date="{{$index+1}}-{{monthNum+1}}-{{year}}"
                  > 
               </td> 
@@ -128,7 +128,7 @@
           <!--  MANQUES PAR VILLE -->
           <tbody id="manquesTable" ng-repeat="city in cities">
 
-            <tr class="cityManquesHeader" ng-click="slideManques($event)"l><th colspan="{{calendar.monthDays.length+1}}" >  {{city}}</th> </tr>
+            <tr class="cityManquesHeader" ><th colspan="{{calendar.monthDays.length+1}}" >  {{city}}</th> </tr>
             <tr>
               <td ng-click="toggleCityDispos(city)" >Manques
               </td>

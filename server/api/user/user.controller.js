@@ -19,7 +19,19 @@ exports.index = function(req, res) {
     res.json(200, users);
   });
 };
+exports.addCompetences = function(req, res){
+  console.log(req.body.id)
+  User.findById(req.body.id, function (err, user) {
 
+    user.competences = req.body.competences;
+        console.log(user);
+      user.save(function(err){
+      if (err) return validationError(res, err);
+        res.send(200);
+      });   
+  });
+
+}
 /**
  * Creates a new user
  */

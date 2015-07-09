@@ -11,7 +11,7 @@ angular.module('velociteScheduleApp')
     });
     // Use the User $resource to fetch all users
     $scope.users = User.query();
-    $scope.competences = ["Back-office","Spécial", "Coursier", "Dispatcheur", "CTiste"]
+    $scope.competences = shiftService.getCompetences()
     $scope.shift = {};
     $scope.shift.coursiers = null;
     $scope.selectedCompetences = [];
@@ -26,7 +26,7 @@ angular.module('velociteScheduleApp')
       {id:5, nom : 'Vendredi', times: 1},
       {id:6, nom : 'Samedi', times: 1}
     ]
-    $scope.cities = [ 'Lausanne','Yverdon','Neuchâtel']
+    $scope.cities = shiftService.getCities()
      //months for periode de validite
     $scope.months = calendarService.getMonths();
    // console.log($scope.months)
@@ -42,7 +42,6 @@ angular.module('velociteScheduleApp')
     };
    }
 
-
   $scope.sortByCompetences = function  (competences) {
     console.log(competences)
     var competentUsers = []
@@ -55,9 +54,6 @@ angular.module('velociteScheduleApp')
     $scope.competentUsers = competentUsers
 
   }
-   $scope.enableTimes = function(){ 
-
-   }
    /*
     create the shift with all its data
    */

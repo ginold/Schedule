@@ -31,21 +31,11 @@ angular.module('velociteScheduleApp')
         } 
 
       },
-      formatCities : function(shifts){
-        for (var i = shifts.length - 1; i >= 0; i--) {
-          for (var j = shifts[i].villes.length - 1; j >= 0; j--) {
-            if (shifts[i].villes[j] == "yverdon") {
-               shifts[i].villes[j] = 'YD'
-            };
-            if (shifts[i].villes[j] == "lausanne") {
-              shifts[i].villes[j] = "LA"
-              
-            };
-            if (shifts[i].villes[j] =="neuchâtel") {
-              shifts[i].villes[j] = "NE"
-            };
-          };
-        };
+      getCompetences:function(){
+        return ["Back-office","Spécial", "Coursier", "Dispatcheur", "CTiste"]
+      },
+      getCities : function(){
+        return ["Lausanne", "Yverdon", "Neuchâtel"]
       },
       containsAll: function(needles, haystack){ 
         for(var i = 0 , len = needles.length; i < len; i++){

@@ -12,21 +12,17 @@ angular.module('velociteScheduleApp')
     $scope.year = date.getFullYear();
     $scope.today = moment(new Date()).format("D-M-YYYY")
     $scope.monthYear = moment(new Date()).format("MM-YYYY")
-    $scope.cities = ["Lausanne", "Yverdon", "Neuchâtel"]
-    $scope.coursiers;
-    $scope.shifts;
+    $scope.cities = shiftService.getCities()
     $scope.isAdmin = Auth.isAdmin; //to show or not to show the first planning
     $scope.currentUser = Auth.getCurrentUser()
-    $scope.presences;
-    $scope.dispos;
-    $scope.collapseManques = false;
     $scope.loading = true;
     $scope.shiftSources = [];
     $scope.alreadySeen = [];
 
 $(document).ready(function () {
   $("body").on('click','.cityManquesHeader',function(){
-     $(this).next('div').slideToggle('fast')
+
+     $(this).next('tr').slideToggle('fast')
   });
 
   $(document).keyup(function(e) {
@@ -823,12 +819,13 @@ $scope.checkDispo = function(day, month,year, userId){
         day : "=",
         setShift : "=",
         monthNum : "=",
+        returnAttributions: "=",
         checkDispo : "=",
         user: "=",
-        attributions : "=",
         monthYear : "="
       },
       link : function  (scope, elem, attrs) {
+        scope.attributions = scope.returnAttributions(scope.monthYear)
         scope.addDispoMonthChange = function (newMonth) {
           elem.attr("date", (scope.day)+"-"+(newMonth+1)+"-"+scope.year )  
           var dispo = scope.checkDispo(scope.day, newMonth, scope.year, scope.user._id) 

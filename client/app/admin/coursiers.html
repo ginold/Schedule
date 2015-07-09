@@ -1,0 +1,34 @@
+<div ui-view="">
+<div class="bg-primary text-center title">
+  <h2>Liste des coursiers</h2>
+</div>
+
+<div class="container">   
+
+<form class="form-inline search">
+  <div class="form-group">
+     <label>Recherche</label>
+    <input type="text" ng-model="searchCoursier"> 
+  </div>
+</form>
+
+
+
+  <table class="table table-striped table-bordered">
+    <tr>
+        <th class="shiftsHeaders">Nom</th>
+         <th class="shiftsHeaders">Prénom</th> 
+         <th class="shiftsHeaders">Coursier depuis</th>
+         <th class="shiftsHeaders">Compétences</th>
+         <th><span class="glyphicon glyphicon-trash pull-right"></span></th>
+    </tr>
+    <tr ng-repeat="user in users | filter: searchCoursier"  >
+      <td> <a ui-sref="coursiers.details({coursierId:user._id})">{{user.name}}</a></td>  
+      <td>  {{user.prenom}}</td>
+      <td>{{user.createdOn | amDateFormat:'dddd D MMMM YYYY'}}</td>
+      <td><span ng-repeat="com in user.competences">{{com}}{{$last ? "" : ", "}}</span></td>
+      <td><a ng-click="delete(user)" class="trash"><span class="glyphicon glyphicon-trash pull-right"></span></a></td>
+    </tr>
+  </table>
+</div>
+</div>

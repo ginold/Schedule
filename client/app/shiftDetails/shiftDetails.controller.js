@@ -20,16 +20,15 @@ angular.module('velociteScheduleApp')
       $scope.coursiers = []
   		$http.get("api/users").success(function (coursiers) {
   			$.each(coursiers, function(i, coursier){
-          $.each($scope.shift.coursiers, function (j, coursierToDel) {
-            if (coursier._id == coursierToDel._id) {
-              delete coursiers[i];
-            };
-          })
+         // console.debug(shiftService.containsAll(shift.competences, coursier.competences));
+          if (shiftService.containsAll($scope.shift.competences, coursier.competences)) {
+            $scope.coursiers.push(coursier)
+          };
         })
   			$scope.showAddCoursiers = true;
-        $scope.coursiers = coursiers;
   		});
    	}
+    $scope.loadCoursiers()
 
     /*
       update the shift with new coursiers

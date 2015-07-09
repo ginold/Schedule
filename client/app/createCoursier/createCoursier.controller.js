@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('velociteScheduleApp')
-  .controller('CreateCoursierCtrl', function ($scope,Auth, $modal) {
-  	$scope.competences = ["Back-office","Spécial", "Coursier", "Dispatcheur", "CTiste"]
+  .controller('CreateCoursierCtrl', function ($scope,Auth, $modal,shiftService) {
+  	$scope.competences = shiftService.getCompetences()
   	//init false by default
     $scope.user = {
     	ag : false,

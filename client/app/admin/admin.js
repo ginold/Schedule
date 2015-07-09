@@ -3,9 +3,13 @@
 angular.module('velociteScheduleApp')
   .config(function ($stateProvider) {
     $stateProvider
-      .state('admin', {
-        url: '/admin',
-        templateUrl: 'app/admin/admin.html',
+      .state('coursiers', {
+        url: '/coursiers',
+        templateUrl: 'app/admin/coursiers.html',
         controller: 'AdminCtrl'
-      });
+      }).state('coursiers.details', {
+        url: '/:coursierId',
+        templateUrl: 'app/coursierDetails/coursierDetails.html',
+        controller: 'CoursierDetailsCtrl'
+      })
   });

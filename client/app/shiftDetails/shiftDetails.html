@@ -22,28 +22,17 @@
 	<div class="col-md-6">
 	<h4>Ville</h4>
 	<ul>
-		<li>{{shift.villes}}</li>
+		<li>{{shift.ville}}</li>
 	</ul>
 		<h4>Coursiers capables</h4>
 		<ul>
-			<li ng-repeat="coursier in shift.coursiers">{{coursier.name}} {{coursier.prenom}}</li>
+			<li ng-repeat="coursier in coursiers">{{coursier.name}} {{coursier.prenom}}</li>
 		</ul>
 	<h4>Competences</h4>
 	<ul>
 		<li ng-repeat="competence in shift.competences">{{competence}}</li>
 	</ul>
-		<!-- <div ng-show="showAddCoursiers" class="coursiersListe text-center">
-		 <h3>Ajouter</h3>
-			<label class="coursiersCheckbox" 
-			ng-repeat="coursier in coursiers track by $index" ng-show="coursier !== undefined ">
-			<input type="checkbox" 
-			checklist-value="coursier._id"
-			checklist-model="selectedCoursiers">
-				{{coursier.name}} {{coursier.prenom}}
-				</label></br>
-			<button class="btn btn-success btn-sm"   ng-click="addCoursiers(selectedCoursiers)">Ajouter</button>
-		</div>
-		<button class="btn btn-success" ng-click="loadCoursiers()">Ajouter des coursier</button> -->
+
 	</div>
 </div>
 <div class="text-center back">
