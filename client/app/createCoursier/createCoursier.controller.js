@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('velociteScheduleApp')
-  .controller('CreateCoursierCtrl', function ($scope,Auth, $modal,shiftService) {
+  .controller('CreateCoursierCtrl', function ($scope,Auth, $modal,shiftService, $http) {
   	$scope.competences = shiftService.getCompetences()
   	//init false by default
     $scope.user = {
@@ -12,9 +12,14 @@ angular.module('velociteScheduleApp')
     $scope.okModal = function(){
     	$modalInstance.dismiss('cancel');
     }
+   	$http.get('api/users').success(function(users){
+		$scope.numeroCoursier = users.length+1
+		$scope.user.numeroCoursier =  $scope.numeroCoursier
+	})
 
-    $scope.createCoursier = function(user){
-    	console.log(user)
+    $scope.createCoursier = function(user){   	
+
+    	console.log(user);
     	 $scope.submitted = true;
     	 //if(form.$valid) {
 	        Auth.createUser(user)
@@ -22,7 +27,9 @@ angular.module('velociteScheduleApp')
 		          // Account created, redirect to home
 		           var modalInstance = $modal.open({
 		            templateUrl: 'app/createCoursier/createCoursierModal.html',//par rapport a l index.html
-		            controller: 'CreateCoursierCtrl',
+		            controller: function($scope, $modalInstance){
+	                  $scope.cancel = function(){ $modalInstance.dismiss('cancel'); }
+	                  },
 		            size: "sm"
 		          });
 		        })
@@ -30,7 +37,9 @@ angular.module('velociteScheduleApp')
 		        	console.log(err)
 		        	var modalInstance = $modal.open({
 		            template: "<h2>Erreur s'\est produite",//par rapport a l index.html
-		            controller: 'CreateCoursierCtrl',
+		            controller: function($scope, $modalInstance){
+		                  $scope.cancel = function(){ $modalInstance.dismiss('cancel'); }
+		                  },
 		            size: "sm"
 		          });
 		          err = err.data;

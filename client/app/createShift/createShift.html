@@ -87,13 +87,12 @@
 
 
      	<h3>Liste des coursiers</h3>
-	    <ul id="listeCoursiersShift" class=" coursiersCheckbox">
+	    <ul id="listeCoursiers">
 			<li ng-repeat="user in competentUsers"> 
-				<label class="checkboxText">{{user.name}}</label>
+				<p><b># {{user.numeroCoursier}} </b>{{user.name}} {{user.prenom}}</p>
 			</li>
 		</ul>
-		<!-- Cocher/decocher tous les coursiers -->
-    	<button type="button" class="btn btn-info text-center btn-login"  ng-click="checkAll()">Cocher tous</button>
+
     </div>
   
   </form>

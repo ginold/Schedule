@@ -1,8 +1,9 @@
 'use strict';
 
 angular.module('velociteScheduleApp')
-  .controller('AttribuerShiftCtrl', function ($scope, shifts, $http, preselectedDate, preselectedShift, coursier, date, allShifts, AttributionsService, attributions, attributedShifts) {
-    //->no shifts found => the user didnt give his dispos  
+  .controller('AttribuerShiftCtrl', function (event, $scope, shifts, $http, preselectedDate, preselectedShift, 
+                      coursier, date, allShifts, AttributionsService, attributions, attributedShifts) {
+    //->no shifts found => the user didnt give his dispos  (coming from setShift())
     if (shifts == null) {
       shifts = []
       $scope.wait = false;
@@ -11,24 +12,48 @@ angular.module('velociteScheduleApp')
     if(preselectedShift && moment(date).format("D-M-YYYY") == preselectedDate){
       $scope.preselectedShift = preselectedShift
     }
+       //if any, you can delete one and sort them out
     if (attributedShifts){
       $scope.attributed = true;
-      $scope.attributedShifts = attributedShifts
-      console.debug('attributinos ! so..');
-      console.debug($scope.attributed);
-    }else if(typeof attributedShifts == 'undefined' || attributedShifts.length == 0){
-      console.debug('no attributions soo...');
-      $scope.attributed = false;
-      console.debug($scope.attributed);
-    }  
-    shifts.push({nom: "Absence/vacances", ville: "Indisponible"})
+      $scope.attributedShifts = attributedShifts.coursierShifts
+    }; 
+    shifts.push({nom: "Absence/vacances", 
+                  _id: "nope",
+                  ville: "Indisponible",
+                  start: date,
+                  title: 'Absent'
+                })
     $scope.shifts = shifts;
     $scope.date = date;
     $scope.coursier = coursier
     $scope.wait = true;
     $scope.allShifts = allShifts
-    console.log('at the end');
-    console.debug($scope.attributed, attributedShifts);
+
+    //remove from select already enoughly attributed shifts
+    $.each(attributedShifts.enoughAttr, function(i, enough){
+      $.each($scope.shifts, function(j,shift){
+        if (shift && enough) {
+          if (shift._id == 
+            enough._id) {
+             $scope.shifts.splice(j, 1)
+          };
+        };
+       
+      })
+    })
+    //preselect the selected shift in manques, if exising in the shift list
+    if(preselectedShift && moment(date).format("D-M-YYYY") == preselectedDate){
+      $http.get("api/shifts/"+preselectedShift._id).success(function(shift){
+        for (var i = $scope.shifts.length - 1; i >= 0; i--) {
+           if($scope.shifts[i]['_id'] === shift['_id']){
+                $scope.selectedShift = []
+                $scope.selectedShift.push($scope.shifts[i]);
+            }
+        };
+        
+      })
+    }
+
     /*
       returns the number of desired shifts per week
       on during the week of the clicked day. Calls getNumberOfAttributedShifts.

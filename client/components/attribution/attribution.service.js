@@ -4,13 +4,9 @@ angular.module('velociteScheduleApp')
   .factory('AttributionsService', function ($resource, $http,$rootScope) {
     return {
       setShift: function (shifts, coursier, date, otherShift){
-        console.debug(shifts);
-        console.debug(otherShift);
         if (shifts == null) {
           shifts = [otherShift]
         };
-        console.debug('attribution service shift selected->');
-        console.debug(shifts);
         var monthYear = moment(date).format("MM-YYYY");
         var day = moment(date).format("D")
         $http.put("api/attributions/:id/setShift",
@@ -106,5 +102,5 @@ angular.module('velociteScheduleApp')
         callback(myMonthlyShifts)
       }
     }
-	  
+    
   });

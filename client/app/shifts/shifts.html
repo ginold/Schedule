@@ -12,6 +12,7 @@
 			<th class='shiftsHeaders'>Début</th>
 			<th class='shiftsHeaders'>Fin</th>
 			<th class='shiftsHeaders'>Ville</th>
+			<th class='shiftsHeaders'>Compétence requise</th>
 			<th class='shiftsHeaders'>Jours</th>
 		</tr>
 		<tr ng-repeat="shift in shifts | filter: searchShift"> 
@@ -26,6 +27,11 @@
 			</td>
 			<td>
 				{{shift.ville}}
+			</td>
+			<td>
+				<span ng-repeat="com in shift.competences ">
+					{{com}}{{$last ? '' : ', '}}
+				</span>
 			</td>
 			<td>
 				<span ng-repeat="jour in shift.jours | orderBy:'id'">

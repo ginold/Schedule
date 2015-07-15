@@ -19,13 +19,7 @@ angular.module('velociteScheduleApp')
   $scope.weekDispos =  []; // everyday dispo per week
   $scope.eventSources = [$scope.weekDispos];
   $scope.dispoType  = true; // true = disponible, false = absent
-  //$scope.dispos[$scope.monthYear] = {};
 
-  // $scope.$on('dispoUpdate',function(){
-  //    console.log($scope.weekDispos)
-  //   $scope.weekDispos = [];
-  //    console.log($scope.weekDispos)
-  // })
 
   /* config calendar */
   $scope.calendarConfig = {    
@@ -159,7 +153,6 @@ angular.module('velociteScheduleApp')
       },//end select
 
       eventClick: function(calEvent, jsEvent, view){
-        console.log(calEvent)
         var modalInstance = $modal.open({
           templateUrl: 'app/modalRemoveDispo/modalRemoveDispo.html',//par rapport a l index.html
           controller: 'ModalRemoveDispoCtrl',
@@ -212,7 +205,6 @@ $scope.inputRemarques =function (remarques){
           
         }
       };  
-      console.log($scope.dispos)
     	
   }
 
@@ -227,21 +219,40 @@ $scope.inputRemarques =function (remarques){
       $scope.dispoType = false;
     }
   }
+
+
   /*
     handle 1, 2 and 3 keypress 
     for quick city checkbox
   */
-  // $scope.checkCity = function(event){
+$(document).keypress(function(e) {
+  // console.debug(e);
   //   if (event.keyCode == 49) {
-  //     $scope.laus_check = true;
+  //     if ($scope.laus_check) {
+  //       $scope.laus_check = false
+  //     }else{
+  //       $scope.laus_check = true;
+  //     }
   //   };
   //   if (event.keyCode == 50) {
-  //    $scope.yv_check = true;        
+  //    if ($scope.yv_check) {
+  //     $scope.yv_check= false;
+  //    }else{
+  //     $scope.yv_check = true
+  //    }
   //   };
   //   if (event.keyCode == 51) {
-  //    $scope.neuch_check = true;
+  //    if ($scope.neuch_check) {
+  //     $scope.neuch_check = false;
+  //    }else{
+  //     $scope.neuch_check = true
+  //    }
       
-  //   };
-  // }
+    //};
+    console.debug($scope.neuch_check, $scope.yv_check, $scope.laus_check);
+});
+
+
+  
 
   });

@@ -78,10 +78,20 @@
 </form>
 
 <form class="form-horizontal col-md-6" >
+ <h4> Numéro coursier: # <b>{{numeroCoursier}} </b> </h4>
   <h4>Compétences</h4>
     <ul class="coursierOthersCheckbox">
         <li ng-repeat="competence in competences">
           <label class="checkboxText" > <input type="checkbox" checklist-value="competence" checklist-model="user.competences">{{competence}}</label>
+        </li> 
+    </ul>
+    <h4>Rôle</h4>
+    <ul class="coursierOthersCheckbox">
+        <li>
+          <label class="checkboxText" > <input type="radio" value="admin" name="role" ng-model="user.role">Admin</label>
+        </li> 
+         <li>
+          <label class="checkboxText" > <input type="radio" value="user"  name="role" ng-model="user.role">Coursier</label>
         </li> 
     </ul>
        

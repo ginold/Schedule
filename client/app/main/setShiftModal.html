@@ -11,12 +11,13 @@
                 <p ng-show="shifts.length == 1">Pas de shift adéquat trouvé</p>
                <p ng-show="noDispo"> <b>Pas de dispo trouvée!</b></p>
             <p>Selectionnez un shift &nbsp;
-                <select multiple class="form-control" ng-options="shift as shift.nom group by shift.ville for shift in shifts" ng-model="selectedShift">
-                    <option selected="selected">{{preselectedShift.nom}}</option>
+                <select multiple class="form-control"  ng-options="shift as shift.nom group by shift.ville for shift in shifts" ng-model="selectedShift">
                 </select>
             </p>  
+
             <p>Tous les shifts
             <select class="form-control" ng-options="shift as shift.nom group by shift.ville  for shift in allShifts track by shift._id" ng-model="otherShift"></select> </p>
+
             <div ng-show="attributedShifts.length > 0" class="text-centered">  
             <p>Enlever un shift
             <select class="form-control" ng-options="shift as shift.nom group by shift.ville for shift in attributedShifts track by shift._id" ng-model="attributedShift"></select></p>
@@ -25,9 +26,7 @@
         </div>
 
         <div class="text-center">
-
-            <button ng-show="selectedShift.length > 0 || otherShift" class="btn btn-success " ng-click="attribuer(selectedShift, coursier, date, otherShift)">Attribuer</button>
-
+            <button ng-show="selectedShift.length > 0 || otherShift" class="btn btn-success " ng-click="attribuer(selectedShift, coursier, date, otherShift)" aria-label="Remove">Attribuer</button>
             <button class="btn btn-info" ng-click="close()">Annuler</button>
         </div>
 <div class="modal-footer "></div>

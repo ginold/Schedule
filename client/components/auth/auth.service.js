@@ -61,6 +61,8 @@ angular.module('velociteScheduleApp')
 
         return User.save(user,
           function(data) {
+            console.debug(user);
+            console.log(data)
             //dont login after register!
             // $cookieStore.put('token', data.token);
             // currentUser = User.get();

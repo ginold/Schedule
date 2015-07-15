@@ -70,7 +70,6 @@ exports.setShift = function (req, res){
 }
 // Creates a new attribution in the DB.
 exports.create = function(req, res) {
-  console.log(req.body);
   var coursier = req.body.coursier;
   delete coursier.dispos;
   req.body.shifts[0].coursierAttributed = coursier;
@@ -103,6 +102,7 @@ function arrayUnique(array) {
 // Updates an existing attribution in the DB.
 // creates a new attributed shift
 exports.update = function(req, res, attributions) {
+  console.log(req.body)
   var daMonthYear = req.body.monthYear
   var daDay = req.body.day
   var coursier = req.body.coursier;

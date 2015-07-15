@@ -8,7 +8,7 @@
       <h3>Personnel</h3>
        <p> <label>Nom:</label> {{user.name}}</p>
        <p> <label>Prénom:</label> {{user.prenom}}</p>
-       <p> <label>Date de naissance:</label> {{user.naissance}}</p>
+       <p> <label>Date de naissance:</label> {{user.naissance  | amDateFormat:'dddd D MMMM YYYY'}}</p>
        <p> <label>Email:</label> {{user.email}}</p>
         <p><label>Fixe: </label> {{user.adresse.telFixe}}</p>
         <p><label>Portable: </label> {{user.adresse.telPortable}}</p>
@@ -29,7 +29,7 @@
         <p><label>Mobility: </label>{{user.mobility == true ? " Oui":" Non"}}</p>
 
         <h3>Vélocité</h3>
-        <p><label>Coursier depuis: </label>{{user.createdOn}}</p>
+        <p><label>Coursier depuis: </label>{{user.createdOn  | amDateFormat:'dddd D MMMM YYYY'}}</p>
         <p><label>Actif: </label>{{}}</p>
 
         <h3>Compétences</h3>
@@ -46,7 +46,7 @@
 			
         </div>
 
-        <button class="btn-primary btn" ng-click="showCompetences()">Ajouter des compétences</button>
+        <button class="btn-primary btn" ng-show="!addCompetences" ng-click="showCompetences()">Ajouter des compétences</button>
         <button  ng-show="addCompetences"  class="btn btn-success" ng-click="add(user.newCompetences)">Ajouter</button>
       </div>
       </div>

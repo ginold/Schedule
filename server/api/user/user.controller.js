@@ -20,25 +20,22 @@ exports.index = function(req, res) {
   });
 };
 exports.addCompetences = function(req, res){
-  console.log(req.body.id)
   User.findById(req.body.id, function (err, user) {
-
     user.competences = req.body.competences;
-        console.log(user);
-      user.save(function(err){
-      if (err) return validationError(res, err);
-        res.send(200);
-      });   
+    user.save(function(err){
+    if (err) return validationError(res, err);
+      res.send(200);
+    });   
   });
 
 }
+
 /**
  * Creates a new user
  */
 exports.create = function (req, res, next) {
   var newUser = new User(req.body);
   newUser.provider = 'local';
-  newUser.role = 'user';
   newUser.save(function(err, user) {
     if (err) return validationError(res, err);
     var token = jwt.sign({_id: user._id }, config.secrets.session, { expiresInMinutes: 60*5 });

@@ -11,6 +11,8 @@ angular.module('velociteScheduleApp', [
   'angularMoment'
   ])
   .config(function ($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider) {
+     moment.locale('fr')
+
     $urlRouterProvider
     //if you are logged, redirect to planning
       .otherwise('/planningCoursier');

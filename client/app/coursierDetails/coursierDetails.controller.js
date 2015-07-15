@@ -5,7 +5,7 @@ angular.module('velociteScheduleApp')
     $http.get("api/users/"+$state.params.coursierId).success(function(coursier){
     	$scope.user = coursier;
     })
-    $scope.addCompetences = true;
+    $scope.addCompetences = false;
      $scope.back =function(){
     	$state.go("^");
     }

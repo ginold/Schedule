@@ -29,7 +29,6 @@ angular.module('velociteScheduleApp')
     $scope.cities = shiftService.getCities()
      //months for periode de validite
     $scope.months = calendarService.getMonths();
-   // console.log($scope.months)
 
    /*
     sets the number of times a shift should be done per day

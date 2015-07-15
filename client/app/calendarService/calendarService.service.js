@@ -12,13 +12,7 @@ angular.module('velociteScheduleApp')
   		},
   		getDays :function(){
   			return days;
-  		},
-      getDate: function(){
-        return moment().format("DD-MM-YYYY")
-      },
-      getMonthYear: function(){
-        return moment().format("MM-YYYY")
-      }
+  		}
 
   	}
     

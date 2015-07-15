@@ -1,10 +1,8 @@
 <div ui-view="">
 	<div class="container" ng-keypress="checkCity($event)">
 		<div class="col-lg-3 col-md-3 row">
-		<button ng-click="toggleDispoType('absent')" type="button" class="btn btn-danger btn-lg ">Absence</button>
-		<button ng-click="toggleDispoType('present')" type="button" class="btn btn-primary btn-lg">Préférence</button>
-
-
+		<button ng-click="toggleDispoType('absent')" type="button" class="btn  btn-lg " ng-class="{'btn-danger selected': !dispoType}">Absence</button>
+		<button ng-click="toggleDispoType('present')" type="button" class="btn  btn-lg" ng-class="{'btn-info selected': dispoType}">Présence</button>
 
 
 			<label>Nombre souhaité de shifts</label>

@@ -106,14 +106,18 @@ background-color: #00FF4C ;
 td,th {
     text-align: center;
 }
+.coursierTD {
+  text-align: left;
+}
 #planning thead, tbody{
 //  display: block;
 }
 .coursierDay{
   width: auto;
-
 }
-
+.shiftHidden{
+ // display: none;
+}
 #shiftsTable{
 
   height: 300px;
@@ -251,7 +255,7 @@ table tr th {
   color:green;
 }
 .attributedShift[city="Neuchâtel"]{
-  color:yellow;
+  color: gold ;
 }
 
 .today{
@@ -263,22 +267,28 @@ table tr th {
   margin-right: 2%;
   padding-left: 3%;
 }
+
 .dispoInfo{
-      height: 10px;
+      height: 13px;
       width: 20px;
       margin-bottom: -20%;
     right: 0;
     top: 0;
 }
-
+#fullCalSwitch{
+  position: relative;
+  top:-620px;
+  left: 1%;
+}
 .theContainer{
   width: 70%;
-  margin-left: 12%;
+  margin-left: 15%;
   margin-top:  -3%;
 }
 #fullCal{
   width: 75%;
   margin-left: 12.5%;
+  margin-top: 6%;
 }
 
 .modal.fade {
