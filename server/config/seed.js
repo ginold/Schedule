@@ -49,8 +49,8 @@ Attribution.find({}).remove(function() {
 Shift.find({}).remove(function() {
   Shift.create({
     "nom" : "C",
-    "debut" : ISODate("1970-01-01T07:30:00.000Z"),
-    "fin" : ISODate("1970-01-01T09:30:00.000Z"),
+    "debut" : new Date("1970-01-01T07:30:00.000Z"),
+    "fin" : new Date("1970-01-01T09:30:00.000Z"),
     "ville" : "Neuchâtel",
     "remarques" : "CC",
     "competences" : [ 
@@ -66,8 +66,8 @@ Shift.find({}).remove(function() {
     ]
   }, {
    "nom" : "D",
-    "debut" : ISODate("1970-01-01T10:30:00.000Z"),
-    "fin" : ISODate("1970-01-01T16:00:00.000Z"),
+    "debut" : new Date("1970-01-01T10:30:00.000Z"),
+    "fin" : new Date("1970-01-01T16:00:00.000Z"),
     "ville" : "Yverdon",
     "remarques" : "DD",
     "competences" : [ 
@@ -93,8 +93,8 @@ Shift.find({}).remove(function() {
     ]
   },{
     "nom" : "X",
-    "debut" : ISODate("1970-01-01T08:30:00.000Z"),
-    "fin" : ISODate("1970-01-01T09:00:00.000Z"),
+    "debut" : new Date("1970-01-01T08:30:00.000Z"),
+    "fin" : new Date("1970-01-01T09:00:00.000Z"),
     "ville" : "Lausanne",
     "competences" : [ 
         "Back-office"
@@ -119,8 +119,8 @@ Shift.find({}).remove(function() {
     
   },{
     "nom" : "A",
-    "debut" : ISODate("1970-01-01T07:30:00.000Z"),
-    "fin" : ISODate("1970-01-01T08:00:00.000Z"),
+    "debut" : new Date("1970-01-01T07:30:00.000Z"),
+    "fin" : new Date("1970-01-01T08:00:00.000Z"),
     "ville" : "Lausanne",
     "remarques" : "Aa",
     "competences" : [ 
@@ -147,8 +147,8 @@ Shift.find({}).remove(function() {
     
 
     "nom" : "B",
-    "debut" : ISODate("1970-01-01T07:30:00.000Z"),
-    "fin" : ISODate("1970-01-01T09:30:00.000Z"),
+    "debut" : new Date("1970-01-01T07:30:00.000Z"),
+    "fin" : new Date("1970-01-01T09:30:00.000Z"),
     "ville" : "Lausanne",
     "remarques" : "BB",
     "competences" : [ 
