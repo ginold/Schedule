@@ -28,8 +28,12 @@ angular.module('velociteScheduleApp')
   var date = new Date()
   var year = date.getFullYear()
 
+  //get months for this and next year
   $http.get("api/monthYears/year/"+year).success(function(monthYears){
     $scope.monthYears = monthYears
+      $http.get("api/monthYears/year/"+(year+1)).success(function(monthYears2){
+           $scope.monthYears = $scope.monthYears.concat(monthYears2)
+      })
   })
 
   /* config calendar */
