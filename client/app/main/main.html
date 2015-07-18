@@ -2,13 +2,14 @@
  <div class="text-center" ng-show="loading"> <img src="assets/images/loading.gif">
   </div>
 
-  
-    <div class="theContainer" ng-show="!loading">
+
+      <div class="theContainer" ng-show="!loading">
         <!-- show first monthly calendar to non admin -->
         <div ng-show="!isAdmin()">
         
       <div  id="fullCal"></div>
        <button  id="fullCalSwitch" class="btn btn-primary  btn-sm"  ng-click="togglePlanning(isAdmin())">{{isAdmin() == true ? "Mon planning" :"Tous les coursiers"}}</button>
+
 
       </div>
 
@@ -16,19 +17,17 @@
     <!-- show all coursiers calendar to admin -->
       <div id="calendar" ng-show="isAdmin()">
 
-        <div class="col-md-4" id="monthYearSelect">
+        <div class="col-md-5" id="monthYearSelect">
           <!-- select the month we are in -->
-            <label>Mois</label>
             <select ng-model="month" 
             ng-change="renderCalendar(month)">
               <option 
               ng-repeat="months in calendar.monthNames" 
               value="{{$index}}"  
-              ng-selected="calendar.monthNames[monthNum] == calendar.monthNames[$index]">{{calendar.monthNames[$index]}}</option>
+                ng-selected="calendar.monthNames[monthNum] == calendar.monthNames[$index]">{{calendar.monthNames[$index]}}</option>
             </select >
 
             <!-- select the year we are in -->
-            <label>Année</label>
             <select ng-model="year" 
             ng-change="renderCalendar(monthNum,year)">
               <option>2014</option>
@@ -38,13 +37,14 @@
               <option>2017</option>
             </select>
   <button class="btn btn-primary  btn-sm"  ng-click="togglePlanning(isAdmin())">{{isAdmin() == true ? "Mon planning" :"Tous les coursiers"}}</button>
-
+<span>Nom &nbsp;<input class="searchName" ng-model="search.name"></span>
+<span># <input class="searchNo" ng-model="search.no"></soan>
               
         </div>
      
-        <div class="text-centered">
+        <div class="text-centered" >
          <!--  previous and next buttons (month) -->
-          <h3 class="col-md-4 text-center"> 
+          <h3 class="col-md-3 " id="monthNavigation"> 
              <button id="prevMonth"  class="btn btn-success btn-sm" ng-click="renderCalendar(monthNum-1)" ><</button>
              {{calendar.month}} {{calendar.year}}
              <button id="nextMonth"  class="btn btn-success btn-sm" ng-click="renderCalendar(monthNum+1)">></button>
@@ -53,7 +53,7 @@
 
 
 
- <div class="col-md-4 col-sm-12" id="headButtons">
+ <div class="col-md-3 col-sm-10" id="headButtons">
   <div class="dropdown">
     <button class="btn btn-success  dropdown-toggle" type="button"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
       Dispos
@@ -67,9 +67,9 @@
     </ul>
   </div>
 
-  <div class="dropdown" ng-show="isAdmin()">
+<!--   <div class="dropdown" ng-show="isAdmin()">
     <button class="btn btn-info dropdown-toggle " type="button"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-      Shifts souhaités
+      Shifts 
       <span class="caret"></span>
     </button>
     <ul class="dropdown-menu text-centered wantedShifts" aria-labelledby="dropdownMenu1">
@@ -84,30 +84,30 @@
            <select ng-model="citySelected3" ng-change="toggleDispoLevelCity(citySelected3, 'highDispo')" ><option ng-repeat="city in cities">{{city}} </option></select>   
       </li>
     </ul>
-  </div>
+  </div> -->
    <div class="dropdown">  
     <button class="btn btn-warning" ng-click="toggleAllDispos(toggleAll)">On</button>
 </div>
 
   </div>
 
-        <div class="table-responsive">
-          <table id="planning" cellspacing="0" >
+      <div class="wrapper">
+          <table class="planning shifts">
          <!-- colonnes pour la css et les weekends,+1 car une colonne pour users -->
          <col></col>
          <col class="column" ng-repeat="numDay in calendar.monthDays track by $index" ng-class="isToday($index+1, monthNum, year)" data-dayNameCol="{{calendar.daysNames[$index]}}" date="{{$index+1}}-{{monthNum}}-{{year}}"/>
-         <thead>
+         
+       <thead>
          <!-- les jours du mois-->
-            <tr class="mainHeader bg-active"> 
-              <th><div>Coursier|Jour</div></th>
+            <tr class="bg-active"> 
+              <th>Coursier|Jour</th>
                <th class="monthDay" ng-repeat="numDay in calendar.monthDays track by $index" > {{$index+1}}
                </th>
             </tr>
-         </thead>
-
-          <tbody id="shiftsTable">
+        </thead>
+        <tbody id="shiftsTable">
           <!-- rangs avec nom du coursier et les jours. On ajoute la class myRow à l'endroit de notre login id-->
-          <tr ng-repeat="user in coursiers track by user._id | orderBy: 'numeroCoursier'  "  class=" {{currentUser._id == user._id ? 'myRow coursierName' : ''}} ">
+          <tr ng-repeat="user in coursiers | orderBy: 'numeroCoursier':reverse | filter: {name: search.name, numeroCoursier: search.no }"  class=" {{currentUser._id == user._id ? 'myRow coursierName' : ''}} ">
               <td  class="coursierTD"
                   popover="Email: {{user.email}} portable: {{user.telPortable}}"
                    popover-placement="top"
@@ -132,14 +132,20 @@
                  > 
               </td> 
            </tr>
-          <!--  MANQUES PAR VILLE -->
-          <tbody id="manquesTable" ng-repeat="city in cities">
+           </tbody>
 
-            <tr class="cityManquesHeader" ><th colspan="{{calendar.monthDays.length+1}}" >  {{city}}</th> </tr>
-            <tr>
-              <td ng-click="toggleCityDispos(city)" >Manques
-              </td>
-              <td 
+   
+          <!--  MANQUES PAR VILLE -->
+
+    <tbody  ng-repeat="city in cities">
+        <tr class="cityManquesHeader" >
+          <th colspan="{{calendar.monthDays.length+1}}" >  
+            {{city}}
+          </th> 
+        </tr>
+      <tr>
+        <td ng-click="toggleCityDispos(city)">Manques</td>
+            <td 
                   manques-city
                   ng-repeat="day in calendar.monthDays track by $index"
                    day="$index"
@@ -151,12 +157,14 @@
                    daily-shifts="dailyShifts"
                   show-potential-coursiers="showPotentialCoursiers">
 
-              </td>
-             </tr>
-          
-            </tbody><!-- manques -->
+            </td>
+          </tr>
+      </tbody>
+          <tbody>
           <tr>
             <tr class="cityManquesHeader" ng-click="slideManques($event)"><th colspan="{{calendar.monthDays.length+1}}" >Doublons</th></tr>
+
+      
             <tr>
                 <td>Doublons</td>
                   <td doublons
@@ -169,13 +177,9 @@
                    month-year="monthYear"       
                    daily-shifts="dailyShifts"></td>
               </tr>
-          </tbody>
+         </tbody>
+    </table>
 
-         </table>
-        </div>  <!-- table div --> 
-
+ 
       </div> <!-- calendar -->
-     
-
-
 </div>

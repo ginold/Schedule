@@ -12,20 +12,15 @@ angular.module('velociteScheduleApp')
     // Use the User $resource to fetch all users
     $scope.users = User.query();
     $scope.competences = shiftService.getCompetences()
-    $scope.shift = {};
+    $scope.shift = {
+      competences : []
+    };
     $scope.shift.coursiers = null;
     $scope.selectedCompetences = [];
     $scope.isFalseHour = false;
-    $scope.times = 1 ;
+    $scope.times = 1;
     //days of week with default times/day shift = 1
-    $scope.days = [ 
-      {id:1, nom : 'Lundi', times: 1},
-      {id:2, nom : 'Mardi', times: 1},
-      {id:3, nom : 'Mercredi', times: 1},
-      {id:4, nom : 'Jeudi', times: 1},
-      {id:5, nom : 'Vendredi', times: 1},
-      {id:6, nom : 'Samedi', times: 1}
-    ]
+    $scope.days = shiftService.getWeekDays()
     $scope.cities = shiftService.getCities()
      //months for periode de validite
     $scope.months = calendarService.getMonths();
@@ -112,8 +107,7 @@ angular.module('velociteScheduleApp')
 
      $scope.shift.debut = start;
      $scope.shift.fin = end;
-
-      
+ 
 
     }
       if (typeof start != 'undefined' && typeof end != 'undefined') {

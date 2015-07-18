@@ -10,6 +10,7 @@
     <title>Vélocité dispos coursiers</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width">
+    <meta http-equiv="X-UA-Compatible" content="IE=10; IE=9; IE=8; IE=7; IE=EDGE" />
 
 
   
@@ -18,10 +19,12 @@
       <!-- bower:css -->
       <link rel="stylesheet" href="bower_components/fullcalendar/dist/fullcalendar.css" />
       <link rel="stylesheet" href="bower_components/jquery-timepicker-jt/jquery.timepicker.css" />
+      <link rel="stylesheet" href="bower_components/angular-xeditable/dist/css/xeditable.css" />
       <!-- endbower -->
     <!-- endbuild -->
     <!-- build:css({.tmp,client}) app/app.css -->
     <link rel="stylesheet" href="app/app.css">
+
       <!-- injector:css -->
 
       <!-- endinjector -->
@@ -39,11 +42,6 @@
       <img src="assets/images/loading.gif">
     </div>
     <div ui-view=""></div>
-    
-   
-    <div ng-include="'components/footer/footer.html'"></div>
-
-
 
     <!--[if lt IE 9]>
     <script src="bower_components/es5-shim/es5-shim.js"></script>
@@ -66,6 +64,9 @@
       <script src="bower_components/checklist-model/checklist-model.js"></script>
       <script src="bower_components/angular-moment/angular-moment.js"></script>
       <script src="bower_components/moment-timezone/builds/moment-timezone-with-data-2010-2020.js"></script>
+      <script src="bower_components/floatThead/dist/jquery.floatThead.js"></script>
+      <script src="bower_components/floatThead/dist/jquery.floatThead.min.js"></script>
+      <script src="bower_components/angular-xeditable/dist/js/xeditable.js"></script>
       <!-- endbower -->
     <!-- endbuild -->
 
@@ -88,6 +89,8 @@
           <script src="app/main/main.controller.js"></script>
           <script src="app/main/main.js"></script>
           <script src="app/modalRemoveDispo/modalRemoveDispo.controller.js"></script>
+          <script src="app/monthYear/monthYear.controller.js"></script>
+          <script src="app/monthYear/monthYear.js"></script>
           <script src="app/sendDispos/sendDispos.controller.js"></script>
           <script src="app/sendDispos/sendDispos.js"></script>
           <script src="app/sendDispos/verifyDispos.controller.js"></script>

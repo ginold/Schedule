@@ -3,19 +3,21 @@
 angular.module('velociteScheduleApp')
   .controller('CreateCoursierCtrl', function ($scope,Auth, $modal,shiftService, $http) {
   	$scope.competences = shiftService.getCompetences()
+  	$scope.invalidNo = false;
+
+
   	//init false by default
     $scope.user = {
     	ag : false,
     	permis : false,
     	mobility : false
     };
-    $scope.okModal = function(){
-    	$modalInstance.dismiss('cancel');
-    }
+
    	$http.get('api/users').success(function(users){
-		$scope.numeroCoursier = users.length+1
-		$scope.user.numeroCoursier =  $scope.numeroCoursier
+		$scope.user.numeroCoursier =  users.length+1
+		$scope.users = users;
 	})
+
 
     $scope.createCoursier = function(user){   	
 
@@ -53,4 +55,30 @@ angular.module('velociteScheduleApp')
 		     	});
 		  //} 
     }//create coursier
-  });
+
+    $scope.okModal = function(){
+    	$modalInstance.dismiss('cancel');
+    }
+
+  }).directive("validateNo", function() {
+    return {
+    	scope:{
+    		numero : "=",
+    		coursiers : "=",
+    	},
+        link: function(scope, elem, attrs) {
+        	scope.$watch("numero",function(newNo, oldNo){
+    		 	for (var i = scope.coursiers.length - 1; i >= 0; i--) {
+               		if(scope.coursiers[i].numeroCoursier == newNo){
+               			scope.$parent.invalidNo = true;
+               			return;
+               		}else{
+               			scope.$parent.invalidNo = false;
+               		}
+          		 };
+        	})//watch
+
+        }
+    }
+
+})

@@ -6,18 +6,19 @@
  <div class="col-md-2"></div>
   <div class="col-md-4">
       <h3>Personnel</h3>
-       <p> <label>Nom:</label> {{user.name}}</p>
-       <p> <label>Prénom:</label> {{user.prenom}}</p>
+       <p> <label>Nom:</label> <span editable-text="user.name">{{user.name}}</span></p>
+       <p> <label>Prénom:</label> <span editable-text="user.prenom">{{user.prenom}}<span></p>
        <p> <label>Date de naissance:</label> {{user.naissance  | amDateFormat:'dddd D MMMM YYYY'}}</p>
-       <p> <label>Email:</label> {{user.email}}</p>
-        <p><label>Fixe: </label> {{user.adresse.telFixe}}</p>
+       <p> <label>Email:</label> <span editable-email="user.email">{{user.email}}</span></p>
+        <p> <label>No coursier:</label> <span editable-number="user.numeroCoursier"> #{{user.numeroCoursier}}</span></p>
+     <!--    <p><label>Fixe: </label> {{user.adresse.telFixe}}</p>
         <p><label>Portable: </label> {{user.adresse.telPortable}}</p>
 
         <h3>Adresse</h3>
         <p><label>Rue: </label> {{user.adresse.rue}}</p>
         <p><label>Ville: </label> {{user.adresse.ville}}</p>
         <p><label>NPA: </label> {{user.adresse.npa}}</p>
-   
+    -->
 
 
       </div>
@@ -29,8 +30,9 @@
         <p><label>Mobility: </label>{{user.mobility == true ? " Oui":" Non"}}</p>
 
         <h3>Vélocité</h3>
-        <p><label>Coursier depuis: </label>{{user.createdOn  | amDateFormat:'dddd D MMMM YYYY'}}</p>
-        <p><label>Actif: </label>{{}}</p>
+        <p><label>Coursier depuis:&nbsp; </label>{{user.createdOn  | amDateFormat:'dddd D MMMM YYYY'}}</p>
+        <p><label>Actif:&nbsp; </label>{{user.departOn == "Oui" ? user.departOn : "non - depuis "+user.departOn}}</p>
+        <button ng-show="user.departOn == 'Oui' " class="btn btn-danger" ng-click="deactivateCoursier(user)">Désactiver</button>
 
         <h3>Compétences</h3>
         <p ng-repeat="com in user.competences">{{com}}</p>

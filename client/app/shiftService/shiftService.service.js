@@ -31,6 +31,16 @@ angular.module('velociteScheduleApp')
         } 
 
       },
+      getWeekDays : function(){
+        return [ 
+              {id:1, nom : 'Lundi', times: 1},
+              {id:2, nom : 'Mardi', times: 1},
+              {id:3, nom : 'Mercredi', times: 1},
+              {id:4, nom : 'Jeudi', times: 1},
+              {id:5, nom : 'Vendredi', times: 1},
+              {id:6, nom : 'Samedi', times: 1}
+            ]
+      },
       getCompetences:function(){
         return ["Back-office","Spécial", "Coursier", "Dispatcheur", "CTiste"]
       },

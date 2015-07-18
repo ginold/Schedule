@@ -2,8 +2,15 @@
 
 angular.module('velociteScheduleApp')
   .controller('CoursierDetailsCtrl', function ($scope,$http, $state, shiftService) {
+
     $http.get("api/users/"+$state.params.coursierId).success(function(coursier){
     	$scope.user = coursier;
+        //if user has no departure date, set it to YES (will display "actif : oui ")
+        if(!$scope.user.departOn){
+            $scope.user.departOn = "Oui"
+        }else{
+            $scope.user.departOn = moment($scope.user.departOn).format("dddd D MMMM YYYY")
+        }
     })
     $scope.addCompetences = false;
      $scope.back =function(){
@@ -21,6 +28,23 @@ angular.module('velociteScheduleApp')
     	})
     	$scope.competences = competences
     	$scope.addCompetences = true;
+
+    }
+    $scope.deactivateCoursier = function(user){
+        var departOn = new Date()
+        user.departOn = departOn
+       $http({
+            method: 'PUT',
+            url: "/api/users/deactivateCoursier",
+            data: {
+                coursier:  user
+            }
+          }).success(function(data, status){ 
+            console.debug(data);
+             $scope.user.departOn = moment(departOn).format("dddd D MMMM YYYY")
+          }).error(function(err){
+            console.debug(err);
+          })
 
     }
 

@@ -13,6 +13,7 @@ exports.index = function(req, res) {
   });
 };
 
+
 // Get a single shift and all its coursiers
 exports.show = function(req, res) {
   Shift.findById(req.params.id, function(err,shift){
@@ -20,6 +21,40 @@ exports.show = function(req, res) {
       return res.json(shift)
     })
   })
+ 
+};
+exports.editName = function(req, res) {
+    var set = { $set: {} };
+    set.$set["nom"] = req.body.name;
+    Shift.update({ _id:  req.params.id }, set , function(error){
+         if (error) return res.send(500, err);
+         return res.send(204)
+     }); 
+};
+exports.editStart = function(req, res) {
+    var set = { $set: {} };
+    set.$set["debut"] = req.body.start;
+    Shift.update({ _id:  req.params.id }, set , function(error){
+         if (error) return res.send(500, err);
+         return res.send(204)
+     }); 
+};
+exports.editCity = function(req, res) {
+    var set = { $set: {} };
+    set.$set["ville"] = req.body.city;
+    Shift.update({ _id:  req.params.id }, set , function(error){
+         if (error) return res.send(500, err);
+         return res.send(204)
+     }); 
+};
+
+exports.editEnd = function(req, res) {
+   var set = { $set: {} };
+    set.$set["fin"] = req.body.end;
+    Shift.update({ _id:  req.params.id }, set , function(error){
+         if (error) return res.send(500, error);
+         return res.send(204)
+     }); 
  
 };
 
@@ -39,15 +74,6 @@ exports.update = function(req, res) {
   Shift.findById(req.params.id, function (err, shift) {
     if (err) { return handleError(res, err); }
     if(!shift) { return res.send(404); }
-//     var oldCoursiers = shift.coursiers;
-//     var newCoursiers = req.body.coursiers
-//     console.log(oldCoursiers)
-//     var newOldCoursiers = oldCoursiers.concat(newCoursiers) 
-
-//     console.log(newOldCoursiers)
-// //console.log('-----shift-------')
-//      shift.coursiers = newOldCoursiers;
-    //console.log(shift)
 
     shift.save(function (err) {
       if (err) { return handleError(res, err); }

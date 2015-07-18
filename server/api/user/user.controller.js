@@ -66,31 +66,34 @@ exports.destroy = function(req, res) {
     return res.send(204);
   });
 };
+
+exports.deactivateCoursier = function(req,res){
+  var coursier = req.body.coursier
+  User.findById(coursier._id, function (err, user) {
+      user.departOn = coursier.departOn;
+      user.save(function(err) {
+        if (err) return validationError(res, err);
+        res.send(200);
+      });
+
+  });
+}
 /**
   Update users availbitilities
 */
 exports.saveDispos = function(req, res){
   var disposnibilites = req.body.dispos
+  var monthYear = req.body.monthYear
   //for every month, check if there is anything
-  for(var monthYear in disposnibilites){
-    //if not, delete the property
-    if ( Object.keys(disposnibilites[monthYear]).length == 0 ) {
-      delete disposnibilites[monthYear]
-    };  
-
-  }
-
+  
     //and update each month of the user.dispos
-    var stringMonthDay = monthYear.toString();
     var set = { $set: {} };
-    set.$set['dispos.' + monthYear] = disposnibilites[monthYear];
+    set.$set['dispos.' + monthYear] = disposnibilites;
     
     User.update({ _id:  req.body.id }, set , function(error){
          if (error) return res.send(500, err);
          return res.send(204)
      }); 
-
-   
 
 }
 

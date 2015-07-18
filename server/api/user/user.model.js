@@ -18,6 +18,7 @@ var UserSchema = new Schema({
   prenom: String,
   compteBanc :String,
   competences : [],
+  departOn : Date,
   numeroCoursier : Number,
   adresse: {
     npa: {type: Number},

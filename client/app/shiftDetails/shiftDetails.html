@@ -7,9 +7,25 @@
 
 	<div class="col-md-6">
 		
-		<p><label>Nom du shift: &nbsp;</label>{{shift.nom}}</p>
-		<p><label>Début:&nbsp;</label>{{shift.debut | amDateFormat:'H:mm'}}</p>
-		<p><label>Fin:&nbsp;</label>{{shift.fin | amDateFormat:'H:mm'}}</p>
+		<p><label>Nom du shift: &nbsp;</label>
+				<span   onaftersave="editName($data)"
+						editable-text="shift.nom" 
+						>{{shift.nom}}
+				</span>
+		</p>
+		<p><label>Début:&nbsp;</label> 
+				<span   onaftersave="editStart($data)"
+						editable-bstime="shift.debut" 
+						e-show-meridian="false" 
+						e-minute-step="10">{{shift.debut | amDateFormat:'H:mm'}}
+				</span>
+	    </p>
+		<p><label>Fin:&nbsp;</label>
+				<span   onaftersave="editEnd($data)"
+						editable-bstime="shift.fin" 
+						e-show-meridian="false" 
+						e-minute-step="10">{{shift.fin | amDateFormat:'H:mm'}}
+				</span></p>
 		<p><label>Description:&nbsp;</label>{{shift.remarques}}</p>
 
 		<h4>Jours</h4>
@@ -21,9 +37,11 @@
 	
 	<div class="col-md-6">
 	<h4>Ville</h4>
-	<ul>
-		<li>{{shift.ville}}</li>
-	</ul>
+	<p  onaftersave="editCity($data)"
+		editable-select="shift.ville" 
+	    e-ng-options="ville as ville for ville in villes">{{shift.ville}}
+	<p>
+	
 		<h4>Coursiers capables</h4>
 		<ul>
 			<li ng-repeat="coursier in coursiers">{{coursier.name}} {{coursier.prenom}}</li>

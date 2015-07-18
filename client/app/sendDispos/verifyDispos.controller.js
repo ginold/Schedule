@@ -41,31 +41,38 @@ angular.module('velociteScheduleApp')
     	@dispos - availbilites object
     */
     $scope.sendDispos = function(dispos){
+        console.debug(dispos);
     	$scope.user = Auth.getCurrentUser();
-    	var dispo = dispos[Object.keys(dispos)[0]]; //one level lower in object
-    	
-    	$http({
-            method: 'PUT',
-            url: "/api/users/"+$scope.user._id+"/dispos",// in server->user->index.js & user.controller
-            data: { dispos : dispo, id : $scope.user._id }
-        })
-    	.success(function(data, status){   
-          	$scope.$emit("dispoUpdate");    
-             console.log(data);
-             console.log('sucess updating dispos');
 
-            var modalInstance = $modal.open({
-	            templateUrl: 'app/sendDispos/disposSent.html',//par rapport a l index.html
-	            controller: function($scope, $modalInstance){
-				    $scope.cancel = function(){ $modalInstance.dismiss('cancel'); }
-				 },
-	            size: "sm"
-	       	});
-		})
-	    .error(function(err){
-	      	console.log('error while updating dipos!')
-	        console.log(err);
-	    }) 
+       for(var monthYear in dispos.dispos){
+           var dispo = dispos.dispos[monthYear]
+            $http({
+                method: 'PUT',
+                url: "/api/users/"+$scope.user._id+"/dispos",// in server->user->index.js & user.controller
+                data: { dispos : dispo, id : $scope.user._id, monthYear : monthYear }
+            })
+            .success(function(data, status){    
+                 console.log(data);
+                 console.log('sucess updating dispos');
+            })
+            .error(function(err){
+                console.log('error while updating dipos!')
+                console.log(err);
+            }) 
+
+        };
+       var modalInstance = $modal.open({
+            templateUrl: 'app/sendDispos/disposSent.html',//par rapport a l index.html
+            controller: function($scope, $modalInstance){
+                $scope.cancel = function(){ 
+                    $modalInstance.dismiss('cancel'); 
+                    $state.go("planningCoursier")
+
+                }
+             },
+            size: "sm"
+        });
+    	
 
     }
     $scope.back = function(){

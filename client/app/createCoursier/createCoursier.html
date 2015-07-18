@@ -13,7 +13,7 @@
 
   <div class="form-group">
     <label class="col-sm-3 control-label">Nom</label>
-    <div class="col-sm-9">
+    <div class="col-sm-9"> 
       <input type="text" ng-model="user.name" class="form-control" >
     </div>
   </div>
@@ -32,7 +32,7 @@
     </div>
   </div>
 
-  <h3>Adresse</h3>
+<!--   <h3>Adresse</h3>
    <div class="form-group">
     <label class="col-sm-3 control-label">Rue et no</label>
     <div class="col-sm-9">
@@ -74,11 +74,34 @@
     </div>
   </div>
 
+ -->
+  <h4>Autres</h4>
+          <ul class="coursierOthersCheckbox">
+            <li> <label class="checkboxText"><input type="checkbox" ng-model="user.mobility"> Mobility</label></li>
+            <li> <label class="checkboxText"><input type="checkbox" ng-model="user.ag"> Abonnement Général</label>  </li>
+            <li> <label class="checkboxText"><input type="checkbox"  ng-model="user.permis"> Permis de conduire</label></li>
+          </ul>
 
+         <div class="form-group">
+        <label class="col-sm-3 control-label">Mot de passe</label>
+        <div class="col-sm-9">
+          <input type="text" ng-model="user.password" class="form-control" >
+        </div>
+      </div>
 </form>
 
-<form class="form-horizontal col-md-6" >
- <h4> Numéro coursier: # <b>{{numeroCoursier}} </b> </h4>
+<div class="form-horizontal col-md-6" >
+ <h4> Numéro coursier: # <b> 
+         <input type="number" validate-no 
+              ng-model="user.numeroCoursier"
+              coursiers="users" 
+              numero="user.numeroCoursier" 
+              invalid-no = "validNo"
+              value="{{user.numeroCoursier}}"
+              min="0">
+             </b> 
+  </h4>
+ <h4 ng-show="invalidNo" class="bg-danger">Ce numéro existe déjà! </h4>
   <h4>Compétences</h4>
     <ul class="coursierOthersCheckbox">
         <li ng-repeat="competence in competences">
@@ -96,26 +119,14 @@
     </ul>
        
 
-	<h4>Autres</h4>
-	       	<ul class="coursierOthersCheckbox">
-	        	<li> <label class="checkboxText"><input type="checkbox" ng-model="user.mobility"> Mobility</label></li>
-	        	<li> <label class="checkboxText"><input type="checkbox" ng-model="user.ag"> Abonnement Général</label>	</li>
-	        	<li> <label class="checkboxText"><input type="checkbox"  ng-model="user.permis"> Permis de conduire</label></li>
-	        </ul>
 
-		     <div class="form-group">
-		    <label class="col-sm-3 control-label">Mot de passe</label>
-		    <div class="col-sm-9">
-		      <input type="text" ng-model="user.password" class="form-control" >
-		    </div>
-		  </div>
 
 		  <div class="form-group">
 		    <div class="col-sm-offset-2 col-sm-9">
 		      <button class="btn btn-primary" ng-click="createCoursier(user)">Créer coursier</button>
 		    </div>
 		  </div>
-</form>
+</div>
 </div> <!-- container -->
 
   

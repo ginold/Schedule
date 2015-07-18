@@ -113,7 +113,6 @@ exports.update = function(req, res, attributions) {
   delete coursier.dispos;
   //set the coursier of that shift
   req.body.shifts[0].coursierAttributed = coursier;
-  req.body.shifts[0].daSuperId = mongoose.Types.ObjectId();;
   //init the monthYear
     var monthYear = {}
     monthYear[req.body.monthYear] = {}
