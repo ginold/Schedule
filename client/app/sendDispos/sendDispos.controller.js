@@ -15,7 +15,6 @@ angular.module('velociteScheduleApp')
   var monthYear = moment(new Date()).format("MM-YYYY")
   $scope.dispos = {};
   $scope.villes = [];
-   $scope.shiftsWeek = 1;
   $scope.forgotCity = false;
   $scope.drag = false
   $scope.loaded = false;
@@ -62,7 +61,6 @@ angular.module('velociteScheduleApp')
           var monthEnd = view.end._d.getMonth();
           var monthYearStart = moment(view.start._d).format("MM-YYYY");
           var monthYearEnd = moment(view.end._d).format("MM-YYYY");
-         
           //init name of the displayed month
           //useful for displaying month names in veryfiDispos.html
           // for example 28 juin - 2 juillet
@@ -71,17 +69,18 @@ angular.module('velociteScheduleApp')
           }else{
              $scope.week = weekStart+" "+$scope.months[monthStart]+" - "+weekEnd+" "+$scope.months[monthEnd]
           }
-            $scope.monthYear = monthYearStart
-            $scope.loadDispos($scope.week, monthYearStart, monthYearEnd ) 
-             $('#calendar').fullCalendar('removeEventSource')
-             $('#calendar').fullCalendar('removeEvents');
-             $('#calendar').fullCalendar('addEventSource', $scope.weekDispos);
+          $scope.monthYear = monthYearStart
+          $scope.loadDispos($scope.week, monthYearStart, monthYearEnd ) 
+          $('#calendar').fullCalendar('removeEventSource')
+          $('#calendar').fullCalendar('removeEvents');
+          $('#calendar').fullCalendar('addEventSource', $scope.weekDispos);
       },
 
       select: function(start, end) {
         //if click is before now
         if (moment(start).isBefore(new Date(), "day") ) {
           $scope.isBefore = true;
+          return
         }else{
           $scope.isBefore = false;
         }
@@ -95,13 +94,11 @@ angular.module('velociteScheduleApp')
         }else{
           $scope.monthClosedInfo = false;
         }
-
-        //select a city and a nb of shifts/week first
-        if ($scope.villes.length != 0 && typeof $scope.shiftsWeek != 'undefined') {
+    
           $scope.monthYear = moment(start._d).format("MM-YYYY");
           var startHour = start._d.getHours()+":"+start._d.getMinutes();
           var endHour = end._d.getHours()+":"+end._d.getMinutes();
-        }
+        
         //if you dragged...
         if (moment(end).isAfter(moment(start), "day") && !(startHour == endHour)  ) {
           $scope.drag = true;
@@ -111,9 +108,10 @@ angular.module('velociteScheduleApp')
          //if it has the same starting and ending hours 
          //-> it's all day, restrict the starting and ending hours
          if (startHour == endHour) {
+          console.debug(startHour, endHour);
             var allDay = true;
-            var startTime = moment(start).hour(4)
-            var endTime = moment(end).hour(19)
+            var startTime = moment(start).hour(6)
+            var endTime = moment(end).hour(21)
          }else{
             var allDay = false;
             var startTime = start;
@@ -146,7 +144,6 @@ angular.module('velociteScheduleApp')
 
                     for (var  j = $scope.weekDispos.length - 1; j >= 0; j--) {
                       if( moment($scope.weekDispos[j].start).isSame(dispo.start,"day")){
-                        console.debug($scope.weekDispos[j], dispo.start);
                         $scope.weekDispos.splice(j,1)
                          $('#calendar').fullCalendar('removeEventSource')
                          $('#calendar').fullCalendar('removeEvents');
@@ -166,7 +163,7 @@ angular.module('velociteScheduleApp')
         }else{
           $scope.forgotCity = false
         }
-        if (!$scope.shiftsWeek) {
+        if ($("#shiftsWeek").val() == '' || $("#shiftsWeek").val() == null) {
           $scope.forgotShiftsWeek = true
 
         }else{
@@ -187,8 +184,6 @@ angular.module('velociteScheduleApp')
             }
             dispo.villes = angular.copy($scope.villes)
             $scope.dispos[$scope.monthYear][$scope.week].dispos.push(dispo)
-            $scope.dispos[$scope.monthYear][$scope.week].shiftsWeek = $scope.shiftsWeek;
-            $scope.dispos[$scope.monthYear][$scope.week].remarques = $scope.remarques 
             $scope.weekDispos.push(dispo);
         };
       },//end select
@@ -222,12 +217,13 @@ $scope.isOpenMonth = function(date){
 
 $scope.inputShiftsWeek = function(number){
   $scope.shiftsWeek = number;
+  $scope.forgotShiftsWeek = false
 }
 $scope.inputRemarques =function (remarques){
   $scope.remarques = remarques;
 }
 
-$scope.loadDispos =function(theWeek, monthYearStart, monthYearEnd){
+$scope.loadDispos = function(theWeek, monthYearStart, monthYearEnd){
   if (monthYearStart == monthYearEnd) {
     var months= [monthYearStart]
   }else{
@@ -254,6 +250,7 @@ $scope.loadDispos =function(theWeek, monthYearStart, monthYearEnd){
          if ($scope.dispos[monthYear][week].dispos) {
             $scope.dispos[monthYear][week].dispos = []
          };
+
          $scope.dispos[monthYear][week].dispos = $scope.user.dispos[monthYear][week].dispos
          $scope.dispos[monthYear][week].shiftsWeek = $scope.user.dispos[monthYear][week].shiftsWeek
          $scope.dispos[monthYear][week].remarques = $scope.user.dispos[monthYear][week].remarques
@@ -279,39 +276,5 @@ $scope.toggleDispoType = function(type){
     }
   }
 
-
-  /*
-    handle 1, 2 and 3 keypress 
-    for quick city checkbox
-  */
-$(document).keypress(function(e) {
-  // console.debug(e);
-  //   if (event.keyCode == 49) {
-  //     if ($scope.laus_check) {
-  //       $scope.laus_check = false
-  //     }else{
-  //       $scope.laus_check = true;
-  //     }
-  //   };
-  //   if (event.keyCode == 50) {
-  //    if ($scope.yv_check) {
-  //     $scope.yv_check= false;
-  //    }else{
-  //     $scope.yv_check = true
-  //    }
-  //   };
-  //   if (event.keyCode == 51) {
-  //    if ($scope.neuch_check) {
-  //     $scope.neuch_check = false;
-  //    }else{
-  //     $scope.neuch_check = true
-  //    }
-      
-    //};
-   
-});
-
-
   
-
-  });
+});

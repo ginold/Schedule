@@ -17,7 +17,7 @@
     <!-- show all coursiers calendar to admin -->
       <div id="calendar" ng-show="isAdmin()">
 
-        <div class="col-md-5" id="monthYearSelect">
+        <div class="col-md-5 col-sm-5" id="monthYearSelect">
           <!-- select the month we are in -->
             <select ng-model="month" 
             ng-change="renderCalendar(month)">
@@ -37,14 +37,14 @@
               <option>2017</option>
             </select>
   <button class="btn btn-primary  btn-sm"  ng-click="togglePlanning(isAdmin())">{{isAdmin() == true ? "Mon planning" :"Tous les coursiers"}}</button>
-<span>Nom &nbsp;<input class="searchName" ng-model="search.name"></span>
-<span># <input class="searchNo" ng-model="search.no"></soan>
+<span id="searchName">Nom &nbsp;<input class="searchName" ng-model="search.name"></span>
+<span># <input class="searchNo" ng-model="search.no"></span>
               
         </div>
      
         <div class="text-centered" >
          <!--  previous and next buttons (month) -->
-          <h3 class="col-md-3 " id="monthNavigation"> 
+          <h3 class="col-md-3 col-sm-4 col-xs-6" id="monthNavigation"> 
              <button id="prevMonth"  class="btn btn-success btn-sm" ng-click="renderCalendar(monthNum-1)" ><</button>
              {{calendar.month}} {{calendar.year}}
              <button id="nextMonth"  class="btn btn-success btn-sm" ng-click="renderCalendar(monthNum+1)">></button>
@@ -53,7 +53,7 @@
 
 
 
- <div class="col-md-3 col-sm-10" id="headButtons">
+ <div class="col-md-3 col-sm-3 col-xs-6" id="headButtons">
   <div class="dropdown">
     <button class="btn btn-success  dropdown-toggle" type="button"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
       Dispos

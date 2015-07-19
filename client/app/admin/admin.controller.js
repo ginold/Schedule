@@ -46,9 +46,6 @@ angular.module('velociteScheduleApp')
        }
       };
       $scope.users = users
-     for (var i =  $scope.users.length - 1; i >= 0; i--) {
-        console.debug($scope.users[i].gaveDispos, $scope.users[i].name);
-     };
    }
 
 

@@ -11,10 +11,12 @@ angular.module('velociteScheduleApp')
 	    var weeks = [];	// nb shift, remarques & dispos per week
 	    var names = []; //ex 10 - 17 juin
 	    var index = 0;
+
 	    //if some dispos have been entered
 	    if($scope.dispos.dispos != null){
 	    	for (var month in $scope.month) {
     		for (var week in $scope.month[month]){
+                console.debug($scope.month[month][week]);
     			if ($scope.month[month][week].dispos.length == 0) {
     				$scope.noDispos = true;
     			}else{
