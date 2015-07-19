@@ -1,6 +1,6 @@
 @desktop:   ~"only screen and (min-width: 960px) and (max-width: 1199px)";
 @laptop :   ~"only screen and (min-width: 960px) and (max-width: 1199px)";
-@tablet:    ~"only screen and (min-width: 720px) and (max-width: 959px)";
+@tablet:    ~"only screen and (min-width: 569px) and (max-width: 959px)";
 @iphone :   ~"only screen and (min-width: 320px) and (max-width: 568px)";
 
 #banner {
@@ -103,6 +103,16 @@ background-color: #00FF4C ;
 .coursierTD {
   text-align: left;
   background-color: white;
+  @media @tablet{
+    text-align:  left;
+  }
+
+   @media @iphone{
+      font-size: 0.9em;
+      padding-bottom: 2px;
+      padding-top: 2px;
+      text-align: left;
+  }
 }
 
 
@@ -131,7 +141,7 @@ background-color: #00FF4C ;
     margin-left:  0;
     width:100%;
   }
-  @media @laptop {
+  @media @laptop{
     margin-left:  0;
     width:100%;
   }
@@ -151,6 +161,24 @@ background-color: #00FF4C ;
   padding-bottom: 2px;
   padding-left: 6px;
   padding-right: 6px;
+  @media @tablet{
+    padding-top: 1px;
+    padding-bottom: 1px;
+    padding-left: 1px;
+    padding-right: 1px;
+  }
+   @media @iphone{
+      padding-top: 0px;
+    padding-bottom: 0px;
+    padding-left: 0px;
+    padding-right: 0px;
+  }
+   @media @laptop{
+      padding-top: 1px;
+    padding-bottom: 1px;
+    padding-left: 3px;
+    padding-right: 3px;
+  }
 }
 
 .planning tr th:first-child,
@@ -158,22 +186,12 @@ background-color: #00FF4C ;
   border-left: 1px solid #bbb;
 
 }
-// .planning.manques, .planning.doublons { 
-//   tr td:first-child{
-//     width: 112px;
-//   }
-//    tr td{
 
-//      padding-left: 4px;
-//      padding-right: 4px;
-//      min-width: 33px;
-//   }
-
-// }
 table tr th {
   background: #eee;
   border-top: 1px solid #bbb;
   text-align: left;
+
 }
 
 .manquesCell{
@@ -217,7 +235,6 @@ table tr th {
 }
 #monthNavigation{
  left: -10px;
-
     @media @iphone{
       font-size: 1em;
     }
@@ -226,7 +243,7 @@ table tr th {
 
     @media @iphone{
        padding:4px 6px;
-    font-size:80%;
+      font-size:80%;
  
     }
 }
@@ -258,13 +275,6 @@ table tr th {
   background-color: "";
 }
 
-
-
-  th, td {
-
-    text-align: center;
-  }
-
 .planning.shifts{
  // table-layout: fixed;
   tbody:first-of-type {
@@ -281,16 +291,43 @@ table tr th {
     }
   }
   th, td {
-
     text-align: center;
+   
+  }
+  th{
+    @media @iphone{
+      font-size: 0.8em;
+    }
+    @media @tablet{
+      font-size: 0.9em
+    }
+  }
+  .coursierTD{
+     @media @iphone{
+      text-align: left;
+    }
+    @media @tablet{
+      text-align: left;
+    }
+  }
+  #coursierTH{
+    @media @iphone{
+      font-size: 0.8em;
+    }
+    @media @tablet{
+      font-size: 0.9em;
+    }
   }
   td:nth-child(1), th:nth-child(1) { width: 110px; }
   td:nth-child(2), th:nth-child(2){ width: 50px; }
   td:nth-child(3), th:nth-child(3) { width: 40px; }
 
+  
 }
 
-
+td, th{
+  text-align: center;
+}
 
 
 
@@ -301,6 +338,9 @@ table tr th {
     padding: 0 0 0 0;
     font-size: 0.75em;
     line-height: 110%;
+    @media @iphone{
+      font-size: 0.7em;
+    }
 }
 .shiftsByCity:hover{
       border: solid;
@@ -324,6 +364,14 @@ table tr th {
   font-weight: bold;
   margin: 0 0 0 0;
   padding: 0 0 0 0;
+   @media @iphone{
+     font-weight:  normal;
+     font-size: 0.8em;
+  }
+   @media @tablet{
+     font-weight:  normal;
+     font-size: 0.9em;
+  }
 
 }
 .attributedShift[city="Lausanne"]{
