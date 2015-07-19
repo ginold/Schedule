@@ -17,7 +17,11 @@ angular.module('velociteScheduleApp')
     $scope.isActive = function(route) {
       return route === $location.path();
     };
-
+    $scope.toggleCollapse = function(){
+      if (!$scope.isCollapsed) {
+        $scope.isCollapsed = true
+      };
+    }
     //toggle planning between all coursiers and monthly personnal view
 $scope.togglePlanning = function(planningAdmin){
   if (planningAdmin) {

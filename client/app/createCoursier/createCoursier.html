@@ -21,14 +21,15 @@
    <div class="form-group">
     <label class="col-sm-3 control-label">Date de naissance </label>
     <div class="col-sm-9">
-      <input type="date" ng-model="user.naissance" class="form-control" >
+    <datepicker ng-model="user.naissance" show-weeks="true" ></datepicker>
+
     </div>
   </div>
 
   <div class="form-group">
     <label class="col-sm-3 control-label">E-mail </label>
     <div class="col-sm-9">
-      <input type="mail" ng-model="user.email" class="form-control" >
+      <input type="email" ng-model="user.email" class="form-control" >
     </div>
   </div>
 
@@ -75,19 +76,13 @@
   </div>
 
  -->
-  <h4>Autres</h4>
-          <ul class="coursierOthersCheckbox">
-            <li> <label class="checkboxText"><input type="checkbox" ng-model="user.mobility"> Mobility</label></li>
-            <li> <label class="checkboxText"><input type="checkbox" ng-model="user.ag"> Abonnement Général</label>  </li>
-            <li> <label class="checkboxText"><input type="checkbox"  ng-model="user.permis"> Permis de conduire</label></li>
-          </ul>
-
-         <div class="form-group">
+     <div class="form-group">
         <label class="col-sm-3 control-label">Mot de passe</label>
         <div class="col-sm-9">
           <input type="text" ng-model="user.password" class="form-control" >
         </div>
       </div>
+
 </form>
 
 <div class="form-horizontal col-md-6" >
@@ -117,16 +112,17 @@
           <label class="checkboxText" > <input type="radio" value="user"  name="role" ng-model="user.role">Coursier</label>
         </li> 
     </ul>
-       
+      <h4>Autres</h4>
+          <ul class="coursierOthersCheckbox">
+            <li> <label class="checkboxText"><input type="checkbox" ng-model="user.mobility"> Mobility</label></li>
+            <li> <label class="checkboxText"><input type="checkbox" ng-model="user.ag"> Abonnement Général</label>  </li>
+            <li> <label class="checkboxText"><input type="checkbox"  ng-model="user.permis"> Permis de conduire</label></li>
+          </ul>
 
-
-
-		  <div class="form-group">
-		    <div class="col-sm-offset-2 col-sm-9">
-		      <button class="btn btn-primary" ng-click="createCoursier(user)">Créer coursier</button>
-		    </div>
-		  </div>
 </div>
+  <div class="text-center">
+      <button class="btn btn-success btn-lg" ng-click="createCoursier(user)">Créer coursier</button>
+  </div>
 </div> <!-- container -->
 
   

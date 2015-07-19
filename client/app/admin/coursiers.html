@@ -9,7 +9,9 @@
   <div class="form-group row">
      <label>Recherche</label>
     <input type="text" ng-model="searchCoursier"> 
-    <button class="btn btn-info" ng-click="checkDispos = !checkDispos">Check dispos</button>
+    <button class="btn" ng-class="checkDispos == '' ? ' btn-success' :'btn-danger' " ng-click="checkDispos = !checkDispos">
+      {{checkDispos == '' ? 'Qui a donné ses dispos' : 'Qui n\'a pas donné' }}
+    </button>
 
     <button class="btn btn-sm" ng-click="checkDispos = '' ">Tous</button>
   </div>
@@ -43,7 +45,7 @@
 
          </th>
         <th class="shiftsHeaders">Coursier depuis</th>
-        <th class="shiftsHeaders">Coursier jusqu'à</th>
+      <!--   <th class="shiftsHeaders">Coursier jusqu'à</th> -->
 
          <th><span class="glyphicon glyphicon-trash pull-right"></span></th>
     </tr>
@@ -59,7 +61,7 @@
             {{user.gaveDispos === true ? 'Oui'  : "Non"}} </b> 
       </td>
        <td>{{user.createdOn}}</td>
-       <td>{{user.departOn}}</td>
+<!--        <td>{{user.departOn}}</td> -->
       <td><a ng-click="delete(user)" class="trash"><span class="glyphicon glyphicon-trash pull-right"></span></a></td>
     </tr>
   </table>

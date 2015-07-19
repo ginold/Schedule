@@ -86,30 +86,9 @@ angular.module('velociteScheduleApp')
       check if start hour isn't after ending or ending before start
     */
     $scope.checkHour = function(start, end){
-      if (typeof start.getMonth !== 'function' || typeof end.getMonth 
-        !== 'function') {
-      var startHours = start.split(":");
-      var endHours = end.split(":");
-      if (startHours[0][0] == "0") {
-        startHours[0] = startHours[0].substring(1, startHours[0].length)
-      }
-      if (endHours[0][0] == "0") {
-        endHours[0] = endHours[0].substring(1, endHours[0].length)
- 
-      };
-      var start = new Date()
-      var end = new Date()
-      start.setHours(startHours[0])
-      start.setMinutes(startHours[1])
-      end.setHours(endHours[0])
-      end.setMinutes(endHours[1])
-
-
      $scope.shift.debut = start;
      $scope.shift.fin = end;
- 
 
-    }
       if (typeof start != 'undefined' && typeof end != 'undefined') {
         if (moment(start).isAfter(end, 'hour')) {
           $scope.isFalseHour = true;

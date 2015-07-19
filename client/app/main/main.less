@@ -1,432 +1,427 @@
-@desktop:   ~"only screen and (min-width: 1200px) and (max-width: 1600px)";
-@laptop :   ~"only screen and (min-width: 960px) and (max-width: 1299px)";
-@tablet:    ~"only screen and (min-width: 569px) and (max-width: 959px)";
-@iphone :   ~"only screen and (min-width: 320px) and (max-width: 568px)";
+  @desktop:   ~"only screen and (min-width: 1200px) and (max-width: 1600px)";
+  @laptop :   ~"only screen and (min-width: 960px) and (max-width: 1299px)";
+  @tablet:    ~"only screen and (min-width: 569px) and (max-width: 959px)";
+  @iphone :   ~"only screen and (min-width: 320px) and (max-width: 568px)";
 
-#banner {
-    border-bottom: none;
-    margin-top: -20px;
-}
+  #banner {
+      border-bottom: none;
+      margin-top: -20px;
+  }
 
 
-#banner h1 {
-    font-size: 60px;
-    line-height: 1;
-    letter-spacing: -1px;
-}
+  #banner h1 {
+      font-size: 60px;
+      line-height: 1;
+      letter-spacing: -1px;
+  }
 
-.hero-unit {
-    position: relative;
+  .hero-unit {
+      position: relative;
 
-    color: #F5F5F5;
+      color: #F5F5F5;
+      text-align: center;
+      text-shadow: 0 1px 0 rgba(0, 0, 0, 0.1);
+      background: #4393B9;
+      margin-bottom: 10px;
+  }
+
+  .cityManquesHeader th{
     text-align: center;
-    text-shadow: 0 1px 0 rgba(0, 0, 0, 0.1);
-    background: #4393B9;
-    margin-bottom: 10px;
-}
-
-.cityManquesHeader th{
-  text-align: center;
-  cursor: pointer;
-  font-size: 0.9em;
-}
-
-///////=======================DISPOS=========================
-.dispoLevelCityLow{
- background-color: #FFBC82 ;
-}
-.dispoLevelCityMedium{
-background-color: #85FFF7 ;
-}
-.dispoLevelCityHigh{
-background-color: #00FF4C ;
-}
-.busy{
- color: black;
- background-color: #E6E6E6;
-
-}
-.lowDispo{
-
- background-color: #FFBC82;
-
-
-}
-.highDispo{
-  background-color: #00FF4C;
-
-}
-.mediumDispo{
-// border-style:solid; 
-  background-color: #85FFF7;
-}
-.absent{
-    background-color: #FF8C8C;
-    opacity: 0.9;
-}
-.noInfo{
-    background-color: #FFD58C;
-
-}
-.noInfo, .noInfoOff{
-  cursor: help;
-}
-.absent:hover{
-    cursor: not-allowed;
-}
-.present{
-    background-color: #6ED7FF;
-    color: white;
     cursor: pointer;
-}
-
-////---------------==============================
-.footer {
-    text-align: center;
-    padding-top: 5px;
-    margin-top: 20px;
-    border-top: 1px solid #E5E5E5;
-}
-#togglePlanning{
-    padding: 6px;
-    position: absolute;
-    left: 84%;
-    margin-top: 1%;
-}
-
-//======================CALENDAR TABLE======================
-#calendar{
-  margin-top: 3%;
-}
-
-   
-.coursierTD {
-  text-align: left;
-  background-color: white;
-  @media @tablet{
-    text-align:  left;
+    font-size: 0.9em;
   }
 
-   @media @iphone{
-      font-size: 0.9em;
-      padding-bottom: 2px;
-      padding-top: 2px;
-      text-align: left;
+  ///////=======================DISPOS=========================
+  .dispoLevelCityLow{
+   background-color: #FFBC82 ;
   }
-}
-
-
-.shiftHidden{
- // display: none;
-}
-::-webkit-scrollbar{
-  display: none;
-}
-.wrapper{
-  //overflow-y: auto;
-  //max-height:350px;
-  width: 100%;
-
-}
-// .wrapper-manques{
-//   overflow-y: scroll;
-//   max-height: 100px;
-//   width: 100%;
-// }
-.theContainer{
-  width: 80%;
-  margin-left: 10%;
-  margin-top:  -3%;
-  @media @tablet {
-    margin-left:  0;
-    width:100%;
+  .dispoLevelCityMedium{
+  background-color: #85FFF7 ;
   }
-  @media @laptop{
-    margin-left:  0;
-    width:100%;
+  .dispoLevelCityHigh{
+  background-color: #00FF4C ;
   }
-  @media @iphone {
-    margin-left:  0;
-    width:100%;
+  .busy{
+   color: black;
+   background-color: #E6E6E6;
+
   }
-}
-.planning{
-  width: 100%;
-}
-.planning tr th,
-.planning tr td {
-  border-right: 1px solid #bbb;
-  border-bottom: 1px solid #bbb;
-  padding-top: 2px;
-  padding-bottom: 2px;
-  padding-left: 6px;
-  padding-right: 6px;
-  @media @tablet{
-    padding-top: 1px;
-    padding-bottom: 1px;
-    padding-left: 1px;
-    padding-right: 1px;
+  .lowDispo{
+
+   background-color: #FFBC82;
+
+
   }
-   @media @iphone{
-      padding-top: 0px;
-    padding-bottom: 0px;
-    padding-left: 0px;
-    padding-right: 0px;
+  .highDispo{
+    background-color: #00FF4C;
+
   }
-   @media @laptop{
-      padding-top: 1px;
-    padding-bottom: 1px;
-    padding-left: 3px;
-    padding-right: 3px;
+  .mediumDispo{
+  // border-style:solid; 
+    background-color: #85FFF7;
   }
-}
+  .absent{
+      background-color: #FF8C8C;
+      opacity: 0.9;
+  }
+  .noInfo{
+      background-color: #FFD58C;
 
-.planning tr th:first-child,
-.planning tr td:first-child {
-  border-left: 1px solid #bbb;
+  }
+  .noInfo, .noInfoOff{
+    cursor: help;
+  }
+  .absent:hover{
+      cursor: not-allowed;
+  }
+  .present{
+      background-color: #6ED7FF;
+      color: white;
+      cursor: pointer;
+  }
 
-}
+  ////---------------==============================
+  .footer {
+      text-align: center;
+      padding-top: 5px;
+      margin-top: 20px;
+      border-top: 1px solid #E5E5E5;
+  }
+  #togglePlanning{
+      padding: 6px;
+      position: absolute;
+      left: 84%;
+      margin-top: 1%;
+  }
 
-table tr th {
-  background: #eee;
-  border-top: 1px solid #bbb;
-  text-align: left;
+  //======================CALENDAR TABLE======================
+  #calendar{
+    margin-top: 3%;
+  }
 
-}
+     
 
-.manquesCell{
-  height: 30px;
-}
-//======================================
-#prevMonth{
-    margin-right: 4%;
-}
-#nextMonth{
-    margin-left: 4%;
-}
-#monthYearSelect{
-  margin-top: 2%;
-}
-#headButtons{
-  display: flex;
-  margin-top: 2%;
 
-}
-.searchNo{
-  width: 25px;
-}
-.searchName{
-  width: 60px;
-  
-}
-#searchName{
-  @media @iphone {
+
+  .shiftHidden{
+   // display: none;
+  }
+  ::-webkit-scrollbar{
     display: none;
   }
-}
-.monthDay  {
-    text-align: center;
-    font-weight: normal;
-    font-size: 0.9em;
-    line-height: 110%;
+  .wrapper{
+    //overflow-y: auto;
+    //max-height:350px;
+    width: 100%;
+
+  }
+  // .wrapper-manques{
+  //   overflow-y: scroll;
+  //   max-height: 100px;
+  //   width: 100%;
+  // }
+  .theContainer{
+    width: 80%;
+    margin-left: 10%;
+    margin-top:  -3%;
+    @media @tablet {
+      margin-left:  0;
+      width:100%;
+    }
+    @media @laptop{
+      margin-left:  5%;
+      width:90%;
+    }
+    @media @iphone {
+      margin-left:  0;
+      width:100%;
+    }
+  }
+  .planning{
+    width: 100%;
+  }
+  .planning tr th,
+  .planning tr td {
+    border-right: 1px solid #bbb;
+    border-bottom: 1px solid #bbb;
+    padding-top: 2px;
+    padding-bottom: 2px;
+    padding-left: 6px;
+    padding-right: 6px;
     @media @tablet{
-      font-size: 0.8em;
+      padding-top: 1px;
+      padding-bottom: 1px;
+      padding-left: 1px;
+      padding-right: 1px;
     }
-}
-#monthNavigation{
- left: -10px;
-    @media @iphone{
-      font-size: 1em;
-    }
-}
-.btn{
-
-    @media @iphone{
-       padding:4px 6px;
-      font-size:80%;
- 
-    }
-}
-.rowDaySelected{
-  background-color: #ECF0C5 !important;
-
-}
-.colDaySelected{
-    background-color: #86ED80 !important;
-}
-.myRow{
-    background-color: rgba(123, 200, 224, 0.2) ;  
-}
-.coursierDay:hover{
-    background-color: rgba(123, 100, 224, 0.2) ; 
-}
-.coursierDay{
-  font-size: 0.8em;
-}
-.shiftManqueDaySelected{
-   border: solid;
-  border-width: 2px;
-  border-color: blue;
-}
-.body{
-  position: fixed;
-}
-.noBg{
-  background-color: "";
-}
-
-.planning.shifts{
- // table-layout: fixed;
-  tbody:first-of-type {
-    //display: block;
-    overflow: auto;
-    width: 10000%;
-    height: 300px;
-
-  }
-  thead:first-of-type  {
-    tr {
-    //  display: block;
-      position: relative;
-    }
-  }
-  th, td {
-    text-align: center;
-   
-  }
-  th{
-    @media @iphone{
-      font-size: 0.8em;
-    }
-    @media @tablet{
-      font-size: 0.9em
-    }
-  }
-  .coursierTD{
      @media @iphone{
-      text-align: left;
+        padding-top: 0px;
+      padding-bottom: 0px;
+      padding-left: 0px;
+      padding-right: 0px;
     }
-    @media @tablet{
-      font-size: 0.9em;
-      text-align: left;
+     @media @laptop{
+        padding-top: 1px;
+      padding-bottom: 1px;
+      padding-left: 3px;
+      padding-right: 3px;
     }
   }
-  #coursierTH{
-    @media @iphone{
-      font-size: 0.8em;
+
+  .planning tr th:first-child,
+  .planning tr td:first-child {
+    border-left: 1px solid #bbb;
+
+  }
+
+  table tr th {
+    background: #eee;
+    border-top: 1px solid #bbb;
+    text-align: left;
+
+  }
+
+  .manquesCell{
+    height: 30px;
+  }
+  //======================================
+  #prevMonth{
+      margin-right: 4%;
+  }
+  #nextMonth{
+      margin-left: 4%;
+  }
+  #monthYearSelect{
+    margin-top: 2%;
+  }
+  #headButtons{
+    display: flex;
+    margin-top: 2%;
+
+  }
+  .searchNo{
+    width: 25px;
+  }
+  .searchName{
+    width: 60px;
+    
+  }
+  #searchName{
+    @media @iphone {
+      display: none;
     }
-    @media @tablet{
-      font-size: 0.8em;
+  }
+  .monthDay  {
+      text-align: center;
       font-weight: normal;
-    }
+      font-size: 0.9em;
+      line-height: 110%;
+      @media @tablet{
+        font-size: 0.8em;
+      }
   }
-  td:nth-child(1), th:nth-child(1) { width: 110px; }
-  td:nth-child(2), th:nth-child(2){ width: 50px; }
-  td:nth-child(3), th:nth-child(3) { width: 40px; }
+  #monthNavigation{
+   left: -10px;
+      @media @iphone{
+        font-size: 1em;
+      }
+  }
+  .btn{
 
-  
-}
+      @media @iphone{
+         padding:4px 6px;
+        font-size:80%;
+   
+      }
+  }
+  .rowDaySelected{
+    background-color: #ECF0C5 !important;
 
-td, th{
-  text-align: center;
-}
-
-
-
-
-.shiftsByCity{
-  cursor: pointer;
-    margin: 0 0 0 0;
-    padding: 0 0 0 0;
-    font-size: 0.75em;
-    line-height: 110%;
-    @media @iphone{
-      font-size: 0.7em;
-    }
-}
-.shiftsByCity:hover{
-      border: solid;
-      border-width: 1px;
-      border-color: black;
-}
-
-.shiftsDoubles{
-    margin: 0 0 0 0;
-    padding: 0 0 0 0;
+  }
+  .colDaySelected{
+      background-color: #86ED80 !important;
+  }
+  .myRow{
+      background-color: rgba(123, 200, 224, 0.2) ;  
+  }
+  .coursierDay:hover{
+      background-color: rgba(123, 100, 224, 0.2) ; 
+  }
+  .coursierDay{
     font-size: 0.8em;
-    display: block;
-}
-.column[data-dayNameCol='di'], .column[data-dayNameCol='sa']{
-    background-color: #fcf8e3;
-}
-.attributedShift{
-  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-  font-size: 0.9em;
-  cursor: help;
-  font-weight: bold;
-  margin: 0 0 0 0;
-  padding: 0 0 0 0;
-   @media @iphone{
-     font-weight:  normal;
-     font-size: 0.8em;
   }
-   @media @tablet{
-     font-weight:  normal;
-     font-size: 0.9em;
+  .shiftManqueDaySelected{
+     border: solid;
+    border-width: 2px;
+    border-color: blue;
+  }
+  .body{
+    position: fixed;
+  }
+  .noBg{
+    background-color: "";
   }
 
-}
-.attributedShift[city="Lausanne"]{
-  color:blue;
-}
-.attributedShift[city="Yverdon"]{
-  color:green;
-}
-.attributedShift[city="Neuchâtel"]{
-  color: gold ;
-}
+  .planning.shifts{
+   // table-layout: fixed;
+    tbody:first-of-type {
+      //display: block;
+      overflow: auto;
+      width: 10000%;
+      height: 300px;
 
-.today{
-    background-color: rgba(60, 255, 0, 0.2) !important; 
-    z-index: 20;
-}
+    }
+    thead:first-of-type  {
+      tr {
+      //  display: block;
+        position: relative;
+      }
+    }
+    th, td {
+      text-align: center;
+     
+    }
+    th{
+      @media @iphone{
+        font-size: 0.8em;
+      }
+      @media @tablet{
+        font-size: 0.9em
+      }
+    }
+    .coursierTD{
+      background-color: white;
+      @media @iphone{
+        text-align: left;
+      }
+      @media @tablet{
+        font-size: 0.9em;
+        text-align: left;
+      }
 
-.dropdown{
-  margin-right: 2%;
-  padding-left: 3%;
-  z-index: 1002;
-}
+      @media @iphone{
+        font-size: 0.8em;
+        padding-bottom: 2px;
+        padding-top: 2px;
+        text-align: left;
+      }
+    }
 
-.dispoInfo{
-    height: 13px;
-    width: 20px;
-    margin-bottom: -20%;
-    right: 0;
-    top: 0;
-}
-#fullCalSwitch{
-  position: relative;
-  top:-620px;
-  left: 1%;
-}
+    #coursierTH{
+      @media @iphone{
+        font-size: 0.8em;
+        font-weight: normal;
+      }
+      @media @tablet{
+        font-size: 0.9em;
+
+      }
+    }
+    td:nth-child(1), th:nth-child(1) { width: 110px; }
+
+    
+  }
+
+  td, th{
+    text-align: center;
+  }
 
 
-#fullCal{
-  width: 75%;
-  margin-left: 12.5%;
-  margin-top: 6%;
-}
 
-.modal.fade {
-  opacity: 1;
-}
 
-.modal.fade .modal-dialog, .modal.in .modal-dialog {
-  -webkit-transform: translate(0, 0);
-  -ms-transform: translate(0, 0);
-  transform: translate(0, 0);
-}
-.popover{
-    color: black;
-      width: 15%;
-}
+  .shiftsByCity{
+    cursor: pointer;
+      margin: 0 0 0 0;
+      padding: 0 0 0 0;
+      font-size: 0.75em;
+      line-height: 110%;
+      @media @iphone{
+        font-size: 0.7em;
+      }
+  }
+  .shiftsByCity:hover{
+        border: solid;
+        border-width: 1px;
+        border-color: black;
+  }
+
+  .shiftsDoubles{
+      margin: 0 0 0 0;
+      padding: 0 0 0 0;
+      font-size: 0.8em;
+      display: block;
+  }
+  .column[data-dayNameCol='di'], .column[data-dayNameCol='sa']{
+      background-color: #fcf8e3;
+  }
+  .attributedShift{
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-size: 0.9em;
+    cursor: help;
+    font-weight: bold;
+    margin: 0 0 0 0;
+    padding: 0 0 0 0;
+     @media @iphone{
+       font-weight:  normal;
+       font-size: 0.8em;
+    }
+     @media @tablet{
+       font-weight:  normal;
+       font-size: 0.9em;
+    }
+
+  }
+  .attributedShift[city="Lausanne"]{
+    color:blue;
+  }
+  .attributedShift[city="Yverdon"]{
+    color:green;
+  }
+  .attributedShift[city="Neuchâtel"]{
+    color: gold ;
+  }
+
+  .today{
+      background-color: rgba(60, 255, 0, 0.2) !important; 
+      z-index: 20;
+  }
+
+  .dropdown{
+    margin-right: 2%;
+    padding-left: 3%;
+    z-index: 1002;
+  }
+
+  .dispoInfo{
+      height: 13px;
+      width: 20px;
+      margin-bottom: -20%;
+      right: 0;
+      top: 0;
+  }
+  #fullCalSwitch{
+    position: relative;
+    top:-620px;
+    left: 1%;
+  }
+
+
+  #fullCal{
+    width: 75%;
+    margin-left: 12.5%;
+    margin-top: 6%;
+  }
+
+  .modal.fade {
+    opacity: 1;
+  }
+
+  .modal.fade .modal-dialog, .modal.in .modal-dialog {
+    -webkit-transform: translate(0, 0);
+    -ms-transform: translate(0, 0);
+    transform: translate(0, 0);
+  }
+  .popover{
+      color: black;
+        width: 15%;
+  }

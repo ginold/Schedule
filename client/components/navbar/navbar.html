@@ -13,19 +13,19 @@
     
     <div collapse="isCollapsed" class="navbar-collapse collapse" id="navbar-main">
       <ul class="nav navbar-nav">
-        <li  ng-hide="!isLoggedIn()" ng-class="{active: isActive('/planningCoursier')}">
+        <li  ng-hide="!isLoggedIn()" ng-click="toggleCollapse()" ng-class="{active: isActive('/planningCoursier')}">
             <a ng-href="/planningCoursier">Planning</a>
         </li>
-        <li  ng-hide="!isLoggedIn()" ng-class="{active: isActive('/sendDispos')}">
-            <a ng-href="/sendDispos">Envoyer mes dispos</a>
+        <li  ng-hide="!isLoggedIn()"  ng-click="toggleCollapse()"ng-class="{active: isActive('/sendDispos')}">
+            <a ng-href="/sendDispos" ng-click="toggleCollapse()">Envoyer mes dispos</a>
         </li>
-        <li  ng-show="isAdmin()"  ng-class="{active: isActive('/monthYear')}">
+        <li  ng-show="isAdmin()"   ng-click="toggleCollapse()"ng-class="{active: isActive('/monthYear')}">
             <a ng-href="/monthYear">Les mois</a>
         </li>
-        <li ng-show="isAdmin()" ng-class="{active: isActive('/coursiers')}"><a href="/coursiers">Les coursiers</a></li>
-         <li ng-hide="!isLoggedIn()" ng-class="{active: isActive('/shifts')}"><a href="/shifts">Les shifts</a></li>
-        <li ng-show="isAdmin()" ng-class="{active: isActive('/createShift')}"><a href="/createShift">Créer un shift</a></li>
-        <li ng-show="isAdmin()" ng-class="{active: isActive('/createCoursier')}"><a href="/createCoursier">Créer un coursier</a></li>
+        <li ng-show="isAdmin()" ng-click="toggleCollapse()" ng-class="{active: isActive('/coursiers')}"><a href="/coursiers">Les coursiers</a></li>
+         <li ng-hide="!isLoggedIn()" ng-click="toggleCollapse()" ng-class="{active: isActive('/shifts')}"><a href="/shifts">Les shifts</a></li>
+        <li ng-show="isAdmin()"  ng-click="toggleCollapse()"ng-class="{active: isActive('/createShift')}"><a href="/createShift">Créer un shift</a></li>
+        <li ng-show="isAdmin()" ng-click="toggleCollapse()" ng-class="{active: isActive('/createCoursier')}"><a href="/createCoursier">Créer un coursier</a></li>
       </ul>
 
       <ul class="nav navbar-nav navbar-right">
