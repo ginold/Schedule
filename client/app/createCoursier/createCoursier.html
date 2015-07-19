@@ -1,4 +1,6 @@
-
+<div class="bg-primary text-center title">
+  <h3>Créer un coursier</h3>
+</div>
 <div class="container">
 	<form class="form-horizontal col-md-6" >
 
@@ -29,7 +31,7 @@
   <div class="form-group">
     <label class="col-sm-3 control-label">E-mail </label>
     <div class="col-sm-9">
-      <input type="email" ng-model="user.email" class="form-control" >
+      <input type="email" ng-model="user.email" class="form-control" pattern="^@]+@^@]+\.[a-zA-Z]{2,6}" required >
     </div>
   </div>
 
@@ -97,12 +99,15 @@
              </b> 
   </h4>
  <h4 ng-show="invalidNo" class="bg-danger">Ce numéro existe déjà! </h4>
+ <div class="col-sm-4 col-md-12">
   <h4>Compétences</h4>
     <ul class="coursierOthersCheckbox">
         <li ng-repeat="competence in competences">
           <label class="checkboxText" > <input type="checkbox" checklist-value="competence" checklist-model="user.competences">{{competence}}</label>
         </li> 
     </ul>
+  </div>
+   <div class="col-sm-4 col-md-12">
     <h4>Rôle</h4>
     <ul class="coursierOthersCheckbox">
         <li>
@@ -112,13 +117,16 @@
           <label class="checkboxText" > <input type="radio" value="user"  name="role" ng-model="user.role">Coursier</label>
         </li> 
     </ul>
+     </div>
+
+      <div class="col-sm-4 col-md-12">
       <h4>Autres</h4>
           <ul class="coursierOthersCheckbox">
             <li> <label class="checkboxText"><input type="checkbox" ng-model="user.mobility"> Mobility</label></li>
             <li> <label class="checkboxText"><input type="checkbox" ng-model="user.ag"> Abonnement Général</label>  </li>
             <li> <label class="checkboxText"><input type="checkbox"  ng-model="user.permis"> Permis de conduire</label></li>
           </ul>
-
+</div>
 </div>
   <div class="text-center">
       <button class="btn btn-success btn-lg" ng-click="createCoursier(user)">Créer coursier</button>

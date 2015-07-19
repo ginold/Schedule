@@ -69,6 +69,12 @@ angular.module('velociteScheduleApp')
             if (ville =="Lausanne") {
               return "#1F992F"
             };
+            if (ville =="Neuchâtel") {
+              return "#9f30ff"
+            };
+            // if (ville =="Yverdon") {
+            //   return "#1F992F"
+            // };
           }
 
           var shift = {
@@ -83,6 +89,7 @@ angular.module('velociteScheduleApp')
         callback(formatedShifts);
       },
       getMyMonthlyShifts: function  (coursierId, monthYear, attributions, callback) {
+        console.log(coursierId, monthYear, attributions)
         var attr = attributions[0].monthYear;
         var myMonthlyShifts = []
         for(var month in attr){

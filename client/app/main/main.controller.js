@@ -19,16 +19,16 @@
       $scope.toggleAll = true;
       $scope.shiftSources = [];
       $scope.alreadySeen = [];
+      $scope.formatedShifts = []
 
   $(document).ready(function () {
     $("body").on('click','.cityManquesHeader',function(){
-      console.debug('asds');
        $(this).next('tr').slideToggle('fast')
     });
 
     $(document).keyup(function(e) {
       //when escaping attribution popover with "annuler"
-       if (e.keyCode == 27) { // escape key maps to keycode `27`
+       if (e.keyCode == 27) { 
           $(".colDaySelected").removeClass('colDaySelected')
       }
     });
@@ -60,6 +60,7 @@
           firstDay: 1, //monday
           editable: false,
           allDaySlot: false,
+          eventLimit: 3,
           minTime: "06:00:00", 
           maxTime: "21:00:00",
           lang : 'fr',
@@ -80,20 +81,20 @@
             //if didn't  see this month yet, download the attributions to cal
             if ($.inArray(monthYear, $scope.alreadySeen) == -1) {
               $scope.alreadySeen.push(monthYear)
-                  $http.get('api/attributions').success(function(attributions){
-                    $scope.attributions = attributions
-                     if ($scope.attributions.length == 0) {
-                     return;
-                   }
-                   AttributionsService.getMyMonthlyShifts($scope.currentUser._id, monthYear, $scope.attributions, function (myShifts) {
-                        AttributionsService.formatShiftsForCalendar(myShifts, function(formatedShifts){     
-                        $('#fullCal').fullCalendar('addEventSource', formatedShifts); 
-                        $("#calendar").fullCalendar('renderEvents');
-                        //$("#calendar").fullCalendar('render');
-                        })
-                    })//monthlyShifts
-                  })//get
-            };//if       
+              $http.get('api/attributions').success(function(attributions){
+                $scope.attributions = attributions
+
+             AttributionsService.getMyMonthlyShifts($scope.currentUser._id, monthYear, $scope.attributions, function (myShifts) {
+              console.debug(myShifts);
+                  AttributionsService.formatShiftsForCalendar(myShifts, function(formatedShifts){ 
+                  $scope.formatedShifts = $scope.formatedShifts.concat(formatedShifts)    
+                  $('#fullCal').fullCalendar('removeEventSource')
+                  $('#fullCal').fullCalendar('removeEvents');
+                   $('#fullCal').fullCalendar('addEventSource',$scope.formatedShifts);
+                  })
+              })//monthlyShifts
+            })//get
+          };//if       
           }//viewRender
       })
   })
@@ -681,6 +682,9 @@
         $scope.toggleButtonText = "Mon planning"
         $scope.toggleHeaderText = "Tous les coursiers"
     }
+    $('#fullCal').fullCalendar('removeEventSource')
+    $('#fullCal').fullCalendar('removeEvents');
+     $('#fullCal').fullCalendar('addEventSource',$scope.formatedShifts);
   }
   $scope.isToday= function(day, month, year){
     var date = new Date(year, month, day)

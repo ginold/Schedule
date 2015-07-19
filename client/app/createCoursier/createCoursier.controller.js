@@ -5,7 +5,10 @@ angular.module('velociteScheduleApp')
   	$scope.competences = shiftService.getCompetences()
   	$scope.invalidNo = false;
 
+var date1 = moment("2-6-2015", "D-M-YYYY")
+var date2 = moment("4-5-2015","D-M-YYYY")
 
+console.debug(moment(date1).diff(date2,"days"));
   	//init false by default
     $scope.user = {
     	ag : false,
@@ -68,14 +71,16 @@ angular.module('velociteScheduleApp')
     	},
         link: function(scope, elem, attrs) {
         	scope.$watch("numero",function(newNo, oldNo){
-    		 	for (var i = scope.coursiers.length - 1; i >= 0; i--) {
-               		if(scope.coursiers[i].numeroCoursier == newNo){
-               			scope.$parent.invalidNo = true;
-               			return;
-               		}else{
-               			scope.$parent.invalidNo = false;
-               		}
-          		 };
+          if (scope.coursiers) {
+            for (var i = scope.coursiers.length - 1; i >= 0; i--) {
+                  if(scope.coursiers[i].numeroCoursier == newNo){
+                    scope.$parent.invalidNo = true;
+                    return;
+                  }else{
+                    scope.$parent.invalidNo = false;
+                  }
+               };
+          };
         	})//watch
 
         }
