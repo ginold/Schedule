@@ -14,7 +14,7 @@
   </div>
 
   <div class="form-group">
-    <label class="col-sm-3 control-label">Nom</label>
+    <label class="col-sm-3 control-label">Nom*</label>
     <div class="col-sm-9"> 
       <input type="text" ng-model="user.name" class="form-control" >
     </div>
@@ -29,7 +29,7 @@
   </div>
 
   <div class="form-group">
-    <label class="col-sm-3 control-label">E-mail </label>
+    <label class="col-sm-3 control-label">E-mail*</label>
     <div class="col-sm-9">
       <input type="email" ng-model="user.email" class="form-control" pattern="^@]+@^@]+\.[a-zA-Z]{2,6}" required >
     </div>
@@ -79,7 +79,7 @@
 
  -->
      <div class="form-group">
-        <label class="col-sm-3 control-label">Mot de passe</label>
+        <label class="col-sm-3 control-label">Mot de passe*</label>
         <div class="col-sm-9">
           <input type="text" ng-model="user.password" class="form-control" >
         </div>
@@ -88,7 +88,7 @@
 </form>
 
 <div class="form-horizontal col-md-6" >
- <h4> Numéro coursier: # <b> 
+ <h4> Numéro coursier*: # <b> 
          <input type="number" validate-no 
               ng-model="user.numeroCoursier"
               coursiers="users" 
@@ -108,7 +108,7 @@
     </ul>
   </div>
    <div class="col-sm-4 col-md-12">
-    <h4>Rôle</h4>
+    <h4>Rôle*</h4>
     <ul class="coursierOthersCheckbox">
         <li>
           <label class="checkboxText" > <input type="radio" value="admin" name="role" ng-model="user.role">Admin</label>

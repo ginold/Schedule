@@ -1,9 +1,12 @@
 	<div ui-view="">
 		<div class="container" ng-keypress="checkCity($event)">
 			<div class="col-lg-3 col-md-3 row">
+
+			<div class="col-lg-12 col-md-12">
 			<button ng-click="toggleDispoType('absent')" type="button" class="btn  btn-lg " ng-class="{'btn-danger selected': !dispoType}">Absence</button>
 			<button ng-click="toggleDispoType('present')" type="button" class="btn  btn-lg" ng-class="{'btn-info selected': dispoType}">Présence</button>
 		   <h4 class="bg-danger" ng-show="monthClosedInfo.show">Le mois de {{monthClosedInfo.name}} est fermé</h4>
+
 				<label>Nombre souhaité de shifts</label>
 
 		    <input id="shiftsWeek" ng-show="!dispos[monthYear][week].shiftsWeek"  ng-focus="true" type="number" name="shiftsWeek" class="form-control" ng-model="dispos[monthYear][week].shiftsWeek" min="2" max="11" required ng-change="inputShiftsWeek(dispos[monthYear][week])">
@@ -16,21 +19,21 @@
 
 
 
-		          <h4 ng-show="forgotShiftsWeek" class="bg-warning">Oublié de tes shifts par semaine!</h4>
+		          <h4 ng-show="forgotShiftsWeek" class="bg-warning">Oublié tes shifts par semaine!</h4>
+		      
 		 			<br>
 		 			  <h4 ng-show="isBefore" class="bg-danger">Tu peux pas sélectionner une data antérieure à aujourd'hui</h4>
 		 			  <h4 ng-show="drag" class="bg-danger">Sorry, pas de sélection sur plusieurs jours</h4>
 		 			<br>
+	
 		          <label>Remarques</label>
 		          <textarea ng-show="!dispos[monthYear][week].remarques"  name='remarques' class="form-control" ng-model="remarques"  placeholder="pas de remarques"></textarea>
 		          <button ng-show="!dispos[monthYear][week].remarques" class="btn btn-sm" ng-click="dispos[monthYear][week].remarques = remarques">Ok</button>
 
-		          <h5 ng-show="dispos[monthYear][week].remarques" 
-		          		class="bg-warning"
-		          		>
+		          <h5 ng-show="dispos[monthYear][week].remarques" class="bg-warning" >
 		          		 <span editable-text="dispos[monthYear][week].remarques"
 		          		 >{{dispos[monthYear][week].remarques}}</span></h5>
-
+     		 </div>
 
 		          <!-- dispo cities -->
 		          <h3>Villes</h3>

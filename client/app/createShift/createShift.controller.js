@@ -13,8 +13,11 @@ angular.module('velociteScheduleApp')
     $scope.users = User.query();
     $scope.competences = shiftService.getCompetences()
     $scope.shift = {
-      competences : []
+      competences : [],
+      debut : new Date(),
+      fin : new Date()
     };
+    console.debug($scope.shift);
     $scope.shift.coursiers = null;
     $scope.selectedCompetences = [];
     $scope.isFalseHour = false;
