@@ -1,6 +1,16 @@
   'use strict';
 
   angular.module('velociteScheduleApp')
+  .filter('limitFromTo', function(){
+      return function (input, left, right) {
+          if(input === undefined || left === undefined) return input;
+          if(right === undefined){
+              right = left;
+              left =  0;
+          }
+          return input.slice(left,right);//string and array all have this method
+      };
+  })
 
   .controller('MainCtrl', function ($modal,$state, $scope, $http, User, calendarService, AttributionsService, shiftService, Auth) {
       
@@ -20,12 +30,13 @@
       $scope.shiftSources = [];
       $scope.alreadySeen = [];
       $scope.formatedShifts = []
+      $scope.limitFrom = 5
+      $scope.limitTo = 7
 
   $(document).ready(function () {
     $("body").on('click','.cityManquesHeader',function(){
        $(this).next('tr').slideToggle('fast')
     });
-
     $(document).keyup(function(e) {
       //when escaping attribution popover with "annuler"
        if (e.keyCode == 27) { 
@@ -1278,5 +1289,21 @@
         template:'<span class="shiftsDoubles" ng-class="shift.invalidDay === true ? \'bg-warning\': \'\' " ng-repeat="shift in doubleShifts">{{shift.timesLeft>1 ? shift.nom+"("+shift.timesLeft+")" : shift.nom}}</span>'
 
       }
+  })
+   .directive('scrollCoursiers', function(){
+    return{
+      restrict: 'A',
+      link: function(scope, elem, attr){
+        console.log(elem, scope)
+        // elem.on("scroll", function(){
+        //   console.debug('asds');
+        // })
+
+   $("body").on('scroll', function(){
+          console.debug('asds');
+        })
+      }
+
+    }
   })
 
