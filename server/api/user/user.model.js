@@ -37,7 +37,8 @@ var UserSchema = new Schema({
     default: new Date()
   },
   provider: String,
-  salt: String
+  salt: String,
+  presences: []
 });
 
 /**

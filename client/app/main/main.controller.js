@@ -32,12 +32,15 @@
           $(".colDaySelected").removeClass('colDaySelected')
       }
     });
+    $("body").on('hover','.coursierDay',function(){
+     // $(this).closest("tr").addClass('highDispo')
+    })
     setTimeout(function(){
-      // $('.planning.shifts').floatThead({
-      //   scrollContainer: function($table){
-      //     return  $table.closest('.wrapper');
-      //   }
-      // });
+      $('.planning.shifts').floatThead({
+        scrollContainer: function($table){
+          return  $table.closest('.wrapper');
+        }
+      });
     // var coursierShifts = $('.planning.shifts').DataTable( {
     //       "scrollY": "300px",
     //       "scrollX": "100%",
@@ -351,7 +354,9 @@
           console.log(i)
           var dispo = presences[day][i]
           if(dispo.coursierId == user._id){
+            console.debug(dispo);
             var dispoHours = $scope.getDispoHoursAndDay(dispo);
+            console.log(dispoHours);
             var time_shifts = $scope.compareDiposHoursAndShift(dispoHours, day_shifts);
             var time_city_shifts  = $scope.compareDispoCityAndShift(time_shifts, dispo);
             var time_city_able_shifts = $scope.compareUserAndShift(time_city_shifts, user._id, user.competences); 
@@ -1155,9 +1160,9 @@
                 + 'tooltip-placement="top"  tooltip-append-to-body="true" tooltip-trigger="mouseenter" > </div>'
                 +' <span city="{{shift.ville}}"  ng-repeat="shift in daShifts track by $index" ng-class="daShifts != null ? \'attributedShift\' : \'\'  "  '
                 +' popover="Remarques: {{shift.remarques}} || A {{shift.ville}} de {{shift.debut | date : \'H:mm\'}} à  {{shift.fin | date : \'H:mm\'}}" '
-                +'   popover-placement="top"  '
+                +'  popover-placement="top"  '
                 +'  popover-trigger="mouseenter">'+
-              '{{shift.nom}}{{$last ? "" : "+"}}</span>'
+              '{{shift.nom}}{{$last ? "" : "&nbsp;"}}</span>'
       }
     })
   .directive('doublons', function  () {

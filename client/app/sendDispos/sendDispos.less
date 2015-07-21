@@ -30,4 +30,20 @@ td .fc-widget-content{
 }
 #calendar{
 	margin-top: 0%;
+	overflow-y: hidden;
+}
+#scrollDispos{
+	height: 650px;
+	overflow-y: scroll;
+	display: block;
+	
+	border: 1px solid #bbb;
+	border-radius:  5px;
+	margin-top: 1%;
+	@media @tablet {
+		display: none;
+	}
+	@media @iphone {
+		display: none;
+	}
 }

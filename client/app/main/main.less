@@ -105,12 +105,9 @@
   .shiftHidden{
    // display: none;
   }
-  ::-webkit-scrollbar{
-    display: none;
-  }
-  .wrapper{
-    //overflow-y: auto;
-    //max-height:350px;
+    .wrapper{
+    // overflow-y: auto;
+    // max-height:350px;
     width: 100%;
 
   }
@@ -143,8 +140,8 @@
   .planning tr td {
     border-right: 1px solid #bbb;
     border-bottom: 1px solid #bbb;
-    padding-top: 2px;
-    padding-bottom: 2px;
+    padding-top: 1px;
+    padding-bottom: 1px;
     padding-left: 6px;
     padding-right: 6px;
     @media @tablet{
@@ -263,24 +260,28 @@
   }
 
   .planning.shifts{
+
+    #shiftsTable{}
    // table-layout: fixed;
     tbody:first-of-type {
       //display: block;
-      overflow: auto;
+     // overflow-y: scroll;
       width: 10000%;
       height: 300px;
-
+    //  display: block;
     }
-    thead:first-of-type  {
-      tr {
-      //  display: block;
+    tr:first-of-type, .tdManques  {
+        margin: 0;
+       // display: block;
         position: relative;
-      }
+      // width: 100%; 
+      
     }
     th, td {
       text-align: center;
      
     }
+
     th{
       @media @iphone{
         font-size: 0.8em;
@@ -356,6 +357,7 @@
       background-color: #fcf8e3;
   }
   .attributedShift{
+    display: block;
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     font-size: 0.9em;
     cursor: help;
@@ -372,14 +374,14 @@
     }
 
   }
-  .attributedShift[city="Lausanne"]{
+  [city="Lausanne"]{
     color:blue;
   }
-  .attributedShift[city="Yverdon"]{
+  [city="Yverdon"]{
     color:green;
   }
-  .attributedShift[city="Neuchâtel"]{
-    color: gold ;
+  [city="Neuchâtel"]{
+    color: orange ;
   }
 
   .today{

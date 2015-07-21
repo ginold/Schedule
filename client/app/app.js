@@ -9,7 +9,8 @@ angular.module('velociteScheduleApp', [
   'ui.calendar',
   'checklist-model',
   'angularMoment',
-  "xeditable"
+  "xeditable",
+  'scrollable-table'
   ])
   .config(function ($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider) {
      moment.locale('fr', {

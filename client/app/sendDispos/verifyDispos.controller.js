@@ -7,6 +7,7 @@ angular.module('velociteScheduleApp')
 
 
     $scope.verify = function(dispos){
+        console.debug(dispos);
 		$scope.month = dispos[Object.keys(dispos)[0]]; //returns the containings of the month object.
 	    var weeks = [];	// nb shift, remarques & dispos per week
 	    var names = []; //ex 10 - 17 juin
@@ -16,7 +17,7 @@ angular.module('velociteScheduleApp')
 	    if($scope.dispos.dispos != null){
 	    	for (var month in $scope.month) {
     		for (var week in $scope.month[month]){
-                console.debug($scope.month[month][week]);
+
     			if ($scope.month[month][week].dispos.length == 0) {
     				$scope.noDispos = true;
     			}else{

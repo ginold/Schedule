@@ -92,23 +92,27 @@
   </div>
 
       <div class="wrapper">
+
+
+
           <table class="planning shifts">
          <!-- colonnes pour la css et les weekends,+1 car une colonne pour users -->
          <col></col>
          <col class="column" ng-repeat="numDay in calendar.monthDays track by $index" ng-class="isToday($index+1, monthNum, year)" data-dayNameCol="{{calendar.daysNames[$index]}}" date="{{$index+1}}-{{monthNum}}-{{year}}"/>
          
-       <thead>
+       <thead >
          <!-- les jours du mois-->
             <tr class="bg-active"> 
-              <th id="coursierTH">Coursier|Jour</th>
-               <th class="monthDay" ng-repeat="numDay in calendar.monthDays track by $index" > {{$index+1}}
+              <th id="coursierTH" >Coursier|Jour</th>
+               <th class="monthDay"  ng-repeat="numDay in calendar.monthDays track by $index" > {{$index+1}}
                </th>
             </tr>
         </thead>
         <tbody id="shiftsTable">
           <!-- rangs avec nom du coursier et les jours. On ajoute la class myRow à l'endroit de notre login id-->
-          <tr ng-repeat="user in coursiers | orderBy: 'numeroCoursier':reverse | filter: {name: search.name, numeroCoursier: search.no }"  class=" {{currentUser._id == user._id ? 'myRow coursierName' : ''}} ">
-              <td  class="coursierTD"
+          <tr   
+          ng-repeat="user in coursiers | orderBy: 'numeroCoursier':reverse | filter: {name: search.name, numeroCoursier: search.no }"  class=" {{currentUser._id == user._id ? 'myRow coursierName' : ''}} ">
+              <td   class="coursierTD"
                   popover="Email: {{user.email}} portable: {{user.telPortable}}"
                    popover-placement="top"
                    popover-trigger="click" 
@@ -134,8 +138,9 @@
            </tr>
            </tbody>
 
-   
+
           <!--  MANQUES PAR VILLE -->
+
 
     <tbody  ng-repeat="city in cities">
         <tr class="cityManquesHeader" >
@@ -144,7 +149,7 @@
           </th> 
         </tr>
       <tr>
-        <td ng-click="toggleCityDispos(city)">Manques</td>
+        <td class="tdManques" ng-click="toggleCityDispos(city)">Manques</td>
             <td 
                   manques-city
                   ng-repeat="day in calendar.monthDays track by $index"
@@ -160,10 +165,12 @@
             </td>
           </tr>
       </tbody>
-          <tbody>
+
+       <!--    <tbody>
+          <thead>
           <tr>
             <tr class="cityManquesHeader" ng-click="slideManques($event)"><th colspan="{{calendar.monthDays.length+1}}" >Doublons</th></tr>
-
+        </thead>
       
             <tr>
                 <td>Doublons</td>
@@ -177,8 +184,10 @@
                    month-year="monthYear"       
                    daily-shifts="dailyShifts"></td>
               </tr>
-         </tbody>
+         </tbody> -->
     </table>
+
+
 
  
       </div> <!-- calendar -->

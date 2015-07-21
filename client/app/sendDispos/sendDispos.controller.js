@@ -40,12 +40,20 @@ angular.module('velociteScheduleApp')
     calendarDispos:{
       height: 660,
       firstDay: 1, //monday
+      width: 400,
       lang : 'fr',
       selectable:true, //time range
       editable: false,
       timezone: 'local',
       minTime: "06:00:00", 
      	maxTime: "21:00:00",
+      businessHours: {
+          start: '06:00', // a start time (10am in this example)
+          end: '21:00', // an end time (6pm in this example)
+      },
+      defaultAllDayEventDuration: {
+           hours: 15
+      },
      // events: $scope.myDispos,
       header:{
         left: 'agendaWeek',
@@ -77,6 +85,11 @@ angular.module('velociteScheduleApp')
       },
 
       select: function(start, end) {
+        var startMonth = moment(start).startOf('week').month()
+        var endMonth = moment(end).endOf('week').month()
+        var monthYearEnd = moment(end).format("MM-YYYY")
+        var monthYearStart = moment(start).format("MM-YYYY")
+        
         //if click is before now
         if (moment(start).isBefore(new Date(), "day") ) {
           $scope.isBefore = true;
@@ -105,13 +118,16 @@ angular.module('velociteScheduleApp')
         }else{
           $scope.drag = false
         }
-         //if it has the same starting and ending hours 
+         //if it has the same starting nad ending hours 
          //-> it's all day, restrict the starting and ending hours
          if (startHour == endHour) {
           console.debug(startHour, endHour);
             var allDay = true;
-            var startTime = moment(start).hour(6)
-            var endTime = moment(end).hour(21)
+            var startTime = new Date(start).setHours(6)
+            // startTime = moment(startTime).hour(4)
+            var endTime = new Date(end).setHours(21)
+            // endTime = moment(endTime).subtract(1,"days").hour(19)
+            console.debug(startTime, endTime);
          }else{
             var allDay = false;
             var startTime = start;
@@ -132,6 +148,7 @@ angular.module('velociteScheduleApp')
           end: endTime, stick: true, villes : villes, allDay : allDay, 
           className: className+" data-id="+index
          };
+         console.debug(dispo);
          index++;
         //replace a dispo if selected on the same day
         if ($scope.dispos[$scope.monthYear] && $scope.villes.length != 0 ) {
@@ -145,11 +162,12 @@ angular.module('velociteScheduleApp')
                     for (var  j = $scope.weekDispos.length - 1; j >= 0; j--) {
                       if( moment($scope.weekDispos[j].start).isSame(dispo.start,"day")){
                         $scope.weekDispos.splice(j,1)
-                         $('#calendar').fullCalendar('removeEventSource')
-                         $('#calendar').fullCalendar('removeEvents');
-                         $('#calendar').fullCalendar('addEventSource', $scope.weekDispos);
+                      
                       }
                     };
+                       $('#calendar').fullCalendar('removeEventSource')
+                         $('#calendar').fullCalendar('removeEvents');
+                         $('#calendar').fullCalendar('addEventSource', $scope.weekDispos);
                   }
                 };
               };
@@ -182,9 +200,14 @@ angular.module('velociteScheduleApp')
             if(!$scope.dispos[$scope.monthYear][$scope.week].dispos){
               $scope.dispos[$scope.monthYear][$scope.week].dispos = []
             }
+            if (startMonth !== endMonth) {
+              $scope.dispos[monthYearEnd][$scope.week].shiftsWeek = angular.copy( $scope.dispos[monthYearStart][$scope.week].shiftsWeek )
+              $scope.dispos[monthYearEnd][$scope.week].remarques = angular.copy( $scope.dispos[monthYearStart][$scope.week].remarques)
+            }
             dispo.villes = angular.copy($scope.villes)
             $scope.dispos[$scope.monthYear][$scope.week].dispos.push(dispo)
             $scope.weekDispos.push(dispo);
+            console.debug($scope.dispos);
         };
       },//end select
       /*
@@ -233,6 +256,7 @@ $scope.loadDispos = function(theWeek, monthYearStart, monthYearEnd){
  for (var j = months.length - 1; j >= 0; j--) {
   var monthYear = months[j] 
   if ($scope.user.dispos) {
+    console.debug($scope.user.dispos);
     for(var month in $scope.user.dispos){
       if (monthYear == month &&  $.inArray(monthYear, $scope.alreadySeen) == -1 ) {
         $scope.alreadySeen.push(monthYear)
