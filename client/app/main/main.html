@@ -94,7 +94,7 @@
 
 
         <button id="down" class="glyphicon glyphicon-arrow-up btn" ng-click="down()"></button>
-    <input type="number" class="searchNo" ng-model="number" ng-change="limitCoursiers(number)">
+    <input type="number" class="searchNo" ng-model="number" ng-change="limitCoursiers(number)" min="1" max="{{coursiers.length}}">
     <button class="btn btn-sm btn-info" ng-click="limitCoursiers('tous')"> Tous</button>
    <button  id="up" class="glyphicon glyphicon-arrow-down btn" ng-click="up()"></button>
    <button class="btn btn-warning" ng-show="preselectedShift" ng-click="unselectShift()">Desélectionner</button>
@@ -155,7 +155,7 @@
           </th> 
         </tr>
       <tr>
-        <td ng-click="toggleCityDispos(city)">Manques</td>
+        <td ng-class=" 'manques'+city " ng-click="toggleCityDispos(city, $event)">Manques</td>
             <td 
                   manques-city
                   ng-repeat="day in calendar.monthDays track by $index"

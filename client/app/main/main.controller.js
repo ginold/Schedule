@@ -25,6 +25,9 @@
       $scope.limitTo = 12;
       $scope.dispoOn = false;
       $scope.noInfoOn = false;
+      $scope.toggleCities = []
+      $scope.citiesLeft = []
+      $scope.citiesManques = []
 
   $(document).ready(function () {
     $("body").on('click','.cityManquesHeader',function(){
@@ -66,6 +69,11 @@
          $("td.highDispoOff").addClass('highDispo') .removeClass('highDispoOff')  
          $("td.busyOff").addClass('busy').removeClass('busyOff');
       };
+      $scope.toggleCityDispos(null)
+
+      console.log(navigator.userAgent)
+        console.debug('sds');
+     // }
 
     });
 
@@ -75,38 +83,12 @@
           $(".colDaySelected").removeClass('colDaySelected')
       }
     });
-    setTimeout(function(){
-      // $('.planning.shifts').floatThead({
-      //   scrollContainer: function($table){
-      //     return  $table.closest('.wrapper');
-      //   }
-      // });
-    // var coursierShifts = $('.planning.shifts').DataTable( {
-    //       "scrollY": "300px",
-    //       "scrollX": "100%",
-    //       "scrollCollapse": true,
-    //        "paging": false,
-    //        bFilter: false, 
-    //        bInfo: false,
-    //        bSort : false
-    
-    //   } );
-    //   new $.fn.dataTable.FixedColumns( coursierShifts );
-
-    },1500)
 
     //because angular-fullcalendar was so sloooooow....
     $('#fullCal').fullCalendar({
-          height: 620,
-          width:400,
-          aspectRatio: 0.4,
-          firstDay: 1, //monday
-          editable: false,
-          allDaySlot: false,
-          eventLimit: 3,
-          minTime: "06:00:00", 
-          maxTime: "21:00:00",
-          lang : 'fr',
+          height: 620, width:400, aspectRatio: 0.4,firstDay: 1, //monday
+          editable: false,allDaySlot: false,eventLimit: 3,minTime: "06:00:00", 
+          maxTime: "21:00:00",lang : 'fr',
           header: {
             left: 'month agendaWeek',
             center: 'title',
@@ -147,6 +129,7 @@
   $scope.renderCalendar = function(month, year){
     var dateStart = new Date(year, month, 1)//1st of the month
     var dateEnd =  new Date(year, month+1, 0) //last day of the month
+    $(".notDispoLausanne, .notDispoYverdon, .notDispoNeuchâtel").removeClass("notDispoLausanne notDispoYverdon notDispoNeuchâtel")
     //show the only coursiers that were active during that moment!
       // for (var i = $scope.coursiers.length - 1; i >= 0; i--) {
       //     if ( moment(dateStart, "MM-YYYY").isAfter( moment($scope.coursiers[i].createdOn), "MM-YYYY") ) {
@@ -179,6 +162,7 @@
   } 
   $scope.unselectShift = function(){
     $scope.preselectedShift = null
+    $(".lowPotential, .mediumPotential, .highPotential, .busyPotential, .shiftManqueDaySelected").removeClass("lowPotential mediumPotential highPotential busyPotential shiftManqueDaySelected")
     $(".shiftManqueDaySelected").removeClass("shiftManqueDaySelected")
   }
   /*
@@ -748,49 +732,46 @@
          $scope.noInfoOn = true
       }
   }
+  // on click on td "manques" -> show who is NOT present in a @city
+  // works for one city at a time
   $scope.toggleCityDispos = function (city) {
-   $(".noInfo, .noInfoOff, .present, .highDispo, .lowDispo, .busy").css("background-color", "")
-      if (city == "Lausanne") {
-         $(".Yverdon, .Neuchâtel").css("background-color", "")
-        if ($(".Lausanne.city-bg-off").length >0 ) {
-          $(".Lausanne.city-bg-off").removeClass("city-bg-off").addClass("city-bg-on").css("background-color","#E3F0B1")
-        }else{
-          $(".Lausanne.city-bg-on").removeClass("city-bg-on").addClass("city-bg-off").css("background-color","")
+
+     if( $.inArray(city, $scope.toggleCities) == -1){
+      $scope.toggleCities.push(city)
+     }else{
+      $scope.toggleCities.splice($.inArray(city, $scope.toggleCities), 1)
+     }
+     var citiesLeft = []
+     for (var i = $scope.cities.length - 1; i >= 0; i--) {
+        if($.inArray($scope.cities[i], $scope.toggleCities) == -1 ){
+          citiesLeft.push($scope.cities[i])
         }
-      }
-       else if (city == "Yverdon") {
-        $(".Lausanne, .Neuchâtel").css("background-color", "")
-        if ($(".Yverdon.city-bg-off").length >0 ) {
-          $(".Yverdon.city-bg-off").removeClass("city-bg-off").addClass("city-bg-on").css("background-color","#EEB1F0")
-        }else{
-          $(".Yverdon.city-bg-on").removeClass("city-bg-on").addClass("city-bg-off").css("background-color","")
-        }
-      }
-       else if (city == "Neuchâtel") {
-         $(".Lausanne, .Yverdon").css("background-color", "")
-        if ($(".Neuchâtel.city-bg-off").length >0 ) {
-          $(".Neuchâtel.city-bg-off").removeClass("city-bg-off").addClass("city-bg-on").css("background-color","#BDCAF2")
-        }else{
-          $(".Neuchâtel.city-bg-on").removeClass("city-bg-on").addClass("city-bg-off").css("background-color","")
-        }
-      }
+     };
+     for (var i = $scope.toggleCities.length - 1; i >= 0; i--) {
+        $(".manques"+$scope.toggleCities[i]).addClass('notDispo'+$scope.toggleCities[i])   
+        $("td.coursierDay:not(."+$scope.toggleCities[i]+"):not(.noInfo):not(.noInfoOff):not(.absent)").addClass("city-bg-on notDispo"+$scope.toggleCities[i])
+     };
+     for (var i = citiesLeft.length - 1; i >= 0; i--) {
+       $(".manques"+citiesLeft[i]).removeClass('notDispo'+citiesLeft[i]).addClass('city-bg-off')
+       $("td.coursierDay.notDispo"+citiesLeft[i]).removeClass("notDispo"+citiesLeft[i])
+     
+     };
+      //$scope.citiesManques = citiesLeft;
   }
   $scope.returnAttributions = function(monthYear){
     if ($scope.attributions.length != 0) {
         return $scope.attributions[0].monthYear[monthYear]
       };
   }
-  $scope.toggleShiftsLevel = function(toggleAll){
-    console.log(toggleAll)
-  if (toggleAll) {
-        $("td.lowDispo").addClass('lowDispoOff').removeClass('lowDispo') 
+  $scope.toggleShiftsLevel = function(toggleAll,event){
+    if (toggleAll) {
+     $("td.lowDispo").addClass('lowDispoOff').removeClass('lowDispo') 
      $("td.mediumDispo").addClass('mediumDispoOff') .removeClass('mediumDispo')  
      $("td.highDispo").addClass('highDispoOff') .removeClass('highDispo')  
      $("td.busy").addClass('busyOff').removeClass('busy');
   
      $scope.toggleAll = false;    
    }else if (!toggleAll){
-    console.log('yep')
       $("td.lowDispoOff").addClass('lowDispo').removeClass('lowDispoOff') 
      $("td.mediumDispoOff").addClass('mediumDispo') .removeClass('mediumDispoOff')  
      $("td.highDispoOff").addClass('highDispo') .removeClass('highDispoOff')  
@@ -876,19 +857,12 @@
     };
   }
   $scope.up = function(){
-  
     if ($scope.limitTo >= $scope.coursiers.length) {
       return
     }else{
        $scope.limitFrom++
         $scope.limitTo++
     }
-    // if ($scope.limitTo+2 >= $scope.coursiers.length) {
-    //   $scope.limitTo = $scope.coursiers.length
-    // }else{
-    //   $scope.limitTo = $scope.limitTo +2
-    //   $scope.limitFrom =  $scope.limitFrom+2
-    // }
   }
   $scope.down = function(){
     if ($scope.limitFrom <= 0) {
@@ -898,14 +872,6 @@
         $scope.limitTo--
 
     };
-
-      // if ($scope.limitFrom-2 <= 0) {
-      //   $scope.limitFrom = 0;
-      // }else{
-      //   $scope.limitTo = $scope.limitTo-2
-      //   $scope.limitFrom = $scope.limitFrom-2
-      // }
-    
   }
   $scope.limitCoursiers = function(number){
     var max = $scope.coursiers.length
@@ -1061,7 +1027,7 @@
           scope.addDispoChange = function (newMonth, newYear) {
             elem.attr("date", (scope.day)+"-"+(newMonth+1)+"-"+newYear )  
             var dispo = scope.checkDispo(scope.day, newMonth, newYear, scope.user._id) 
-             elem.removeClass("presentOff present absent city-bg-off city-bg-on noInfo noInfoOff Lausanne Yverdon Neuchâtel")
+             elem.removeClass("presentOff present absent city-bg-off city-bg-on noInfo noInfoOff Lausanne Yverdon Neuchâtel notDispoLausanne notDispoYverdon notDispoNeuchâtel")
                 if(dispo){
                   if (dispo.type =="Dispo") {
                      elem.addClass("presentOff")
@@ -1092,6 +1058,7 @@
                      if (shift.coursierAttributed._id  == scope.user._id) {
                           if (shift.title == 'Absent') {
                             elem.addClass("absent")
+                            elem.removeClass('presentOff')
                           }else{
                              daShifts.push(shift);  
                           }
@@ -1223,7 +1190,7 @@
            })
           //WATCH MONTH
            scope.$watch("monthNum",function(newMonth,oldValue) {
-               elem.removeClass('lowDispo mediumDispo highDispo lowDispoOff mediumDispoOff highDispoOff busy busyOff absent present Lausanne Yverdon Neuchâtel')
+             //  elem.removeClass('lowDispo mediumDispo highDispo lowDispoOff mediumDispoOff highDispoOff busy busyOff absent present Lausanne Yverdon Neuchâtel notDispoCity')
                var date = new Date(parseInt(scope.year), newMonth, scope.day)
                var dayOfWeek = date.getDay();
                var monthYear = moment(1+"-"+(newMonth+1)+"-"+scope.year, "D-M-YYYY").format("MM-YYYY")
@@ -1235,7 +1202,7 @@
             });
            //WATCH YEAR
            scope.$watch("year",function(newYear,oldValue) {
-              elem.removeClass('lowDispo mediumDispo highDispo lowDispoOff mediumDispoOff highDispoOff busy busyOff absent present Lausanne Yverdon Neuchâtel')
+            //  elem.removeClass('lowDispo mediumDispo highDispo lowDispoOff mediumDispoOff highDispoOff busy busyOff absent present Lausanne Yverdon Neuchâtel notDispoCity')
               var date = new Date(parseInt(newYear), scope.monthNum, scope.day)
               var dayOfWeek = date.getDay();
               var monthYear = moment(1+"-"+(scope.monthNum+1)+"-"+newYear,  "D-M-YYYY").format("MM-YYYY")
@@ -1246,6 +1213,7 @@
               scope.checkShiftsPerWeek(dayOfWeek, scope.day, scope.monthNum, newYear)
             });
            scope.$watch("limitTo",function() {
+
               var date = new Date(parseInt(scope.year), scope.monthNum, scope.day)
               var dayOfWeek = date.getDay();
               var monthYear = moment(1+"-"+(scope.monthNum+1)+"-"+scope.year,  "D-M-YYYY").format("MM-YYYY")

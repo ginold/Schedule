@@ -91,7 +91,6 @@
                     $scope.forgotRemarques = true
                   };
                 };
-                console.log($scope.monthYearStart, $scope.monthYearEnd, $scope.week, $scope.dispos[$scope.monthYear][$scope.week].shiftsWeek, $scope.dispos[$scope.monthYear][$scope.week].remarques)
                 if ($scope.dispos[$scope.monthYear][$scope.week].remarques) {
                   $scope.forgotRemarques = false
                 };
@@ -350,7 +349,10 @@
 
   $scope.inputShiftsWeek = function(number){
     console.log($scope.monthYearStart, $scope.monthYearEnd,number)
-
+    if(!number){
+      $scope.forgotShiftsWeek = true
+      return
+    }
     $scope.shiftsWeek = number;
     $scope.forgotShiftsWeek = false
     if (!$scope.dispos[$scope.monthYear]) {
@@ -372,12 +374,12 @@
     }; 
   }
   $scope.inputRemarques =function (remarques){
-    console.log(remarques)
-    if (!remarques) {
-
+   
+    if (!remarques ||  remarques == '') {
        remarques = 'Pas de remarques';
      }
-         $scope.remarques = remarques;
+   
+    $scope.remarques = remarques;
     $scope.forgotRemarques = false
 
     if (!$scope.dispos[$scope.monthYear]) {
@@ -386,20 +388,29 @@
     if (!$scope.dispos[$scope.monthYear][$scope.week]) {
       $scope.dispos[$scope.monthYear][$scope.week] = {}
     };
-    $scope.dispos[$scope.monthYear][$scope.week].remarques = remarques
 
-      if (moment($scope.viewStart).month() != moment($scope.viewEnd).month() ) {
-        console.log($scope.monthYearStart, $scope.monthYearEnd)
-       if (!$scope.dispos[$scope.monthYearEnd]) {
-          $scope.dispos[$scope.monthYearEnd] = {}
-        };
-        if (!$scope.dispos[$scope.monthYearEnd][$scope.week]) {
-          $scope.dispos[$scope.monthYearEnd][$scope.week] = {}
-        };
+   
+    if (moment($scope.viewStart).month() != moment($scope.viewEnd).month() ) {
+
+     if (!$scope.dispos[$scope.monthYearEnd]) {
+        $scope.dispos[$scope.monthYearEnd] = {}
+      };
+      if (!$scope.dispos[$scope.monthYearEnd][$scope.week]) {
+        $scope.dispos[$scope.monthYearEnd][$scope.week] = {}
+      };
       $scope.dispos[$scope.monthYearEnd][$scope.week].remarques = remarques
+
     }; 
-  
+
+   $scope.dispos[$scope.monthYearStart][$scope.week].remarques = remarques
+   $scope.dispos[$scope.monthYearEnd][$scope.week].remarques = remarques
+   console.debug($scope.dispos[$scope.monthYearStart]);
+    console.debug($scope.dispos[$scope.monthYearStart][$scope.week]);
+    console.debug($scope.dispos[$scope.monthYearStart]);
     
+
+    console.debug(remarques);
+
  }
 
   $scope.loadDispos = function(theWeek, monthYearStart, monthYearEnd){
@@ -517,15 +528,16 @@ $scope.checkForgots = function(){
       };
 }
     $(document).ready(function(){
+      //for checking on week change
       $("body").on('mouseup',".fc-prev-button",function(e){
         console.log($scope.monthYearEnd, $scope.monthYearStart)
         if($scope.dispos[$scope.monthYearEnd] || $scope.dispos[$scope.monthYearStart]){
           if ($scope.dispos[$scope.monthYearEnd][$scope.week] || $scope.dispos[$scope.monthYearStart][$scope.week] ) {
             if ($scope.dispos[$scope.monthYearEnd][$scope.week].dispos.length > 0   ||  $scope.dispos[$scope.monthYearStart][$scope.week].dispos.length >0  ) {  
-              if ($scope.checkForgots()) {
-                  $("#calendar").fullCalendar('next')
-                  return
-              };
+              // if ($scope.checkForgots()) {
+              //     $("#calendar").fullCalendar('next')
+              //     return
+              // };
             };
           };
         }
@@ -534,10 +546,10 @@ $scope.checkForgots = function(){
         if($scope.dispos[$scope.monthYearEnd] || $scope.dispos[$scope.monthYearStart]){
           if ($scope.dispos[$scope.monthYearEnd][$scope.week] || $scope.dispos[$scope.monthYearStart][$scope.week] ) {
             if ($scope.dispos[$scope.monthYearEnd][$scope.week].dispos.length > 0  ||  $scope.dispos[$scope.monthYearStart][$scope.week].dispos > 0  ) {
-               if ($scope.checkForgots()) {
-                 $("#calendar").fullCalendar('prev')
-                return
-              };
+              //  if ($scope.checkForgots()) {
+              //    $("#calendar").fullCalendar('prev')
+              //   return
+              // };
             };
           };
         }
