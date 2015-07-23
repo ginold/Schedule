@@ -3,7 +3,7 @@
 angular.module('velociteScheduleApp')
   .controller('VerifyDisposCtrl', function ($scope, $state, Auth, $http, $modal) {
   	$scope.dispos = $state.params; //used in ng-click sendDispos(dispos)
-  	$scope.noDispos = true;
+  	//$scope.noDispos = true;
 
 
     $scope.verify = function(dispos){
@@ -16,9 +16,9 @@ angular.module('velociteScheduleApp')
 	    if($scope.dispos.dispos != null){
 	    	for (var month in $scope.month) {
     		for (var week in $scope.month[month]){
-                console.debug($scope.month[month][week]);
+               
     			if ($scope.month[month][week].dispos.length == 0) {
-    				$scope.noDispos = true;
+    				delete $scope.month[month][week]
     			}else{
     				$scope.noDispos = false;
     				weeks[index] = $scope.month[month][week];
@@ -45,6 +45,8 @@ angular.module('velociteScheduleApp')
     $scope.sendDispos = function(dispos){
         console.debug(dispos);
     	$scope.user = Auth.getCurrentUser();
+    if (!$scope.noDispos) {
+        
 
        for(var monthYear in dispos.dispos){
            var dispo = dispos.dispos[monthYear]
@@ -71,12 +73,16 @@ angular.module('velociteScheduleApp')
                     $state.go("planningCoursier")
 
                 }
+                $scope.close = function(){ 
+                    $modalInstance.dismiss('cancel'); 
+                }
              },
             size: "sm"
         });
     	
-
+    };
     }
+    $scope.sendDispos($scope.dispos)
     $scope.back = function(){
     	$state.go("^");
     }

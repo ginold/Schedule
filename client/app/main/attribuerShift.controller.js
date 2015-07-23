@@ -149,12 +149,14 @@ angular.module('velociteScheduleApp')
     };
     $scope.deleteShift = function(coursier, date, shift){
       AttributionsService.deleteShift(coursier, date, shift);
+       $(".colDaySelected").removeClass('colDaySelected');
         $scope.$close();
     }
     $scope.attribuer = function(shifts, coursier, date, otherShift) {
       //in components/attribution
       AttributionsService.setShift(shifts, coursier, date,otherShift);
       $(".colDaySelected").removeClass('colDaySelected');
+       $(".lowPotential, .mediumPotential, .highPotential, .busy, .shiftManqueDaySelected").removeClass("lowPotential mediumPotential highPotential busy shiftManqueDaySelected")
       $scope.$close();
 
     };

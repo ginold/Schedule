@@ -44,7 +44,7 @@
      
         <div class="text-centered" >
          <!--  previous and next buttons (month) -->
-          <h4 class="col-md-3 col-sm-4 col-xs-6" id="monthNavigation"> 
+          <h4 class="col-md-3 col-sm-3 col-xs-4" id="monthNavigation"> 
              <button id="prevMonth"  class="btn btn-success btn-sm" ng-click="renderCalendar(monthNum-1)" ><</button>
              {{calendar.month}} {{calendar.year}}
              <button id="nextMonth"  class="btn btn-success btn-sm" ng-click="renderCalendar(monthNum+1)">></button>
@@ -53,7 +53,7 @@
 
 
 
- <div class="col-md-3 col-sm-3 col-xs-6" id="headButtons">
+ <div class="col-md-4 col-sm-4 col-xs-7" id="headButtons">
   <div class="dropdown">
     <button class="btn btn-success  dropdown-toggle" type="button"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
       Dispos
@@ -62,9 +62,14 @@
     <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
       <li class="bg-info"><a ng-click="toggleIsPresent()">Dispos</a></li>
       <li class="bg-warning"><a ng-click="toggleNoInfo()">No info</a></li>
+      <li class="bg-danger"> 
+        <a ng-click="toggleShiftsLevel(toggleAll)">Nb shifts</a>
+      </li>
       <li><a ng-click="todaysCoursiers()">Qui roule AJD </a></li>
       <li><a> Qui roule le: <select ng-model="workingDay" ng-change="whoWorksOn(workingDay, monthNum, year, $event)"> <option ng-repeat="key in calendar.monthDays track by $index"> {{$index+1}}</option></select> </a> </li>
     </ul>
+
+
   </div>
 
 <!--   <div class="dropdown" ng-show="isAdmin()">
@@ -86,7 +91,13 @@
     </ul>
   </div> -->
    <div class="dropdown">  
-    <button class="btn btn-warning" ng-click="toggleAllDispos(toggleAll)">On</button>
+
+
+        <button id="down" class="glyphicon glyphicon-arrow-up btn" ng-click="down()"></button>
+    <input type="number" class="searchNo" ng-model="number" ng-change="limitCoursiers(number)">
+    <button class="btn btn-sm btn-info" ng-click="limitCoursiers('tous')"> Tous</button>
+   <button  id="up" class="glyphicon glyphicon-arrow-down btn" ng-click="up()"></button>
+   <button class="btn btn-warning" ng-show="preselectedShift" ng-click="unselectShift()">Desélectionner</button>
 </div>
 
   </div>
@@ -107,7 +118,7 @@
         </thead>
         <tbody id="shiftsTable">
           <!-- rangs avec nom du coursier et les jours. On ajoute la class myRow à l'endroit de notre login id-->
-          <tr ng-repeat="user in coursiers | orderBy: 'numeroCoursier':reverse | filter: {name: search.name, numeroCoursier: search.no }"  class=" {{currentUser._id == user._id ? 'myRow coursierName' : ''}} ">
+          <tr ng-repeat="user in coursiers | orderBy: 'numeroCoursier':reverse | filter: {name: search.name, numeroCoursier: search.no } | limitFromTo:limitFrom:limitTo"  class=" {{currentUser._id == user._id ? 'myRow coursierName' : ''}} ">
               <td  class="coursierTD"
                   popover="Email: {{user.email}} portable: {{user.telPortable}}"
                    popover-placement="top"

@@ -2,7 +2,7 @@
 <div class="container" >
  	<div>
  		<button class="col-md-1 btn-info button btn"ng-click="back()">Retour</button>
- 		<button   ng-show="!noDispos" 	class="btn-success btn" ng-click="sendDispos(dispos)">Envoyer</button>
+ 	<!-- 	<button   ng-show="!noDispos" 	class="btn-success btn" ng-click="sendDispos(dispos)">Envoyer</button> -->
  		<h1 class="text-center" ng-show="!noDispos" >Confirmation</h1>
  	</div>
  	<!-- if noDispos = true, you didn't fill your dispos -->
@@ -10,8 +10,11 @@
 	<section class="disponibilites col-md-12">
 		
 
-		<div class="week col-md-3" ng-repeat="week in weeks">
-			<h3>Du {{names[$index]}}</h3>
+		<div class="col-md-3"ng-repeat="week in weeks">
+
+			<h3 class="">Semaine {{$index+1}}</h3>
+			<div class="week ">
+			<h4>Du {{names[$index]}}</h4>
 			<p class="{{week.shiftsWeek == null ? 'text-danger' : ''}}">
 			<label>Shifts souhaités:&nbsp;</label>{{week.shiftsWeek == null ? "Attention, t'as oublié!" : week.shiftsWeek}}</p>
 			<p><label>Remarques:&nbsp;</label>
@@ -48,7 +51,7 @@
 			  	 <strong class="text-danger">Absent</strong>
 			  </tr>
 			</table>
-	
+	</div>
 
 		</div>
 	</section>

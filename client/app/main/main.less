@@ -1,4 +1,4 @@
-  @desktop:   ~"only screen and (min-width: 1200px) and (max-width: 1600px)";
+  @desktop:   ~"only screen and (min-width: 1200px) and (max-width: 3000px)";
   @laptop :   ~"only screen and (min-width: 960px) and (max-width: 1299px)";
   @tablet:    ~"only screen and (min-width: 569px) and (max-width: 959px)";
   @iphone :   ~"only screen and (min-width: 320px) and (max-width: 568px)";
@@ -23,7 +23,9 @@
       background: #4393B9;
       margin-bottom: 10px;
   }
-
+#up, #down{
+  display:none;
+}
   .cityManquesHeader th{
     text-align: center;
     cursor: pointer;
@@ -42,29 +44,49 @@
   }
   .busy{
    color: black;
-   background-color: #E6E6E6;
+   background-color: #E6E6E6 ;
 
   }
   .lowDispo{
 
-   background-color: #FFBC82;
+   background-color: #FFBC82  ;
 
 
   }
   .highDispo{
-    background-color: #00FF4C;
+    background-color: #00FF4C ;
 
   }
   .mediumDispo{
   // border-style:solid; 
-    background-color: #85FFF7;
+    background-color: #85FFF7 ;
   }
+  .busyPotential{
+     color: white;
+   background-color: black !important;
+  }
+  .lowPotential{
+
+   background-color: #FFBC82  !important;
+
+
+  }
+  .highPotential{
+    background-color: #00FF4C !important;
+
+  }
+  .mediumPotential{
+  // border-style:solid; 
+    background-color: #85FFF7 !important;
+  }
+
+
   .absent{
-      background-color: #FF8C8C;
+      background-color: #FF8C8C ;
       opacity: 0.9;
   }
   .noInfo{
-      background-color: #FFD58C;
+      background-color: #FFD58C ;
 
   }
   .noInfo, .noInfoOff{
@@ -170,7 +192,19 @@
   .planning tr th:first-child,
   .planning tr td:first-child {
     border-left: 1px solid #bbb;
-
+    width: 180px;
+    @media @desktop {
+      width:200px;
+    }
+     @media @laptop {
+      width:150px;
+    }
+     @media @tablet {
+      width:100px;
+    }
+     @media @iphone {
+      width:80px;
+    }
   }
 
   table tr th {
@@ -181,7 +215,10 @@
   }
 
   .manquesCell{
-    height: 30px;
+    max-height: 100px;
+    overflow-y: scroll;
+    width:20px;
+    //display:inline-block;
   }
   //======================================
   #prevMonth{
@@ -199,7 +236,7 @@
 
   }
   .searchNo{
-    width: 25px;
+    width: 40px;
   }
   .searchName{
     width: 60px;
@@ -224,7 +261,7 @@
       @media @iphone{
         font-size: 1em;
       }
-    margin-top: 3%;
+    margin-top: 2%;
   }
   .btn{
 
@@ -290,7 +327,7 @@
       }
     }
     .coursierTD{
-      background-color: white;
+     
       @media @iphone{
         text-align: left;
       }
@@ -372,14 +409,14 @@
     }
 
   }
-  .attributedShift[city="Lausanne"]{
+  [city="Lausanne"]{
     color:blue;
   }
-  .attributedShift[city="Yverdon"]{
+  [city="Yverdon"]{
     color:green;
   }
-  .attributedShift[city="Neuchâtel"]{
-    color: gold ;
+ [city="Neuchâtel"]{
+    color: orange ;
   }
 
   .today{

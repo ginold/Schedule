@@ -16,14 +16,57 @@
       $scope.isAdmin = Auth.isAdmin; //to show or not to show the first planning
       $scope.currentUser = Auth.getCurrentUser()
       $scope.loading = true;
-      $scope.toggleAll = true;
+      $scope.toggleAll = false;
       $scope.shiftSources = [];
       $scope.alreadySeen = [];
       $scope.formatedShifts = []
+      $scope.number = 12;
+      $scope.limitFrom = 0;
+      $scope.limitTo = 12;
+      $scope.dispoOn = false;
+      $scope.noInfoOn = false;
 
   $(document).ready(function () {
     $("body").on('click','.cityManquesHeader',function(){
        $(this).next('tr').slideToggle('fast')
+    });
+
+    $("body").on('mouseover','.coursierDay',function(){
+      $(".rowDaySelected").removeClass("rowDaySelected")
+      $(this).closest('tr').addClass('rowDaySelected')
+    });
+
+
+    $(".planning").on('mousewheel',"#shiftsTable",function(e){
+      e.preventDefault();
+        if(e.originalEvent.wheelDelta /120 > 0) {
+           $("#down").trigger('click')  
+        }
+        else{
+          $("#up").trigger('click')
+            
+        }
+       if ($scope.preselectedShift) {
+          setTimeout(function(){
+            var day = moment($scope.preselectedDate,"D-M-YYYY").format("D")
+            var month = moment($scope.preselectedDate,"D-M-YYYY").format("M")
+            var year = moment($scope.preselectedDate,"D-M-YYYY").format("YYYY")
+            $scope.showPotentialCoursiers(day,(month-1),year,$scope.preselectedShift, $scope.preselectedEvent)
+        },100)
+      }
+      if ($scope.dispoOn) {
+         $(".presentOff").removeClass("presentOff").addClass("present");
+      };
+       if ($scope.noInfoOn) {
+        $(".noInfoOff").removeClass("noInfoOff").addClass("noInfo");
+      };
+      if ($scope.toggleAll) {
+         $("td.lowDispoOff").addClass('lowDispo').removeClass('lowDispoOff') 
+         $("td.mediumDispoOff").addClass('mediumDispo') .removeClass('mediumDispoOff')  
+         $("td.highDispoOff").addClass('highDispo') .removeClass('highDispoOff')  
+         $("td.busyOff").addClass('busy').removeClass('busyOff');
+      };
+
     });
 
     $(document).keyup(function(e) {
@@ -134,6 +177,10 @@
     $scope.loading = false;
     
   } 
+  $scope.unselectShift = function(){
+    $scope.preselectedShift = null
+    $(".shiftManqueDaySelected").removeClass("shiftManqueDaySelected")
+  }
   /*
     //TODO - BY MONTH TOO!
     returns an array of shifts ordered by day of week
@@ -201,12 +248,13 @@
     Calls -> sortPotentialCoursiers()
   */
   $scope.showPotentialCoursiers = function(day,month,year, shift, event){
-    $(".lowDispo, .mediumDispo, .highDispo, .busy, .shiftManqueDaySelected").removeClass("lowDispo mediumDispo highDispo busy shiftManqueDaySelected"). addClass('noBg')
+    $(".lowPotential, .mediumPotential, .highPotential, .busyPotential, .shiftManqueDaySelected").removeClass("lowPotential mediumPotential highPotential busyPotential shiftManqueDaySelected")
     $(event.target).addClass('shiftManqueDaySelected')
     var date = moment(new Date(year, month, day)).format("D-M-YYYY");
     var theDay = moment(new Date(year, month, day)).format("D")
     $scope.preselectedShift = shift;
     $scope.preselectedDate = date;
+    $scope.preselectedEvent = event
     var arePresentDispos = [];
     //get every one on dispo on that day
     for(var day in $scope.lesPresences){
@@ -254,16 +302,16 @@
                 var isCapable = shiftService.containsAll(shift.competences, coursier.competences)
                 //everything ok, green
                 if (isCapable && isBetweenHours && (isInCity != -1) && !isBusy) {
-                  cell.this.addClass('highDispo')
+                  cell.this.addClass('highPotential')
                 //can but is busy, blue
                 }else if(isCapable && isBetweenHours && (isInCity != -1) && isBusy){
-                  cell.this.addClass('mediumDispo')
+                  cell.this.addClass('mediumPotential')
                 //cant but is available, orange
                 }else if(!isCapable && isBetweenHours && (isInCity != -1) && !isBusy){
-                  cell.this.addClass('lowDispo')
+                  cell.this.addClass('lowPotential')
                 //cant, is busy, but is hours and city is ok
                 }else if(!isCapable && isBetweenHours && (isInCity != -1) && isBusy){
-                  cell.this.addClass('busy');
+                  cell.this.addClass('busyPotential');
                 }
              };
            }
@@ -327,75 +375,60 @@
     Shows a list of sorted out shifts with corresponding
     hours, cities and capabilities of coursier.
   */
-  $scope.setShift = function(day, month,year, user, event){
-    if (Auth.isAdmin()) {
-    var date = new Date(year, month, day)
-    var day =  moment(date).format("D")
-    var dayOfWeek = moment(date).day()
-    var day_shifts = $scope.dailyShifts[dayOfWeek-1]
-    var presences = $scope.lesPresences
-    var attributedShifts  = $scope.getAttributedShifts($scope.attributions[0].monthYear[$scope.monthYear], date, user._id)
-    //there are no presences sent yet
-    if(Object.keys(presences).length == 0){
-       $scope.showPopover(null, user, date, null, attributedShifts, event);  
-       return;  
-    }
-   var index = 0;
-   var max = Object.keys(presences).length 
-    //check if the day clicked is an dispo present day
-    for(var theDay in presences){
-      index++;
-      if (theDay == day) {
-        console.log(theDay, day)
-        for (var i =  presences[day].length - 1; i >= 0; i--) {
-          console.log(i)
-          var dispo = presences[day][i]
-          if(dispo.coursierId == user._id){
-            var dispoHours = $scope.getDispoHoursAndDay(dispo);
-            var time_shifts = $scope.compareDiposHoursAndShift(dispoHours, day_shifts);
-            var time_city_shifts  = $scope.compareDispoCityAndShift(time_shifts, dispo);
-            var time_city_able_shifts = $scope.compareUserAndShift(time_city_shifts, user._id, user.competences); 
-            //Get attributed shifts for that coursier on that day
-            //show the select screen, give it the date, found shifts and the complete user.
-            $scope.showPopover(time_city_able_shifts, user, date, day_shifts, attributedShifts, event);  
-            return;
-          //no dispo found!
-          }else if (i == 0){
-                   console.log('afte')
-            $scope.showPopover(null, user, date, null, attributedShifts, event);  
-            return;  
+    $scope.setShift = function(day, month,year, user, event){
+      if (Auth.isAdmin()) {
+        var date = new Date(year, month, day)
+        var formatedDate = moment(date).format("D-M-YYYY")
+        var day =  moment(date).format("D")
+        var dayOfWeek = moment(date).day()
+        //attribute the selected shift automatically
+        if($scope.preselectedShift && formatedDate == $scope.preselectedDate){
+           AttributionsService.setShift([$scope.preselectedShift], user, date, null);
+           $scope.preselectedShift = null
+           $(".lowPotential, .mediumPotential, .highPotential, .busy, .shiftManqueDaySelected").removeClass("lowPotential mediumPotential highPotential busy shiftManqueDaySelected")
+           return;
         }
-      };
-    }else if(index == max){
-        $scope.showPopover(null, user, date, null, attributedShifts, event);  
+        var day_shifts = $scope.dailyShifts[dayOfWeek-1]
+        var presences = $scope.lesPresences
+        //Get attributed shifts for that coursier on that day
+        var attributedShifts  = $scope.getAttributedShifts($scope.attributions[0].monthYear[$scope.monthYear], date, user._id)
+        //there are no presences sent yet
+        if(Object.keys(presences).length == 0){
+           $scope.showPopover(null, user, date, null, attributedShifts, event);  
+           return;  
+        }
+       var index = 0;
+       var max = Object.keys(presences).length 
+        //check if the day clicked is an dispo present day
+        for(var theDay in presences){
+          index++;
+          if (theDay == day) {
+            for (var i =  presences[day].length - 1; i >= 0; i--) {
+              var dispo = presences[day][i]
+              if(dispo.coursierId == user._id){
+                var dispoHours = $scope.getDispoHoursAndDay(dispo);
+                var time_shifts = $scope.compareDiposHoursAndShift(dispoHours, day_shifts);
+                var time_city_shifts  = $scope.compareDispoCityAndShift(time_shifts, dispo);
+                var time_city_able_shifts = $scope.compareUserAndShift(time_city_shifts, user._id, user.competences); 
+                //show the select screen, give it the date, found shifts and the complete user.
+                $scope.showPopover(time_city_able_shifts, user, date, day_shifts, attributedShifts, event);  
+                return;
+              //no dispo found!
+              }else if (i == 0){
+                       console.log('afte')
+                $scope.showPopover(null, user, date, null, attributedShifts, event);  
+                return;  
+            }
+          };
+        //there are presences, but none of the user
+        }else if(index == max){
+            $scope.showPopover(null, user, date, null, attributedShifts, event);  
             return;   
+        }
+      }
+    };//isAdmin
+
     }
-  }
-      //  var day = moment(date).format("D-M-YYYY");
-    // for (var i = 0; i < $scope.presences.length; i++) {
-    //   var dispoDay = moment($scope.presences[i].start).format("D-M-YYYY")
-    //   //if yes, check the presence user id and the cell of user clicked
-    //   if (dispoDay == day && $scope.presences[i].coursierId == user._id) {
-    //       //then get all the shifts that fit into this coursier's time range
-    //         var dispo = $scope.presences[i];
-    //         var dispoHours = $scope.getDispoHoursAndDay(dispo);
-    //         var time_shifts = $scope.compareDiposHoursAndShift(dispoHours, day_shifts);
-    //         var time_city_shifts  = $scope.compareDispoCityAndShift(time_shifts, dispo);
-    //         var time_city_able_shifts = $scope.compareUserAndShift(time_city_shifts, user._id, user.competences); 
-    //         //Get attributed shifts for that coursier on that day
-    //         //show the select screen, give it the date, found shifts and the complete user.
-    //         $scope.showPopover(time_city_able_shifts, user, date, day_shifts, attributedShifts, event);  
-    //         return;
-    //       // no dispo found
-    //   }else if (i == $scope.presences.length-1){
-    //          $scope.showPopover(null, user, date, null, attributedShifts, event);  
-    //          return;  
-    //       } 
-    // };
-
-  };//isAdmin
-
-  }
   $scope.showPopover = function(shifts, coursier, date, dayShifts,attributedShifts, event){
     var dateCol = moment(date).subtract(1, 'months')
     var dateCol = moment(dateCol).format('D-M-YYYY')
@@ -629,7 +662,8 @@
            for(var week in month){
               var day = month[week].dispos;
               //get days with absence or presence
-              for (var j = 0; j < day.length; j++) {
+              if (day) {
+                   for (var j = 0; j < day.length; j++) {
                 var dayNo = moment(day[j].start).format("D")
                 if (!disponibilites[dayNo]) {
                   disponibilites[dayNo] = []
@@ -642,7 +676,9 @@
                   lesPresences[dayNo].push(day[j])
                 }
                 disponibilites[dayNo].push(day[j])
-              }//end get days       
+              }//end get days 
+              };
+                 
            }
         };//end get months
       };//var month in coursiers[i].dispos
@@ -697,15 +733,19 @@
   $scope.toggleIsPresent = function(){
       if ($(".present").length > 0) {
         $(".present").removeClass("present").addClass("presentOff");
+        $scope.dispoOn = false
       }else{
         $(".presentOff").removeClass("presentOff").addClass("present");
+         $scope.dispoOn = true
       }
   }
   $scope.toggleNoInfo = function(){
       if ($(".noInfo").length > 0) {
         $(".noInfo").removeClass("noInfo").addClass("noInfoOff");
+        $scope.noInfoOn = false
       }else{
         $(".noInfoOff").removeClass("noInfoOff").addClass("noInfo");
+         $scope.noInfoOn = true
       }
   }
   $scope.toggleCityDispos = function (city) {
@@ -740,18 +780,21 @@
         return $scope.attributions[0].monthYear[monthYear]
       };
   }
-  $scope.toggleAllDispos = function(toggleAll){
-  if (toggleAll== true) {
-     $("td.lowDispoOff").addClass('lowDispo').removeClass('lowDispoOff') 
-     $("td.mediumDispoOff").addClass('mediumDispo') .removeClass('mediumDispoOff')  
-     $("td.highDispoOff").addClass('highDispo') .removeClass('highDispoOff')  
-     $("td.busyOff").addClass('busy').removeClass('busyOff');
-     $scope.toggleAll = false;    
-   }else if (toggleAll == false){
-    $("td.lowDispo").addClass('lowDispoOff').removeClass('lowDispo') 
+  $scope.toggleShiftsLevel = function(toggleAll){
+    console.log(toggleAll)
+  if (toggleAll) {
+        $("td.lowDispo").addClass('lowDispoOff').removeClass('lowDispo') 
      $("td.mediumDispo").addClass('mediumDispoOff') .removeClass('mediumDispo')  
      $("td.highDispo").addClass('highDispoOff') .removeClass('highDispo')  
      $("td.busy").addClass('busyOff').removeClass('busy');
+  
+     $scope.toggleAll = false;    
+   }else if (!toggleAll){
+    console.log('yep')
+      $("td.lowDispoOff").addClass('lowDispo').removeClass('lowDispoOff') 
+     $("td.mediumDispoOff").addClass('mediumDispo') .removeClass('mediumDispoOff')  
+     $("td.highDispoOff").addClass('highDispo') .removeClass('highDispoOff')  
+     $("td.busyOff").addClass('busy').removeClass('busyOff');
      $scope.toggleAll = true;
    }  
   }
@@ -830,24 +873,70 @@
           };
       }
       return theDispo ;
-       //  var dispos = $scope.dispos
-     // var day = moment(date).format("D-M-YYYY");
-       // for (var i = dispos.length - 1; i >= 0; i--) {
-       //   var presentDay = moment(dispos[i].start).format("D-M-YYYY");
-       //    if (presentDay == day && userId == dispos[i].coursierId) {
-       //        if(typeof dispos[i].villes != 'undefined' ) {
-       //          var villes = dispos[i].villes
-       //        }else{
-       //          var villes = [];
-       //        }
-       //          var dispo = {type: dispos[i].title, villes: villes, start : dispos[i].start, end: dispos[i].end};
-       //    }
-       // };
-       //console.debug($scope.dispos);
-      // console.debug(myDispo);
     };
   }
+  $scope.up = function(){
+  
+    if ($scope.limitTo >= $scope.coursiers.length) {
+      return
+    }else{
+       $scope.limitFrom++
+        $scope.limitTo++
+    }
+    // if ($scope.limitTo+2 >= $scope.coursiers.length) {
+    //   $scope.limitTo = $scope.coursiers.length
+    // }else{
+    //   $scope.limitTo = $scope.limitTo +2
+    //   $scope.limitFrom =  $scope.limitFrom+2
+    // }
+  }
+  $scope.down = function(){
+    if ($scope.limitFrom <= 0) {
+      return
+    }else{
+        $scope.limitFrom--
+        $scope.limitTo--
 
+    };
+
+      // if ($scope.limitFrom-2 <= 0) {
+      //   $scope.limitFrom = 0;
+      // }else{
+      //   $scope.limitTo = $scope.limitTo-2
+      //   $scope.limitFrom = $scope.limitFrom-2
+      // }
+    
+  }
+  $scope.limitCoursiers = function(number){
+    var max = $scope.coursiers.length
+    var limitTo = $scope.limitTo
+      if ($scope.preselectedShift) {
+      setTimeout(function(){
+        var day = moment($scope.preselectedDate,"D-M-YYYY").format("D")
+        var month = moment($scope.preselectedDate,"D-M-YYYY").format("M")
+        var year = moment($scope.preselectedDate,"D-M-YYYY").format("YYYY")
+        $scope.showPotentialCoursiers(day,(month-1),year,$scope.preselectedShift, $scope.preselectedEvent)
+      },100) 
+    }
+    if (number =="tous") {
+      $scope.limitFrom = 0 
+      $scope.limitTo = max
+      return
+    }else{
+
+      if (number >= max) {
+        $scope.limitTo = max
+      }else{
+        console.log('sdsd')
+        $scope.limitTo = $scope.limitFrom+number
+      }
+      if ($scope.limitFrom <= 0) {
+        $scope.limitFrom = 0
+      }
+       };
+   
+    console.log($scope.limitFrom, $scope.limitTo)
+  }
   })
   .directive('manquesCity', function(){
       return {
@@ -892,7 +981,8 @@
                 if (times > 0) {
                   //attributed the needed times
                   if (times == shift.times || times > shift.times) {
-                     var daShift = {_id: shift._id, nom: shift.nom, enough: true, ville : shift.ville, timesLeft : 0,competences:shift.competences, fin: shift.fin, debut: shift.debut}
+                    var daShift = {}
+                    // var daShift = {_id: shift._id, nom: shift.nom, enough: true, ville : shift.ville, timesLeft : 0,competences:shift.competences, fin: shift.fin, debut: shift.debut}
                    //attributed less than needed
                   }else{
                     var daShift = {_id: shift._id, nom: shift.nom, enough: false, timesLeft : parseInt(shift.times-times), ville : shift.ville, competences:shift.competences,fin: shift.fin, debut: shift.debut}
@@ -948,9 +1038,9 @@
                scope.checkShifts(dayOfWeek,scope.day, scope.monthNum, newYear,scope.attributions)
             });
         },       
-      template: '<p ng-repeat="daShift in checkedShifts" ng-click ="showPotentialCoursiers(day+1, monthNum, year, daShift, $event)" ng-class="daShift.enough !=true ? \'bg-danger\' : \'shiftHidden\' " ' 
-     + '  class="shiftsByCity"> '
-     +' {{daShift.ville == city ? (daShift.enough === true ? daShift.nom : daShift.nom+"("+daShift.timesLeft+")") : null}}</p>  '
+      template: '<p ng-repeat="daShift in checkedShifts" ng-click ="showPotentialCoursiers(day+1, monthNum, year, daShift, $event)" ' 
+     + '  class="shiftsByCity"  ng-class="daShift.enough !=true ? \'bg-danger\' : \'shiftHidden\' " > '
+     +' {{daShift.ville == city ? ( daShift.timesLeft == 1 ? daShift.nom : daShift.nom+"("+daShift.timesLeft+")"    )  : null }}</p>  '
     }
   })
   .directive('coursierDay', function() {
@@ -1024,14 +1114,18 @@
               for(var month in scope.user.dispos){
                 if (monthYear == month) {
                   for(var week in scope.user.dispos[month]){
-                     var aDay = scope.user.dispos[month][week].dispos[0].start;
-                     var startWeekDay = moment(aDay).startOf('week')._d
+                     
+                    if (scope.user.dispos[month][week].dispos.length > 0) {
+
+                      var aDay = scope.user.dispos[month][week].dispos[0].start;
+                       var startWeekDay = moment(aDay).startOf('week')._d
                     //if its during the week you clicked, get the weekly shifts of that week
                     if (moment(startWeekDay).isSame(startWeek)) {
                       var shiftsPerWeek = scope.user.dispos[month][week].shiftsWeek;
                       scope.remarques = scope.user.dispos[month][week].remarques;
                       var attributed = scope.getNumberOfAttributedShiftsWeek(scope.user._id, monthYear, startWeek, endWeek)
                       scope.setDispoBGInfo(startWeek, endWeek, shiftsPerWeek, attributed,moment(date)._d)
+                    };
                     };
                   }
                 };
@@ -1046,7 +1140,8 @@
               if (moment(date).isBefore(endWeek) || moment(date).isSame(endWeek)) {
                 //set bg from mon till saturday
                 if (date.getDay()  < 7 &&  date.getDay() >0) {  
-                  var shiftsLeft = (wantedShifts-attributedShifts)
+                  if (!elem.hasClass("absent")) {
+                    var shiftsLeft = (wantedShifts-attributedShifts)
                       if (attributedShifts>wantedShifts || attributedShifts == wantedShifts) {
                         elem.addClass("busyOff")
                       }else if( shiftsLeft <= 2 ){
@@ -1066,6 +1161,8 @@
                     scope.shiftsLeft = shiftsLeft
                     scope.wantedShifts = wantedShifts
                     scope.attributedShifts = attributedShifts
+                  };
+                  
                 };          
               };
             };
@@ -1148,6 +1245,27 @@
               scope.getAttrShifts(scope.attributions, monthYear)
               scope.checkShiftsPerWeek(dayOfWeek, scope.day, scope.monthNum, newYear)
             });
+           scope.$watch("limitTo",function() {
+              var date = new Date(parseInt(scope.year), scope.monthNum, scope.day)
+              var dayOfWeek = date.getDay();
+              var monthYear = moment(1+"-"+(scope.monthNum+1)+"-"+scope.year,  "D-M-YYYY").format("MM-YYYY")
+              scope.attributions = scope.returnAttributions(monthYear)
+              scope.shiftsLeft = scope.wantedShifts = scope.daShifts = scope.cities = scope.attributedShifts = scope.from = scope.to =scope.remarques = scope.villes = null
+              scope.addDispoChange(scope.monthNum, scope.year)
+              scope.getAttrShifts(scope.attributions, monthYear)
+              scope.checkShiftsPerWeek(dayOfWeek, scope.day, scope.monthNum, scope.year)
+            });
+           scope.$watch("limitFrom",function() {
+              var date = new Date(parseInt(scope.year), scope.monthNum, scope.day)
+              var dayOfWeek = date.getDay();
+              var monthYear = moment(1+"-"+(scope.monthNum+1)+"-"+scope.year,  "D-M-YYYY").format("MM-YYYY")
+              scope.attributions = scope.returnAttributions(monthYear)
+              scope.shiftsLeft = scope.wantedShifts = scope.daShifts = scope.cities = scope.attributedShifts = scope.from = scope.to =scope.remarques = scope.villes = null
+              scope.addDispoChange(scope.monthNum, scope.year)
+              scope.getAttrShifts(scope.attributions, monthYear)
+              scope.checkShiftsPerWeek(dayOfWeek, scope.day, scope.monthNum, scope.year)
+            });
+
 
         },//link
         template:'<div class="dispoInfo"  tooltip="De {{from != null ? from : \'?\'}} à {{to != null ? to : \'?\'}} &#8232; '
@@ -1273,5 +1391,14 @@
         template:'<span class="shiftsDoubles" ng-class="shift.invalidDay === true ? \'bg-warning\': \'\' " ng-repeat="shift in doubleShifts">{{shift.timesLeft>1 ? shift.nom+"("+shift.timesLeft+")" : shift.nom}}</span>'
 
       }
-  })
+  }).filter('limitFromTo', function(){
+    return function (input, left, right) {
+        if(input === undefined || left === undefined) return input;
+        if(right === undefined){
+            right = left;
+            left =  0;
+        }
+        return input.slice(left,right);//string and array all have this method
+    };
+});
 

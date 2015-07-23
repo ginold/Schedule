@@ -1,6 +1,3 @@
-<div class="modal-header">
-    <h3 class="modal-title text-center">Attribuer un shift</h3>
-</div>
 
         <div class="modal-body ">
             <p>À: <b> &nbsp;{{coursier.prenom}} {{coursier.name}} </b></p>
@@ -11,7 +8,7 @@
                 <p ng-show="shifts.length == 1">Pas de shift adéquat trouvé</p>
                <p ng-show="noDispo"> <b>Pas de dispo trouvée!</b></p>
             <p>Selectionnez un shift &nbsp;
-                <select size="{{shifts.length}}" multiple class="form-control"  ng-options="shift as shift.nom group by shift.ville for shift in shifts" ng-model="selectedShift">
+                <select size="9" multiple class="form-control"  ng-options="shift as shift.nom group by shift.ville for shift in shifts" ng-model="selectedShift">
                 </select>
             </p>  
              <button ng-show="selectedShift.length > 0" class="btn btn-success " ng-click="attribuer(selectedShift, coursier, date, null)" aria-label="Remove">Attribuer</button>
@@ -29,6 +26,5 @@
 
         <div class="text-center">
            
-            <button class="btn btn-info" ng-click="close()">Annuler</button>
+            <button style="margin-bottom:10px;"class="btn btn-info" ng-click="close()">Annuler</button>
         </div>
-<div class="modal-footer "></div>
