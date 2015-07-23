@@ -71,9 +71,6 @@
       };
       $scope.toggleCityDispos(null)
 
-      console.log(navigator.userAgent)
-        console.debug('sds');
-     // }
 
     });
 
@@ -164,6 +161,19 @@
     $scope.preselectedShift = null
     $(".lowPotential, .mediumPotential, .highPotential, .busyPotential, .shiftManqueDaySelected").removeClass("lowPotential mediumPotential highPotential busyPotential shiftManqueDaySelected")
     $(".shiftManqueDaySelected").removeClass("shiftManqueDaySelected")
+  }
+  $scope.searchNo = function(number){
+    console.debug($scope.limitFrom, $scope.limitTo);
+    if (number == '' || typeof number=== undefined) {
+      $scope.limitFrom = 0
+      $scope.limitTo =  $scope.number
+    };
+    for (var i = $scope.coursiers.length - 1; i >= 0; i--) {
+      if(number == $scope.coursiers[i].numeroCoursier){
+         $scope.limitFrom = 0
+         $scope.limitTo = $scope.coursiers.length
+      }
+    };
   }
   /*
     //TODO - BY MONTH TOO!

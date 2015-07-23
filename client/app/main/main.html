@@ -38,7 +38,7 @@
             </select>
   <button class="btn btn-primary  btn-sm"  ng-click="togglePlanning(isAdmin())">{{isAdmin() == true ? "Mon planning" :"Tous les coursiers"}}</button>
 <span id="searchName">Nom &nbsp;<input class="searchName" ng-model="search.name"></span>
-<span># <input class="searchNo" ng-model="search.no"></span>
+<span># <input class="searchNo" ng-model="search.no" ng-change="searchNo(search.no)"></span>
               
         </div>
      
@@ -93,9 +93,9 @@
    <div class="dropdown">  
 
 
-        <button id="down" class="glyphicon glyphicon-arrow-up btn" ng-click="down()"></button>
+    <button id="down" class="glyphicon glyphicon-arrow-up btn" ng-click="down()"></button>
     <input type="number" class="searchNo" ng-model="number" ng-change="limitCoursiers(number)" min="1" max="{{coursiers.length}}">
-    <button class="btn btn-sm btn-info" ng-click="limitCoursiers('tous')"> Tous</button>
+    <button class="btn btn-sm btn-info" ng-click="limitCoursiers('tous')">Tous</button>
    <button  id="up" class="glyphicon glyphicon-arrow-down btn" ng-click="up()"></button>
    <button class="btn btn-warning" ng-show="preselectedShift" ng-click="unselectShift()">Desélectionner</button>
 </div>
