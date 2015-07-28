@@ -26,6 +26,10 @@
       margin-bottom: 10px;
   }
 #up, #down{
+
+  @media @iphone{
+    display: inline-block;
+  }
   display:none;
 }
   .cityManquesHeader th{
@@ -44,6 +48,20 @@
   .dispoLevelCityHigh{
   background-color: #00FF4C ;
   }
+  .notDispoLausanne{
+  background-color: #ffc0cb !important;
+}
+.notDispoYverdon{
+  background-color:#f0e898 !important;
+}
+
+.notDispoNeuchâtel{
+  background-color: #b198f0 !important;
+}
+.notDispo{
+  background-color: #ffc0cb !important;
+
+}
   .busy{
    color: grey;
    background-color: #E6E6E6 ;
@@ -61,7 +79,7 @@
   }
   .mediumDispo{
   // border-style:solid; 
-    background-color: #85FFF7 ;
+    background-color: #b7e9f2 ;
   }
   .busyPotential{
      color: white;
@@ -69,7 +87,7 @@
   }
   .lowPotential{
 
-   background-color: #FFBC82  !important;
+   background-color:#fff96e !important;
 
 
   }
@@ -79,22 +97,9 @@
   }
   .mediumPotential{
   // border-style:solid; 
-    background-color: #85FFF7 !important;
+    background-color:  #85FFF7  !important;
   }
-.notDispoLausanne{
-  background-color: #ffc0cb !important;
-}
-.notDispoYverdon{
-  background-color:#f0e898 !important;
-}
 
-.notDispoNeuchâtel{
-  background-color: #b198f0!important;
-}
-.notDispo{
-  background-color: #ffc0cb !important;
-
-}
   .absent{
       background-color: #FF8C8C ;
       opacity: 0.9;
@@ -139,7 +144,7 @@
 
 
   .shiftHidden{
-   // display: none;
+    display: none;
   }
   ::-webkit-scrollbar{
     display: none;
@@ -179,8 +184,8 @@
   .planning tr td {
     border-right: 1px solid #bbb;
     border-bottom: 1px solid #bbb;
-    padding-top: 2px;
-    padding-bottom: 2px;
+    padding-top: 1px;
+    padding-bottom: 1px;
     padding-left: 6px;
     padding-right: 6px;
     @media @tablet{
@@ -292,8 +297,11 @@
   .colDaySelected{
       background-color: #86ED80 !important;
   }
+  .colHover{
+      background-color: rgba(70, 216, 221, 0.25)!important;
+  }
   .myRow{
-      background-color: rgba(123, 200, 224, 0.2) ;  
+      background-color: rgba(217, 240, 15, 0.23);  
   }
   .coursierDay:hover{
       background-color: rgba(123, 100, 224, 0.2) ; 
@@ -341,7 +349,8 @@
       }
     }
     .coursierTD{
-     
+      font-size: 0.9em;
+
       @media @iphone{
         text-align: left;
       }
@@ -408,7 +417,7 @@
   }
   .attributedShift{
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-    font-size: 0.9em;
+    font-size: 0.85em;
     cursor: help;
     font-weight: bold;
     margin: 0 0 0 0;

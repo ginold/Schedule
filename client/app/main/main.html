@@ -5,17 +5,18 @@
 
       <div class="theContainer" ng-show="!loading">
         <!-- show first monthly calendar to non admin -->
-        <div ng-show="!isAdmin()">
+        <div ng-show="!showAllPlanning">
         
       <div  id="fullCal"></div>
-       <button  id="fullCalSwitch" class="btn btn-primary  btn-sm"  ng-click="togglePlanning(isAdmin())">{{isAdmin() == true ? "Mon planning" :"Tous les coursiers"}}</button>
+       <button  id="fullCalSwitch" class="btn btn-primary  btn-sm"  ng-click="togglePlanning()">{{showAllPlanning != true ? 'Tous les coursiers' : 
+      ''}}</button>
 
 
       </div>
 
 
     <!-- show all coursiers calendar to admin -->
-      <div id="theCalendar" ng-show="isAdmin()">
+      <div id="theCalendar" ng-show="showAllPlanning">
 
         <div class="col-md-5 col-sm-5" id="monthYearSelect">
           <!-- select the month we are in -->
@@ -36,7 +37,7 @@
               <option>2016</option>
               <option>2017</option>
             </select>
-  <button class="btn btn-primary  btn-sm"  ng-click="togglePlanning(isAdmin())">{{isAdmin() == true ? "Mon planning" :"Tous les coursiers"}}</button>
+  <button class="btn btn-primary  btn-sm"  ng-click="togglePlanning()">{{showAllPlanning == true ? 'Mon planning' : ''}}</button>
 <span id="searchName">Nom &nbsp;<input class="searchName" ng-model="search.name"></span>
 <span># <input class="searchNo" ng-model="search.no" ng-change="searchNo(search.no)"></span>
               
@@ -64,6 +65,9 @@
       <li class="bg-warning"><a ng-click="toggleNoInfo()">No info</a></li>
       <li class="bg-danger"> 
         <a ng-click="toggleShiftsLevel(toggleAll)">Nb shifts</a>
+      </li>
+      <li class=""> 
+        <a ng-click="showHiddenShifts()">Montrer/cacher les shifts attribués</a>
       </li>
       <li><a ng-click="todaysCoursiers()">Qui roule AJD </a></li>
       <li><a> Qui roule le: <select ng-model="workingDay" ng-change="whoWorksOn(workingDay, monthNum, year, $event)"> <option ng-repeat="key in calendar.monthDays track by $index"> {{$index+1}}</option></select> </a> </li>
@@ -178,7 +182,7 @@
       
             <tr>
                 <td>Doublons</td>
-                  <td doublons
+                  <td doublons-city
                    ng-repeat="day in calendar.monthDays track by $index"
                    day="$index"
                    return-attributions="returnAttributions"

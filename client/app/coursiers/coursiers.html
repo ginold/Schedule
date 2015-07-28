@@ -1,0 +1,69 @@
+<div ui-view="">
+<div class="bg-primary text-center title">
+  <h3>Liste des coursiers</h3>
+</div>
+
+<div class="container">   
+  <p>Total: <b> {{total}}</b> coursiers</p>
+<form class="form-inline search col-md-6">
+  <div class="form-group row">
+     <label>Recherche</label>
+    <input type="text" ng-model="searchCoursier"> 
+    <button class="btn" ng-class="checkDispos == '' ? ' btn-success' :'btn-danger' " ng-click="checkDispos = !checkDispos">
+      {{checkDispos == '' ? 'Qui a donné ses dispos' : 'Qui n\'a pas donné' }}
+    </button>
+
+    <button class="btn btn-sm" ng-click="checkDispos = '' ">Tous</button>
+  </div>
+  
+</form>
+
+
+  <table class="table table-striped table-bordered">
+    <tr>
+       <th class="shiftsHeaders">No coursier</th>
+        <th class="shiftsHeaders">Nom</th>
+        <th class="shiftsHeaders">Prénom</th> 
+        <th class="shiftsHeaders">Compétences</th>
+         <th class="shiftsHeaders">Donné ses dispos pour 
+            <select 
+                ng-model="month" 
+                ng-change="checkGivenDispos(month, year)">
+              <option 
+                ng-repeat="month in monthNames" 
+                value="{{$index}}"  
+                ng-selected="$index == currentMonth">{{month}}</option>
+            </select >
+            <select 
+                ng-model="year" 
+                ng-change="checkGivenDispos(month, year)">
+              <option 
+                 ng-repeat="year in years" 
+                value="{{year}}"  
+                ng-selected="year == currentYear">{{year}}</option>
+            </select >
+
+         </th>
+        <th class="shiftsHeaders">Coursier depuis</th>
+      <!--   <th class="shiftsHeaders">Coursier jusqu'à</th> -->
+
+         <th><span class="glyphicon glyphicon-trash pull-right"></span></th>
+    </tr>
+    <tr ng-repeat="user in users | filter: 
+             { name: searchCoursier, 
+             gaveDispos : checkDispos} 
+        |orderBy: 'numeroCoursier' "  >
+    <td>  #{{user.numeroCoursier}}</td>
+      <td> <a ui-sref="coursiers.details({coursierId:user._id})">{{user.name}}</a></td>  
+      <td>  {{user.prenom}}</td>
+      <td><span ng-repeat="com in user.competences" >{{com}}{{$last ? "" : ", "}}</span></td>
+      <td> <b ng-style="user.gaveDispos != true ? {color: 'red'} : '' " >
+            {{user.gaveDispos === true ? 'Oui'  : "Non"}} </b> 
+      </td>
+       <td>{{user.createdOn}}</td>
+<!--        <td>{{user.departOn}}</td> -->
+      <td><a ng-click="delete(user)" class="trash"><span class="glyphicon glyphicon-trash pull-right"></span></a></td>
+    </tr>
+  </table>
+</div>
+</div>

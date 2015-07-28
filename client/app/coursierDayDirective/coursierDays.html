@@ -1,0 +1,17 @@
+    <div class="dispoInfo"  
+    tooltip="De {{from != null ? from : '?' }} à {{to != null ? to : '?' }}  
+              {{cities != null ? 'Villes: '+cities : '?'}} 
+              {{remarques != null ? '---' +remarques : '' }} 
+              ---{{shiftsLeft != null ? 'Shifts restants:'+ shiftsLeft : '' }}" 
+             tooltip-placement="top"  
+             tooltip-append-to-body="true" 
+             tooltip-trigger="mouseenter" > 
+       </div>
+       <span city="{{shift.ville}}"  
+       ng-repeat="shift in daShifts track by $index" 
+       ng-class="daShifts != null ? 'attributedShift' : ''  "  
+       popover="Remarques: {{shift.remarques}} || A {{shift.ville}} de {{shift.debut | date : 'H:mm'}} à  {{shift.fin | date : 'H:mm'}}"
+         popover-placement="top"  
+  popover-trigger="mouseenter">
+        {{shift.nom}}{{$last ? "" : " "}}</span>
+      

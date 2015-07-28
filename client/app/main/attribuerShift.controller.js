@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('velociteScheduleApp')
-  .controller('AttribuerShiftCtrl', function (event, $scope, shifts, $http, preselectedDate, preselectedShift, 
+  .controller('AttribuerShiftCtrl', function ($scope, shifts, $http, preselectedDate, preselectedShift, 
                       coursier, date, allShifts, AttributionsService, attributions, attributedShifts) {
     //->no shifts found => the user didnt give his dispos  (coming from setShift())
     if (shifts == null) {

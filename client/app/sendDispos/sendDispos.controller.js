@@ -1,13 +1,14 @@
   'use strict';
 
   angular.module('velociteScheduleApp')
-    .controller('SendDisposCtrl', function ($scope, $http,$modal,calendarService, Auth) {
+    .controller('SendDisposCtrl', function ($scope, $http,$modal,calendarService, Auth, shiftService) {
 
     //var $doc = angular.element(document);
     var index = 0; //for event delete
     //checkbox default  checked
     $scope.laus_check = false;
     $scope.yv_check = false;
+    $scope.cities =  shiftService.getCities()
     $scope.neuch_check = false;
     $scope.isBefore  =  false;
     $scope.months = calendarService.getMonths();
@@ -143,7 +144,7 @@
           }else{
             $scope.drag = false
           }
-
+          console.debug($scope.villes);
           if ($scope.villes.length == 0) {
             $scope.forgotCity = true
           }else{
@@ -205,10 +206,11 @@
           var dispoStart = moment.duration(dispo.start).asMinutes()
           var dispoEnd = moment.duration(dispo.end).asMinutes()
           if (dispoEnd-dispoStart <= 60 ) {
-            $scope.forgotShiftsWeek = false
-             $scope.forgotCity = false;
+
+  
             return
           };
+           console.debug($scope.forgotShiftsWeek);
           //show forgot city modal
           if ($scope.forgotCity && dispo.title != 'Absent') {
              var modalInstance = $modal.open({

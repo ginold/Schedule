@@ -39,24 +39,14 @@
 		          <!-- dispo cities -->
 		        <div class="col-sm-4 col-md-12">
 		          <h3>Villes</h3>
-		          <div class="checkbox" >
+		          <div class="checkbox" ng-repeat="city in cities" >
 					  <label>
-					    <input type="checkbox"  checklist-value="'Lausanne'" checklist-model="villes" ng-checked="laus_check">
-					    Lausanne
+					    <input type="checkbox"  checklist-value="city" checklist-model="villes" >
+					    {{city}}
 					  </label>
 						
 					</div>
-					<div class="checkbox">   <label>
-					    <input type="checkbox"  checklist-value="'Yverdon'" checklist-model="villes" ng-checked="yv_check">
-					    Yverdon
-					  </label>
-					</div>
-					<div class="checkbox">
-					  <label>
-					    <input type="checkbox"  checklist-value="'Neuchâtel'" checklist-model="villes" ng-checked="neuch_check">
-					    Neuchâtel
-					  </label>
-					</div>
+					
 					<h4 ng-show="forgotCity" class="bg-warning  text-danger">Sélectionne une ville!</h4>
 				</div>
 				
