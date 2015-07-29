@@ -1,8 +1,8 @@
-<p ng-repeat="daShift in checkedShifts" 
+<div class="scrollable"><p ng-repeat="daShift in checkedShifts" 
 	ng-click ="showPotentialCoursiers(day+1, monthNum, year, daShift, $event)" 
    class="shiftsByCity"  
    ng-class="daShift.enough !=true ? 'bg-danger' : 'shiftHidden' " > 
       {{daShift.ville == city ? ( daShift.timesLeft <= 1 ? daShift.nom : daShift.nom+"("+daShift.timesLeft+")"    )  : null }}
 
       </p>  
-    
+    </div>
