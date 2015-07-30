@@ -92,13 +92,40 @@
                     $scope.forgotRemarques = true
                   };
                 };
-                if ($scope.dispos[$scope.monthYear][$scope.week].remarques) {
+                if ($scope.dispos[monthYearStart][$scope.week].remarques) {
                   $scope.forgotRemarques = false
                 };
-                if ($scope.dispos[$scope.monthYear][$scope.week].shiftsWeek) {
+                if ($scope.dispos[monthYearStart][$scope.week].shiftsWeek) {
                     $scope.forgotShiftsWeek = false
                 };
               };
+            };
+            //different rules if the week starts in different month that it ends
+            if (monthYearStart != monthYearEnd) {
+              //f there is only the ending month, you should see the shiftsWeek and remarques in both cases
+              if ($scope.dispos[monthYearEnd] && !$scope.dispos[monthYearStart]) {
+                $scope.dispos[monthYearStart] = {}
+                $scope.dispos[monthYearStart][$scope.week] = {}
+                if ($scope.dispos[monthYearEnd][$scope.week].shiftsWeek) {
+                  $scope.dispos[monthYearStart][$scope.week].shiftsWeek = $scope.dispos[monthYearEnd][$scope.week].shiftsWeek
+                  $scope.forgotShiftsWeek = false
+                };
+                if ($scope.dispos[monthYearEnd][$scope.week].remarques) {
+                   $scope.dispos[monthYearStart][$scope.week].remarques =   $scope.dispos[monthYearEnd][$scope.week].remarques
+                   $scope.forgotRemarques = false; 
+                };
+              //if there is the ending month and starting month but nothing in the same week...
+              }else if($scope.dispos[monthYearEnd] && !$scope.dispos[monthYearStart][$scope.week] ){
+                $scope.dispos[monthYearStart][$scope.week] = {}
+                 if ($scope.dispos[monthYearEnd][$scope.week].shiftsWeek) {
+                  $scope.dispos[monthYearStart][$scope.week].shiftsWeek = $scope.dispos[monthYearEnd][$scope.week].shiftsWeek
+                  $scope.forgotShiftsWeek = false
+                };
+                if ($scope.dispos[monthYearEnd][$scope.week].remarques) {
+                   $scope.dispos[monthYearStart][$scope.week].remarques =   $scope.dispos[monthYearEnd][$scope.week].remarques
+                   $scope.forgotRemarques = false; 
+                };
+              }
             };
 
               if (!$scope.dispos[$scope.monthYear]) {
@@ -112,7 +139,8 @@
             $('#calendar').fullCalendar('removeEventSource')
             $('#calendar').fullCalendar('removeEvents');
             $('#calendar').fullCalendar('addEventSource', $scope.weekDispos);
-            console.log($scope.forgotShiftsWeek, $scope.forgotRemarques)
+            console.log($scope.dispos[monthYearStart][$scope.week])
+            console.log($scope.dispos[monthYearEnd][$scope.week])
         },
         select: function(start, end) {
         
@@ -190,8 +218,7 @@
                       $scope.dispos[$scope.monthYear][$scope.week].dispos.splice(i,1)
                       for (var  j = $scope.weekDispos.length - 1; j >= 0; j--) {
                         if( moment($scope.weekDispos[j].start).isSame(dispo.start,"day")){
-                          $scope.weekDispos.splice(j,1)
-                          console.log('same!')
+                          $scope.weekDispos.splice(j,1)                          
                            $('#calendar').fullCalendar('removeEventSource')
                            $('#calendar').fullCalendar('removeEvents');
                            $('#calendar').fullCalendar('addEventSource', $scope.weekDispos);

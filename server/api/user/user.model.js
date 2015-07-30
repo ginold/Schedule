@@ -26,6 +26,7 @@ var UserSchema = new Schema({
     rue : { type: String}
   },
   dispos: Schema.Types.Mixed,
+    presences: Schema.Types.Mixed,
   shifts:  Schema.Types.Mixed,
   hashedPassword: String,
     role: {

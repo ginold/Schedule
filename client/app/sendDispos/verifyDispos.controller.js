@@ -16,9 +16,9 @@ angular.module('velociteScheduleApp')
 	    if($scope.dispos.dispos != null){
 	    	for (var month in $scope.month) {
     		for (var week in $scope.month[month]){
-               
+               console.debug($scope.month);
     			if ($scope.month[month][week].dispos.length == 0) {
-    				delete $scope.month[month][week]
+    				//delete $scope.month[month][week]
     			}else{
     				$scope.noDispos = false;
     				weeks[index] = $scope.month[month][week];
