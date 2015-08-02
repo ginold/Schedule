@@ -8,5 +8,5 @@ module.exports = {
     uri: 'mongodb://localhost/velociteschedule-dev'
   },
 
-  seedDB: false
+  seedDB: true
 };
